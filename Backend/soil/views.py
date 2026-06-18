@@ -14,6 +14,7 @@ from .serializers import (
     SoilImageUploadSerializer
 )
 from .services import SoilAnalysisService, SoilImageAnalyzer
+from settings.utils import log_analytics_event
 
 
 # ==========================================================
@@ -46,6 +47,12 @@ class SoilTestViewSet(viewsets.ModelViewSet):
                 soil_test=soil_test,
                 **rec
             )
+
+        # Analytics
+        log_analytics_event(
+            self.request.user,
+            "soil_analysis"
+        )
 
 
 # ==========================================================
@@ -208,6 +215,21 @@ class SoilImageUploadView(APIView):
 
         soil_image.save()
 
+
+        # Analytics
+        log_analytics_event(
+            self.request.user,
+            "soil_image_analysis"
+        )
+
+        # return Response({
+        #     "id": soil_image.id,
+        #     "image_url": request.build_absolute_uri(
+        #         soil_image.image.url
+        #     ),
+        #     "analysis": result
+        # }, status=status.HTTP_201_CREATED)
+
         # FINAL RESPONSE (INCLUDES CROPS)
         return Response(
             {
@@ -250,6 +272,12 @@ class SoilHealthSummaryView(APIView):
             })
 
         score = self._calculate_health_score(latest_test)
+
+        # Analytics
+        log_analytics_event(
+            request.user,
+            "soil_health_summary"
+        )
 
         return Response({
             "overall_health": self._get_health_label(score),

@@ -586,6 +586,11 @@ export default function Sidebar() {
         </nav>
 
         <nav className="bottom-links">
+          <NavLink to="/admin-dashboard">
+            <User size={20} />
+            Admin Panel
+          </NavLink>
+
           <NavLink to="/profile">
             <User size={20} />
             Profile

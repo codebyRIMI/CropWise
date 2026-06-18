@@ -32,8 +32,88 @@ class NotificationPreference(models.Model):
     def __str__(self):
         return f"{self.user.username} settings"
 
+# notifications section =========
+# schema of notifications for weather , system knowledge updates and market prices
+class Notification(models.Model):
+    NOTIFICATION_TYPES = [
+        ("weather", "Weather"),
+        ("market", "Market"),
+        ("system", "System"),
+    ]
 
-# schema of preferences
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="notifications"
+    )
+
+    notification_type = models.CharField(
+        max_length=20,
+        choices=NOTIFICATION_TYPES
+    )
+
+    title = models.CharField(max_length=100)
+    message = models.TextField()
+
+    is_read = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+#  privacy section ===========
+# schema of user location
+class UserLocation(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=100, blank=True)
+    country = models.CharField(max_length=100, blank=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+# schema of analytics events
+class AnalyticsEvent(models.Model):
+    EVENT_CHOICES = [
+        ("crop_prediction", "Crop Prediction"),
+        ("weather_check", "Weather Check"),
+        # ("market_trends", "Market Trends"),
+        ("soil_analysis", "Soil Analysis"),
+        # ("system_knowledge", "System Knowledge"),
+        ("soil_image_analysis", "Soil Image Analysis"),
+        ("soil_health_summary", "Soil Health Summary"),
+    ]
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    event_name = models.CharField(
+        max_length=50,
+        choices=EVENT_CHOICES
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.event_name} - {self.created_at}"
+    
+
+
+# preferences section ===========
+# schema of preferences for theme, measurement unit, language, timezone and currency(for now only theme)
 class UserPreference(models.Model):
     THEME_CHOICES = [
         ("light", "Light"),

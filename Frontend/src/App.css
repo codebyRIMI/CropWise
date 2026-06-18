@@ -3,4 +3,39 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+/* for top bar design */
+.protectedd-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+    .topp-header {
+        height: 70px;
+        width: 100%;
+
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        padding: 0 24px;
+
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .pagee-content {
+        flex: 1;
+    }
 }
