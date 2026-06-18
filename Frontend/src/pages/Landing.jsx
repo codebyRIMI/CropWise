@@ -53,27 +53,76 @@ const [signupData, setSignupData] = useState({
   };
 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        'http://127.0.0.1:8000/api/auth/login',
-        loginData
-      );
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await axios.post(
+  //       'http://127.0.0.1:8000/api/auth/login',
+  //       loginData
+  //     );
 
-      // store tokens
-      localStorage.setItem('access', res.data.access);
-      localStorage.setItem('refresh', res.data.refresh);
-      navigate('/dashboard');
-    }catch (err) {
-      if (err.response?.data) {
-        const messages = Object.values(err.response.data).flat().join(' ');
-        setError(messages);
-      } else {
-        setError('Something went wrong');
-      }
+  //     // store tokens
+  //     localStorage.setItem('access', res.data.access);
+  //     localStorage.setItem('refresh', res.data.refresh);
+  //     navigate('/dashboard');
+  //   }catch (err) {
+  //     if (err.response?.data) {
+  //       const messages = Object.values(err.response.data).flat().join(' ');
+  //       setError(messages);
+  //     } else {
+  //       setError('Something went wrong');
+  //     }
+  //   }
+  // };
+
+
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/api/auth/login",
+      loginData
+    );
+
+    // Store JWT tokens
+    localStorage.setItem(
+      "access",
+      res.data.access
+    );
+
+    localStorage.setItem(
+      "refresh",
+      res.data.refresh
+    );
+
+    // Store user data
+    localStorage.setItem(
+      "user",
+      JSON.stringify(res.data.user)
+    );
+
+    navigate("/dashboard");
+
+  } catch (err) {
+
+    if (err.response?.data) {
+
+      const messages = Object.values(
+        err.response.data
+      )
+        .flat()
+        .join(" ");
+
+      setError(messages);
+
+    } else {
+
+      setError("Something went wrong");
+
     }
-  };
+  }
+};
 
 
 

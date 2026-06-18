@@ -239,10 +239,190 @@
 
 
 
+// import { NavLink, useNavigate, useLocation } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import "../scss/sidebar.scss";
+
+// import {
+//   Home,
+//   Lightbulb,
+//   CloudSun,
+//   FlaskConical,
+//   User,
+//   Settings,
+//   LogOut,
+//   Menu,
+//   X,
+//   BarChart2,
+// } from "lucide-react";
+
+// import axios from "axios";
+
+// export default function Sidebar() {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const [menuOpen, setMenuOpen] = useState(false);
+
+//   /* Close sidebar when route changes */
+//   useEffect(() => {
+//     setMenuOpen(false);
+//   }, [location.pathname]);
+
+//   /* Prevent background scroll */
+//   useEffect(() => {
+//     if (menuOpen) {
+//       document.body.style.overflow = "hidden";
+//     } else {
+//       document.body.style.overflow = "auto";
+//     }
+
+//     return () => {
+//       document.body.style.overflow = "auto";
+//     };
+//   }, [menuOpen]);
+
+//   const handleLogout = async () => {
+//     setMenuOpen(false);
+
+//     try {
+//       await axios.post(
+//         "http://127.0.0.1:8000/api/auth/logout",
+//         {
+//           refresh: localStorage.getItem("refresh"),
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("access")}`,
+//           },
+//         }
+//       );
+//     } catch (error) {
+//       console.error("Logout failed:", error);
+//     } finally {
+//       localStorage.removeItem("access");
+//       localStorage.removeItem("refresh");
+
+//       navigate("/", {
+//         replace: true,
+//       });
+//     }
+//   };
+
+//   return (
+//     <>
+//       {/* MOBILE MENU BUTTON */}
+
+//       <button
+//         className="menu-toggle"
+//         onClick={() => setMenuOpen((prev) => !prev)}
+//       >
+//         {menuOpen ? <X size={24} /> : <Menu size={24} />}
+//       </button>
+
+//       {/* OVERLAY */}
+
+//       {menuOpen && (
+//         <div
+//           className="sidebar-overlay"
+//           onClick={() => setMenuOpen(false)}
+//         />
+//       )}
+
+//       {/* SIDEBAR */}
+
+//       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
+//         {/* LOGO */}
+
+//         <div className="top-section">
+//           <h2 className="logo">🌱 CropWise</h2>
+
+//           <p className="subtitle">
+//             Smart Agriculture
+//           </p>
+//         </div>
+
+//         {/* USER */}
+
+//         <div className="user">
+//           <div className="avatar">
+//             A
+//           </div>
+
+//           <div className="userinfo">
+//             <p className="name">
+//               Aritra
+//             </p>
+
+//             <p className="email">
+//               a@gmail.com
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* NAVIGATION */}
+
+//         <nav className="nav-links">
+//           <NavLink to="/dashboard">
+//             <Home size={20} />
+//             Dashboard
+//           </NavLink>
+
+//           <NavLink to="/recommendations">
+//             <Lightbulb size={20} />
+//             Recommendations
+//           </NavLink>
+
+//           <NavLink to="/farm-records">
+//             <BarChart2 size={20} />
+//             Farm Records
+//           </NavLink>
+
+//           <NavLink to="/weather">
+//             <CloudSun size={20} />
+//             Weather
+//           </NavLink>
+
+//           <NavLink to="/soil-analysis">
+//             <FlaskConical size={20} />
+//             Soil Analysis
+//           </NavLink>
+
+//           <NavLink to="/markets">
+//             <BarChart2 size={20} />
+//             Markets
+//           </NavLink>
+//         </nav>
+
+//         {/* BOTTOM LINKS */}
+
+//         <nav className="bottom-links">
+//           <NavLink to="/profile">
+//             <User size={20} />
+//             Profile
+//           </NavLink>
+
+//           <NavLink to="/settings">
+//             <Settings size={20} />
+//             Settings
+//           </NavLink>
+
+//           <div
+//             className="logout"
+//             onClick={handleLogout}
+//           >
+//             <LogOut size={20} />
+//             Logout
+//           </div>
+//         </nav>
+//       </aside>
+//     </>
+//   );
+// }
+
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../scss/sidebar.scss";
-
 import {
   Home,
   Lightbulb,
@@ -255,7 +435,6 @@ import {
   X,
   BarChart2,
 } from "lucide-react";
-
 import axios from "axios";
 
 export default function Sidebar() {
@@ -264,12 +443,16 @@ export default function Sidebar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* Close sidebar when route changes */
+  const [user, setUser] = useState({
+    id: "",
+    username: "",
+    email: "",
+  });
+
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  /* Prevent background scroll */
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -281,6 +464,29 @@ export default function Sidebar() {
       document.body.style.overflow = "auto";
     };
   }, [menuOpen]);
+
+  // Load user whenever route changes
+  useEffect(() => {
+    const loadUser = () => {
+      try {
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        } else {
+          setUser({
+            id: "",
+            username: "",
+            email: "",
+          });
+        }
+      } catch (error) {
+        console.error("User Parse Error:", error);
+      }
+    };
+
+    loadUser();
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     setMenuOpen(false);
@@ -302,25 +508,23 @@ export default function Sidebar() {
     } finally {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
+      localStorage.removeItem("user");
 
-      navigate("/", {
-        replace: true,
-      });
+      navigate("/", { replace: true });
     }
   };
 
+  const avatarLetter =
+    user?.username?.charAt(0)?.toUpperCase() || "U";
+
   return (
     <>
-      {/* MOBILE MENU BUTTON */}
-
       <button
         className="menu-toggle"
         onClick={() => setMenuOpen((prev) => !prev)}
       >
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
-
-      {/* OVERLAY */}
 
       {menuOpen && (
         <div
@@ -329,38 +533,25 @@ export default function Sidebar() {
         />
       )}
 
-      {/* SIDEBAR */}
-
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
-        {/* LOGO */}
-
         <div className="top-section">
           <h2 className="logo">🌱 CropWise</h2>
-
-          <p className="subtitle">
-            Smart Agriculture
-          </p>
+          <p className="subtitle">Smart Agriculture</p>
         </div>
 
-        {/* USER */}
-
         <div className="user">
-          <div className="avatar">
-            A
-          </div>
+          <div className="avatar">{avatarLetter}</div>
 
           <div className="userinfo">
             <p className="name">
-              Aritra
+              {user.username || "Guest"}
             </p>
 
             <p className="email">
-              a@gmail.com
+              {user.email || "No Email"}
             </p>
           </div>
         </div>
-
-        {/* NAVIGATION */}
 
         <nav className="nav-links">
           <NavLink to="/dashboard">
@@ -394,8 +585,6 @@ export default function Sidebar() {
           </NavLink>
         </nav>
 
-        {/* BOTTOM LINKS */}
-
         <nav className="bottom-links">
           <NavLink to="/profile">
             <User size={20} />
@@ -407,10 +596,7 @@ export default function Sidebar() {
             Settings
           </NavLink>
 
-          <div
-            className="logout"
-            onClick={handleLogout}
-          >
+          <div className="logout" onClick={handleLogout}>
             <LogOut size={20} />
             Logout
           </div>

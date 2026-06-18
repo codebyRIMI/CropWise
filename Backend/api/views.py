@@ -342,7 +342,7 @@ def predict_crop_from_location(request):
         # ==================================================
         # 2. SOIL DATA FROM SOILGRIDS
         # ==================================================
-
+  
         soil_url = (
             "https://rest.isric.org/soilgrids/v2.0/properties/query"
             f"?lat={lat}"
