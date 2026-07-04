@@ -186,7 +186,21 @@ useEffect(() => {
       // store tokens
       localStorage.setItem('access', res.data.access);
       localStorage.setItem('refresh', res.data.refresh);
-      navigate('/dashboard');
+
+      const user = res.data.user;
+
+      localStorage.setItem(
+          'user',
+          JSON.stringify(res.data.user)
+      );
+
+
+      if (user.is_staff) {
+        navigate('/admin-dashboard');
+      }
+      else {
+        navigate('/dashboard');
+      }
     }catch (err) {
       if (err.response?.data) {
         const messages = Object.values(err.response.data).flat().join(' ');
