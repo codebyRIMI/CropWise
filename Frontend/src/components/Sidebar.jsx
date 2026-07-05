@@ -773,10 +773,10 @@ export default function Sidebar() {
             Soil Analysis
           </NavLink>
 
-          <NavLink to="/markets">
+          {/* <NavLink to="/markets">
             <BarChart2 size={20} />
             Markets
-          </NavLink>
+          </NavLink> */}
         </nav>
 
         {/* BOTTOM LINKS */}

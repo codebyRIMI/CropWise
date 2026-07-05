@@ -1,0 +1,532 @@
+.systemStatus {
+  margin-left: 270px;
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 30px;
+  transition: all .3s ease;
+
+  @media (max-width: 992px) {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+/* ===========================
+          Header
+=========================== */
+
+.statusHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #6b7280;
+    font-size: 15px;
+  }
+}
+
+.refreshBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: .3s;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+}
+
+/* ===========================
+        Summary Cards
+=========================== */
+
+.statusCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 20px;
+
+  @media(max-width:1100px){
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  @media(max-width:700px){
+    grid-template-columns:1fr;
+  }
+}
+
+.statusCard {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+  transition: .3s;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+  }
+
+  svg{
+    margin-bottom:5px;
+  }
+
+  span{
+    font-size:13px;
+    font-weight:700;
+    color:#6b7280;
+    letter-spacing:.5px;
+  }
+
+  h2{
+    font-size:42px;
+    font-weight:700;
+    color:#111827;
+  }
+
+  &.healthy{
+    background:#ecfdf5;
+    border-color:#86efac;
+
+    svg{
+      color:#22c55e;
+    }
+  }
+
+  &.degraded{
+    background:#fffbeb;
+    border-color:#facc15;
+
+    svg{
+      color:#eab308;
+    }
+  }
+
+  &.down{
+    background:#fef2f2;
+    border-color:#fca5a5;
+
+    svg{
+      color:#ef4444;
+    }
+  }
+}
+
+.statusCard.overall{
+
+  .progress{
+    width:100%;
+    height:8px;
+    background:#e5e7eb;
+    border-radius:50px;
+    margin-top:8px;
+    overflow:hidden;
+  }
+
+  .progressFill{
+    height:100%;
+    background:#111827;
+    border-radius:50px;
+  }
+}
+
+/* ===========================
+       Warning Banner
+=========================== */
+
+.warningBanner{
+  margin-bottom:25px;
+  background:#fffbeb;
+  border:1px solid #facc15;
+  border-radius:16px;
+  padding:18px 22px;
+
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+
+  svg{
+    color:#eab308;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+
+  h4{
+    font-size:17px;
+    color:#92400e;
+    margin-bottom:4px;
+  }
+
+  p{
+    color:#a16207;
+    line-height:1.6;
+    font-size:14px;
+  }
+}
+
+/* ===========================
+       Services Grid
+=========================== */
+
+.servicesGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+
+  @media(max-width:992px){
+    grid-template-columns:1fr;
+  }
+}
+
+.serviceCard{
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:20px;
+  transition:.3s;
+
+  &:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.07);
+  }
+
+  &.healthy{
+    border-left:5px solid #22c55e;
+  }
+
+  &.degraded{
+    border-left:5px solid #facc15;
+  }
+
+  &.down{
+    border-left:5px solid #ef4444;
+  }
+}
+
+.serviceHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+}
+
+.serviceInfo{
+  display:flex;
+  gap:15px;
+  flex:1;
+}
+
+.serviceIcon{
+  width:46px;
+  height:46px;
+  border-radius:12px;
+  background:#f3f4f6;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  svg{
+    color:#4b5563;
+  }
+}
+
+.serviceTitle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+
+  h3{
+    font-size:18px;
+    color:#111827;
+    margin:0;
+  }
+}
+
+.serviceInfo p{
+  margin-top:5px;
+  color:#6b7280;
+  font-size:14px;
+}
+/* =====================================
+          Status Badge
+===================================== */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &.healthy {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  &.degraded {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  &.down {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+}
+
+/* =====================================
+         Status Icon
+===================================== */
+
+.statusIcon {
+  flex-shrink: 0;
+
+  &.healthy {
+    color: #22c55e;
+  }
+
+  &.degraded {
+    color: #f59e0b;
+  }
+
+  &.down {
+    color: #ef4444;
+  }
+}
+
+/* =====================================
+          Service Stats
+===================================== */
+
+.serviceStats {
+  margin-top: 18px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  span {
+    font-size: 13px;
+    color: #6b7280;
+
+    strong {
+      color: #111827;
+      font-weight: 700;
+      margin-right: 3px;
+    }
+  }
+}
+
+/* =====================================
+        Progress Bar
+===================================== */
+
+.serviceProgress {
+  width: 100%;
+  height: 7px;
+  background: #e5e7eb;
+  border-radius: 50px;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width .8s ease;
+
+  &.healthy {
+    background: #22c55e;
+  }
+
+  &.degraded {
+    background: #f59e0b;
+  }
+
+  &.down {
+    background: #ef4444;
+  }
+}
+
+/* =====================================
+       Hover Animation
+===================================== */
+
+.serviceCard:hover {
+
+  .serviceIcon {
+    transform: rotate(8deg) scale(1.05);
+    transition: .35s;
+  }
+
+  .progressFill {
+    filter: brightness(1.08);
+  }
+
+  .statusBadge {
+    transform: scale(1.03);
+  }
+}
+
+/* =====================================
+       Responsive
+===================================== */
+
+@media (max-width: 992px) {
+
+  .statusHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .refreshBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .serviceHeader {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .statusIcon {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .systemStatus {
+    padding: 18px;
+  }
+
+  .statusHeader h1 {
+    font-size: 28px;
+  }
+
+  .statusCard h2 {
+    font-size: 34px;
+  }
+
+  .serviceInfo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .serviceIcon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .serviceTitle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .serviceStats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .warningBanner {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .systemStatus {
+    padding: 15px;
+  }
+
+  .statusCards {
+    gap: 15px;
+  }
+
+  .statusCard {
+    padding: 18px;
+  }
+
+  .serviceCard {
+    padding: 18px;
+  }
+
+  .refreshBtn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .serviceTitle h3 {
+    font-size: 16px;
+  }
+
+  .serviceInfo p {
+    font-size: 13px;
+  }
+
+  .serviceStats span {
+    font-size: 12px;
+  }
+}
+
+/* =====================================
+        Custom Scrollbar
+===================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =====================================
+       Smooth Animations
+===================================== */
+
+.statusCard,
+.serviceCard,
+.refreshBtn,
+.statusBadge,
+.serviceIcon,
+.progressFill {
+  transition: all 0.3s ease;
+}

@@ -1,0 +1,495 @@
+.feedback {
+  margin-left: 270px;
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 30px;
+  transition: all .3s ease;
+
+  @media (max-width: 992px) {
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+/* ===========================
+        Header
+=========================== */
+
+.feedbackHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+
+  h1 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+  }
+
+  p {
+    color: #6b7280;
+    font-size: 15px;
+  }
+}
+
+/* ===========================
+      Header Actions
+=========================== */
+
+.feedbackActions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* Search */
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 16px;
+  width: 320px;
+
+  svg {
+    color: #9ca3af;
+    margin-right: 10px;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background: transparent;
+    color: #374151;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+}
+
+/* Filter */
+
+.feedbackActions select {
+  height: 48px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  color: #374151;
+
+  &:focus {
+    border-color: #16a34a;
+  }
+}
+
+/* ===========================
+        Statistics
+=========================== */
+
+.feedbackStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
+
+  @media(max-width:1100px) {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  @media(max-width:650px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid #ececec;
+  box-shadow: 0 3px 12px rgba(0,0,0,.04);
+  transition: .3s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  }
+
+  h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #111827;
+  }
+
+  p {
+    color: #6b7280;
+    font-size: 15px;
+  }
+
+  .blue {
+    color: #2563eb;
+  }
+
+  .green {
+    color: #16a34a;
+  }
+
+  .red {
+    color: #dc2626;
+  }
+}
+
+/* ===========================
+      Feedback List
+=========================== */
+
+.feedbackList {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.feedbackCard {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid #ececec;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+  transition: .3s;
+  box-shadow: 0 3px 12px rgba(0,0,0,.03);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.08);
+  }
+}
+
+.feedbackLeft {
+  display: flex;
+  gap: 18px;
+  flex: 1;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.feedbackContent {
+  flex: 1;
+}
+
+.feedbackTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.userInfo {
+
+  h3 {
+    font-size: 19px;
+    color: #111827;
+    margin-bottom: 5px;
+  }
+
+  span {
+    color: #6b7280;
+    font-size: 14px;
+  }
+}
+/* ===========================
+          Badges
+=========================== */
+
+.badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ---------- Type ---------- */
+
+.type {
+  &.bug-report {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  &.feature-request {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+
+  &.general-feedback {
+    background: #dcfce7;
+    color: #15803d;
+  }
+}
+
+/* ---------- Priority ---------- */
+
+.priority {
+  &.critical {
+    background: #fecaca;
+    color: #991b1b;
+  }
+
+  &.high {
+    background: #ffedd5;
+    color: #ea580c;
+  }
+
+  &.medium {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  &.low {
+    background: #ecfccb;
+    color: #4d7c0f;
+  }
+}
+
+/* ---------- Status ---------- */
+
+.status {
+  &.open {
+    background: #dbeafe;
+    color: #2563eb;
+  }
+
+  &.resolved {
+    background: #dcfce7;
+    color: #15803d;
+  }
+}
+
+/* ===========================
+         Message
+=========================== */
+
+.message {
+  margin: 15px 0;
+  color: #4b5563;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ===========================
+           Date
+=========================== */
+
+.date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 14px;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* ===========================
+         Right Buttons
+=========================== */
+
+.feedbackButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+/* Resolve */
+
+.resolveBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+  }
+}
+
+/* Delete */
+
+.deleteBtn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #dc2626;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .3s;
+
+  &:hover {
+    background: #dc2626;
+    color: white;
+    transform: scale(1.05);
+  }
+}
+
+/* ===========================
+        Responsive
+=========================== */
+
+@media (max-width: 992px) {
+  .feedbackCard {
+    flex-direction: column;
+  }
+
+  .feedbackButtons {
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .feedbackHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feedbackActions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchBox {
+    width: 100%;
+  }
+
+  .feedbackActions select {
+    width: 100%;
+  }
+
+  .feedbackTop {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .badges {
+    gap: 8px;
+  }
+
+  .feedbackCard {
+    padding: 20px;
+  }
+
+  .feedbackLeft {
+    flex-direction: column;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .feedbackButtons {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback {
+    padding: 15px;
+  }
+
+  .feedbackHeader h1 {
+    font-size: 28px;
+  }
+
+  .statCard h2 {
+    font-size: 32px;
+  }
+
+  .resolveBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .feedbackButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .deleteBtn {
+    width: 100%;
+    height: 45px;
+  }
+}
+
+/* ===========================
+        Scrollbar
+=========================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
