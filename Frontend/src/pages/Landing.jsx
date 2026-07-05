@@ -203,6 +203,34 @@ const handleResetPassword = async (e) => {
 
       setError("Something went wrong");
 
+<<<<<<< HEAD
+=======
+      // store tokens
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
+
+      const user = res.data.user;
+
+      localStorage.setItem(
+          'user',
+          JSON.stringify(res.data.user)
+      );
+
+
+      if (user.is_staff) {
+        navigate('/admin-dashboard');
+      }
+      else {
+        navigate('/dashboard');
+      }
+    }catch (err) {
+      if (err.response?.data) {
+        const messages = Object.values(err.response.data).flat().join(' ');
+        setError(messages);
+      } else {
+        setError('Something went wrong');
+      }
+>>>>>>> 9cef9662131a9c6e4844844956d368a84da0225b
     }
   }
 };

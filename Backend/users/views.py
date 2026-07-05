@@ -21,6 +21,9 @@ from django.shortcuts import redirect
 from django.core.mail import EmailMultiAlternatives
 from django.utils.crypto import get_random_string
 
+
+from .permissions import IsStaffUser
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
@@ -195,36 +198,37 @@ class VerifyEmailView(APIView):
 #             })
 #         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-class LoginView(APIView):
-    def post(self, request):
 
+
+
+
+
+# class LoginView(APIView):
+#     def post(self, request):
+#         username = request.data.get('username')
+#         password = request.data.get('password')
+#         user = authenticate(username=username, password=password)
+#         if user:
+#             refresh = RefreshToken.for_user(user)
+#             return Response({
+#                 'refresh': str(refresh),
+#                 'access': str(refresh.access_token)
+#             })
+#         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LoginView(APIView):
+
+    def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
-
-        user = authenticate(
-            username=username,
-            password=password
-        )
-
+        user = authenticate(username=username, password=password)
         if user:
-
             refresh = RefreshToken.for_user(user)
-
             return Response({
                 'refresh': str(refresh),
-                'access': str(refresh.access_token),
-
-                'user': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email,
-                }
+                'access': str(refresh.access_token)
             })
-
-        return Response(
-            {'error': 'Invalid credentials'},
-            status=status.HTTP_401_UNAUTHORIZED
-        )
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutView(APIView):
     def post(self, request):

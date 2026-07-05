@@ -443,12 +443,21 @@ export default function Sidebar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+<<<<<<< HEAD
   const [user, setUser] = useState({
     id: "",
     username: "",
     email: "",
   });
 
+=======
+
+  // for getting 'user' data from local storage, so that we can display
+  // admin button in sidebar if user is admin
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  /* Close sidebar when route changes */
+>>>>>>> 9cef9662131a9c6e4844844956d368a84da0225b
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
@@ -586,10 +595,13 @@ export default function Sidebar() {
         </nav>
 
         <nav className="bottom-links">
-          <NavLink to="/admin-dashboard">
-            <User size={20} />
-            Admin Panel
-          </NavLink>
+
+          {user?.is_staff && ( 
+            <NavLink to="/admin-dashboard">
+              <User size={20} />
+              Admin Panel
+            </NavLink>
+          )}
 
           <NavLink to="/profile">
             <User size={20} />
