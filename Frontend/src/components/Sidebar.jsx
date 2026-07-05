@@ -420,9 +420,209 @@
 //   );
 // }
 
+// import { NavLink, useNavigate, useLocation } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import "../scss/sidebar.scss";
+// import {
+//   Home,
+//   Lightbulb,
+//   CloudSun,
+//   FlaskConical,
+//   User,
+//   Settings,
+//   LogOut,
+//   Menu,
+//   X,
+//   BarChart2,
+// } from "lucide-react";
+// import axios from "axios";
+
+// export default function Sidebar() {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const [menuOpen, setMenuOpen] = useState(false);
+
+//   const [user, setUser] = useState({
+//     id: "",
+//     username: "",
+//     email: "",
+//   });
+
+//   // for getting 'user' data from local storage, so that we can display
+//   // admin button in sidebar if user is admin
+//   const user = JSON.parse(localStorage.getItem("user"));
+
+//   /* Close sidebar when route changes */
+
+//   useEffect(() => {
+//     setMenuOpen(false);
+//   }, [location.pathname]);
+
+//   useEffect(() => {
+//     if (menuOpen) {
+//       document.body.style.overflow = "hidden";
+//     } else {
+//       document.body.style.overflow = "auto";
+//     }
+
+//     return () => {
+//       document.body.style.overflow = "auto";
+//     };
+//   }, [menuOpen]);
+
+//   // Load user whenever route changes
+//   useEffect(() => {
+//     const loadUser = () => {
+//       try {
+//         const storedUser = localStorage.getItem("user");
+
+//         if (storedUser) {
+//           setUser(JSON.parse(storedUser));
+//         } else {
+//           setUser({
+//             id: "",
+//             username: "",
+//             email: "",
+//           });
+//         }
+//       } catch (error) {
+//         console.error("User Parse Error:", error);
+//       }
+//     };
+
+//     loadUser();
+//   }, [location.pathname]);
+
+//   const handleLogout = async () => {
+//     setMenuOpen(false);
+
+//     try {
+//       await axios.post(
+//         "http://127.0.0.1:8000/api/auth/logout",
+//         {
+//           refresh: localStorage.getItem("refresh"),
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("access")}`,
+//           },
+//         }
+//       );
+//     } catch (error) {
+//       console.error("Logout failed:", error);
+//     } finally {
+//       localStorage.removeItem("access");
+//       localStorage.removeItem("refresh");
+//       localStorage.removeItem("user");
+
+//       navigate("/", { replace: true });
+//     }
+//   };
+
+//   const avatarLetter =
+//     user?.username?.charAt(0)?.toUpperCase() || "U";
+
+//   return (
+//     <>
+//       <button
+//         className="menu-toggle"
+//         onClick={() => setMenuOpen((prev) => !prev)}
+//       >
+//         {menuOpen ? <X size={24} /> : <Menu size={24} />}
+//       </button>
+
+//       {menuOpen && (
+//         <div
+//           className="sidebar-overlay"
+//           onClick={() => setMenuOpen(false)}
+//         />
+//       )}
+
+//       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
+//         <div className="top-section">
+//           <h2 className="logo">🌱 CropWise</h2>
+//           <p className="subtitle">Smart Agriculture</p>
+//         </div>
+
+//         <div className="user">
+//           <div className="avatar">{avatarLetter}</div>
+
+//           <div className="userinfo">
+//             <p className="name">
+//               {user.username || "Guest"}
+//             </p>
+
+//             <p className="email">
+//               {user.email || "No Email"}
+//             </p>
+//           </div>
+//         </div>
+
+//         <nav className="nav-links">
+//           <NavLink to="/dashboard">
+//             <Home size={20} />
+//             Dashboard
+//           </NavLink>
+
+//           <NavLink to="/recommendations">
+//             <Lightbulb size={20} />
+//             Recommendations
+//           </NavLink>
+
+//           <NavLink to="/farm-records">
+//             <BarChart2 size={20} />
+//             Farm Records
+//           </NavLink>
+
+//           <NavLink to="/weather">
+//             <CloudSun size={20} />
+//             Weather
+//           </NavLink>
+
+//           <NavLink to="/soil-analysis">
+//             <FlaskConical size={20} />
+//             Soil Analysis
+//           </NavLink>
+
+//           <NavLink to="/markets">
+//             <BarChart2 size={20} />
+//             Markets
+//           </NavLink>
+//         </nav>
+
+//         <nav className="bottom-links">
+
+//           {user?.is_staff && ( 
+//             <NavLink to="/admin-dashboard">
+//               <User size={20} />
+//               Admin Panel
+//             </NavLink>
+//           )}
+
+//           <NavLink to="/profile">
+//             <User size={20} />
+//             Profile
+//           </NavLink>
+
+//           <NavLink to="/settings">
+//             <Settings size={20} />
+//             Settings
+//           </NavLink>
+
+//           <div className="logout" onClick={handleLogout}>
+//             <LogOut size={20} />
+//             Logout
+//           </div>
+//         </nav>
+//       </aside>
+//     </>
+//   );
+// }
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../scss/sidebar.scss";
+
 import {
   Home,
   Lightbulb,
@@ -435,6 +635,7 @@ import {
   X,
   BarChart2,
 } from "lucide-react";
+
 import axios from "axios";
 
 export default function Sidebar() {
@@ -443,25 +644,17 @@ export default function Sidebar() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-<<<<<<< HEAD
-  const [user, setUser] = useState({
-    id: "",
-    username: "",
-    email: "",
-  });
-
-=======
 
   // for getting 'user' data from local storage, so that we can display
   // admin button in sidebar if user is admin
   const user = JSON.parse(localStorage.getItem("user"));
 
   /* Close sidebar when route changes */
->>>>>>> 9cef9662131a9c6e4844844956d368a84da0225b
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  /* Prevent background scroll */
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -473,29 +666,6 @@ export default function Sidebar() {
       document.body.style.overflow = "auto";
     };
   }, [menuOpen]);
-
-  // Load user whenever route changes
-  useEffect(() => {
-    const loadUser = () => {
-      try {
-        const storedUser = localStorage.getItem("user");
-
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        } else {
-          setUser({
-            id: "",
-            username: "",
-            email: "",
-          });
-        }
-      } catch (error) {
-        console.error("User Parse Error:", error);
-      }
-    };
-
-    loadUser();
-  }, [location.pathname]);
 
   const handleLogout = async () => {
     setMenuOpen(false);
@@ -517,23 +687,25 @@ export default function Sidebar() {
     } finally {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
-      localStorage.removeItem("user");
 
-      navigate("/", { replace: true });
+      navigate("/", {
+        replace: true,
+      });
     }
   };
 
-  const avatarLetter =
-    user?.username?.charAt(0)?.toUpperCase() || "U";
-
   return (
     <>
+      {/* MOBILE MENU BUTTON */}
+
       <button
         className="menu-toggle"
         onClick={() => setMenuOpen((prev) => !prev)}
       >
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
+
+      {/* OVERLAY */}
 
       {menuOpen && (
         <div
@@ -542,25 +714,38 @@ export default function Sidebar() {
         />
       )}
 
+      {/* SIDEBAR */}
+
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
+        {/* LOGO */}
+
         <div className="top-section">
           <h2 className="logo">🌱 CropWise</h2>
-          <p className="subtitle">Smart Agriculture</p>
+
+          <p className="subtitle">
+            Smart Agriculture
+          </p>
         </div>
 
+        {/* USER */}
+
         <div className="user">
-          <div className="avatar">{avatarLetter}</div>
+          <div className="avatar">
+            A
+          </div>
 
           <div className="userinfo">
             <p className="name">
-              {user.username || "Guest"}
+              Aritra
             </p>
 
             <p className="email">
-              {user.email || "No Email"}
+              a@gmail.com
             </p>
           </div>
         </div>
+
+        {/* NAVIGATION */}
 
         <nav className="nav-links">
           <NavLink to="/dashboard">
@@ -594,6 +779,8 @@ export default function Sidebar() {
           </NavLink>
         </nav>
 
+        {/* BOTTOM LINKS */}
+
         <nav className="bottom-links">
 
           {user?.is_staff && ( 
@@ -613,7 +800,10 @@ export default function Sidebar() {
             Settings
           </NavLink>
 
-          <div className="logout" onClick={handleLogout}>
+          <div
+            className="logout"
+            onClick={handleLogout}
+          >
             <LogOut size={20} />
             Logout
           </div>
