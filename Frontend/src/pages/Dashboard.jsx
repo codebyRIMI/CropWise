@@ -20,7 +20,6 @@ const Dashboard = () => {
           <Link to="/recommendations">
           <button className="primary-btn">Get Smart Recommendations</button>
           </Link>
-          
           <button className="secondary-btn">View Farm Analytics</button>
         </div>
       </header>
@@ -67,7 +66,7 @@ const Dashboard = () => {
               <li><b>Maize</b> – Monsoon Season</li>
               <li><b>Soybean</b> – Post-Monsoon</li>
             </ul>
-            <button className="link-btn">View All Recommendations</button>
+             <button className="link-btn">View All Recommendations</button>
           </div>
           <div className="activity-card">
             <h4>Performance Highlights</h4>
