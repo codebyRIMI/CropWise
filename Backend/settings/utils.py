@@ -1,4 +1,11 @@
-from .models import NotificationPreference, AnalyticsEvent, Notification
+from .models import (
+    NotificationPreference,
+    AnalyticsEvent,
+    Notification,
+    NotificationBatch,
+)
+
+
 from datetime import timedelta
 from django.utils import timezone
 import requests
@@ -64,7 +71,8 @@ def create_notification(
     user,
     notification_type,
     title,
-    message
+    message,
+    batch=None
 ):
     pref, _ = NotificationPreference.objects.get_or_create(
         user=user
@@ -110,10 +118,16 @@ def create_notification(
 
     notification = Notification.objects.create(
         user=user,
+        batch=batch,
         notification_type=notification_type,
         title=title,
-        message=message
+        message=message,
+        delivery_status="pending"
     )
+
+    if batch:
+        batch.sent_count += 1
+        batch.save(update_fields=["sent_count"])
 
     send_notification_ws(
         user,
@@ -125,102 +139,201 @@ def create_notification(
 
 
 
+def check_weather_alerts(current):
 
-def check_weather_alerts(user, city, current):
+    alerts = []
 
-    precipitation = current.get("precipitation_probability")
-    wind_speed = current.get("wind_speed")
-    weather_code = current.get("weather_code")
+    precipitation = current.get(
+        "precipitation_probability"
+    )
+
+    wind_speed = current.get(
+        "wind_speed"
+    )
+
+    weather_code = current.get(
+        "weather_code"
+    )
+
+    temperature = current.get(
+        "temperature"
+    )
+
 
     if precipitation and precipitation >= 70:
-        create_notification(
-            user,
-            "weather",
-            "Heavy Rain Alert",
-            f"Heavy rainfall is expected in {city}."
-        )
+
+        alerts.append({
+            "title": "Heavy Rain Alert",
+            "message":
+            "Heavy rainfall is expected.",
+        })
+
 
     if wind_speed and wind_speed >= 25:
-        create_notification(
-            user,
-            "weather",
-            "Strong Wind Alert",
-            f"Strong winds detected in {city}."
-        )
+
+        alerts.append({
+            "title": "Strong Wind Alert",
+            "message":
+            "Strong winds detected.",
+        })
+
 
     if weather_code in [8000, 8001]:
-        create_notification(
-            user,
-            "weather",
-            "Thunderstorm Alert",
-            f"Thunderstorm conditions detected in {city}."
-        )
 
-    if current["temperature"] >= 40:
-        create_notification(
-            user,
-            "weather",
-            "Heatwave Alert",
-            f"High temperatures detected in {city}."
-        )
-    
-    if current["temperature"] <= 5:
-        create_notification(
-            user,
-            "weather",
-            "Cold Wave Alert",
-            f"Low temperatures detected in {city}."
-        )
+        alerts.append({
+            "title": "Thunderstorm Alert",
+            "message":
+            "Thunderstorm conditions detected.",
+        })
 
+
+    if temperature is not None and temperature >= 40:
+
+        alerts.append({
+            "title": "Heatwave Alert",
+            "message":
+            "High temperatures detected.",
+        })
+
+
+    if temperature is not None and temperature <= 5:
+
+        alerts.append({
+            "title": "Cold Wave Alert",
+            "message":
+            "Low temperatures detected.",
+        })
+
+
+    return alerts
 
 
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
+from django.utils import timezone
+
 def send_notification_ws(
     user,
     notification
 ):
+
+    try:
+
+        channel_layer = get_channel_layer()
+
+        async_to_sync(
+            channel_layer.group_send
+        )(
+            f"user_{user.id}",
+            {
+                "type": "notification_message",
+                "data": {
+                    "id": notification.id,
+                    "title": notification.title,
+                    "message": notification.message,
+                    "notification_type": notification.notification_type,
+                    "created_at": notification.created_at.isoformat()
+                }
+            }
+        )
+
+        notification.delivery_status = "delivered"
+        notification.delivered_at = timezone.now()
+        notification.save(
+            update_fields=[
+                "delivery_status",
+                "delivered_at"
+            ]
+        )
+
+        if notification.batch:
+
+            batch = notification.batch
+
+            batch.delivered_count += 1
+
+            if (
+                batch.sent_count ==
+                batch.delivered_count +
+                batch.failed_count
+            ):
+                batch.status = "completed"
+
+            batch.save()
+
+    except Exception:
+
+        notification.delivery_status = "failed"
+
+        notification.save(
+            update_fields=["delivery_status"]
+        )
+
+        if notification.batch:
+
+            batch = notification.batch
+
+            batch.failed_count += 1
+
+            if (
+                batch.sent_count ==
+                batch.delivered_count +
+                batch.failed_count
+            ):
+                batch.status = "completed"
+
+            batch.save()
+
+
+
+
+def create_notification_batch(
+    users,
+    notification_type,
+    title,
+    message,
+    recipient="All Users"
+):
     
 
-    print("==========")
-    print("SEND_NOTIFICATION_WS CALLED")
-    print("USER:", user.username)
-    print("GROUP:", f"user_{user.id}")
-    print("TITLE:", notification.title)
+    six_hours_ago = timezone.now() - timedelta(hours=6)
 
+    batch = NotificationBatch.objects.filter(
+        title=title,
+        notification_type=notification_type,
+        recipient=recipient,
+        created_at__gte=six_hours_ago,
+    ).first()
 
-    channel_layer = (
-        get_channel_layer()
+    if batch:
+
+        for user in users:
+
+            create_notification(
+                user=user,
+                notification_type=notification_type,
+                title=title,
+                message=message,
+                batch=batch,
+            )
+
+        return batch
+
+    batch = NotificationBatch.objects.create(
+        title=title,
+        notification_type=notification_type,
+        recipient=recipient,
     )
 
-    print("CHANNEL_LAYER:", channel_layer)
 
-    async_to_sync(
-        channel_layer.group_send
-    )(
-        f"user_{user.id}",
-        {
-            "type":
-            "notification_message",
+    for user in users:
 
-            "data": {
-                "id":
-                notification.id,
+        create_notification(
+            user=user,
+            notification_type=notification_type,
+            title=title,
+            message=message,
+            batch=batch
+        )
 
-                "title":
-                notification.title,
-
-                "message":
-                notification.message,
-
-                "notification_type":
-                notification.notification_type,
-
-                "created_at":
-                notification.created_at.isoformat()
-            }
-        }
-    )
-
-    print("GROUP_SEND COMPLETE")
-    print("==========")
+    return batch

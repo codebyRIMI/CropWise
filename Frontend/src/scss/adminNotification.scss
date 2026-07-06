@@ -286,6 +286,16 @@
   }
 }
 
+.empty-history{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:180px;
+    font-size:15px;
+    font-weight:500;
+    color:#6b7280;
+}
+
 .type {
   font-weight: 600;
 }
@@ -302,6 +312,8 @@
 .failed {
   color: #dc2626;
   font-weight: 700;
+  background:#fee2e2;
+    
 }
 
 .status-badge {
