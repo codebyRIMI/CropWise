@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { settingsAPI } from "../api/settingsAPI";
 import toast from "react-hot-toast";
 import { useTheme } from "../context/ThemeContext";
+import { useTranslation } from "react-i18next"; // for language translation
 export default function Settings() {
 
   const [activeTab, setActiveTab] = useState("notifications");
@@ -20,7 +21,7 @@ export default function Settings() {
   location_access: false,
   share_analytics: false,
 });
-
+const {t , i18n} = useTranslation();
 const { toggleTheme } = useTheme();
 //preferences default
 const [preferences, setPreferences] = useState({
@@ -37,15 +38,62 @@ useEffect(() => {
   loadPreferences();
 }, []);
 
+// const loadPreferences = async () => {
+//   try {
+//     const res = await settingsAPI.getPreferences();
+//     setPreferences(res.data);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+// const handlePreferenceChange = async (e) => {
+//   const { name, value } = e.target;
+
+//   const updated = {
+//     ...preferences,
+//     [name]: value,
+//   };
+
+//   setPreferences(updated);
+
+//   // change theme instantly
+//   if (name === "theme") {
+//     toggleTheme(value);
+//   }
+
+//   try {
+//     await settingsAPI.updatePreferences(updated);
+//     toast.success("Updated");
+//   } catch {
+//     toast.error("Update failed");
+//   }
+// };
+
+
+
+// location permission status
+
 const loadPreferences = async () => {
   try {
     const res = await settingsAPI.getPreferences();
+
     setPreferences(res.data);
+
+    // Apply saved theme
+    if (res.data.theme) {
+      toggleTheme(res.data.theme);
+    }
+
+    // Apply saved language
+    if (res.data.language) {
+      i18n.changeLanguage(res.data.language);
+      localStorage.setItem("language", res.data.language);
+    }
   } catch (err) {
     console.log(err);
   }
 };
-
 const handlePreferenceChange = async (e) => {
   const { name, value } = e.target;
 
@@ -56,9 +104,13 @@ const handlePreferenceChange = async (e) => {
 
   setPreferences(updated);
 
-  // change theme instantly
   if (name === "theme") {
     toggleTheme(value);
+  }
+
+  if (name === "language") {
+    i18n.changeLanguage(value);
+    localStorage.setItem("language", value);
   }
 
   try {
@@ -69,9 +121,6 @@ const handlePreferenceChange = async (e) => {
   }
 };
 
-
-
-// location permission status
 useEffect(() => {
   if (!navigator.permissions) return;
 

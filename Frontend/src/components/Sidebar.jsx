@@ -240,7 +240,7 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useTranslation } from "react-i18next";
 import "../scss/sidebar.scss";
 
 import {
@@ -257,6 +257,7 @@ import {
 } from "lucide-react";
 
 export default function Sidebar() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -383,11 +384,11 @@ export default function Sidebar() {
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
         {/* Logo */}
 
+       
         <div className="top-section">
-          <h2 className="logo">🌱 CropWise</h2>
-          <p className="subtitle">Smart Agriculture</p>
-        </div>
-
+  <h2 className="logo">🌱 {t("cropwise")}</h2>
+  <p className="subtitle">{t("smart_agriculture")}</p>
+</div>
         {/* User */}
 
         <div className="user">
@@ -410,76 +411,70 @@ export default function Sidebar() {
 
           <div className="userinfo">
             <p className="name">
-              {`${user?.first_name || ""} ${
-                user?.last_name || ""
-              }`.trim() ||
-                user?.username ||
-                "Guest"}
-            </p>
+  {`${user?.first_name || ""} ${user?.last_name || ""}`.trim() ||
+    user?.username ||
+    t("guest")}
+</p>
 
-            <p className="email">
-              {user?.email || "No Email"}
-            </p>
+<p className="email">
+  {user?.email || t("no_email")}
+</p>
           </div>
         </div>
 
         {/* Navigation */}
 
         <nav className="nav-links">
-          <NavLink to="/dashboard">
-            <Home size={20} />
-            <span>Dashboard</span>
-          </NavLink>
+  <NavLink to="/dashboard">
+    <Home size={20} />
+    <span>{t("dashboard")}</span>
+  </NavLink>
 
-          <NavLink to="/recommendations">
-            <Lightbulb size={20} />
-            <span>Recommendations</span>
-          </NavLink>
+  <NavLink to="/recommendations">
+    <Lightbulb size={20} />
+    <span>{t("recommendations")}</span>
+  </NavLink>
 
-          <NavLink to="/farm-records">
-            <BarChart2 size={20} />
-            <span>Farm Records</span>
-          </NavLink>
+  <NavLink to="/farm-records">
+    <BarChart2 size={20} />
+    <span>{t("farm_records")}</span>
+  </NavLink>
 
-          <NavLink to="/weather">
-            <CloudSun size={20} />
-            <span>Weather</span>
-          </NavLink>
+  <NavLink to="/weather">
+    <CloudSun size={20} />
+    <span>{t("weather")}</span>
+  </NavLink>
 
-          <NavLink to="/soil-analysis">
-            <FlaskConical size={20} />
-            <span>Soil Analysis</span>
-          </NavLink>
-        </nav>
-
+  <NavLink to="/soil-analysis">
+    <FlaskConical size={20} />
+    <span>{t("soil_analysis")}</span>
+  </NavLink>
+</nav>
         {/* Bottom */}
 
-        <nav className="bottom-links">
-          {user?.is_staff && (
-            <NavLink to="/admin-dashboard">
-              <User size={20} />
-              <span>Admin Panel</span>
-            </NavLink>
-          )}
+      <nav className="bottom-links">
+  {user?.is_staff && (
+    <NavLink to="/admin-dashboard">
+      <User size={20} />
+      <span>{t("admin_panel")}</span>
+    </NavLink>
+  )}
 
-          <NavLink to="/profile">
-            <User size={20} />
-            <span>Profile</span>
-          </NavLink>
+  <NavLink to="/profile">
+    <User size={20} />
+    <span>{t("profile")}</span>
+  </NavLink>
 
-          <NavLink to="/settings">
-            <Settings size={20} />
-            <span>Settings</span>
-          </NavLink>
+  <NavLink to="/settings">
+    <Settings size={20} />
+    <span>{t("settings")}</span>
+  </NavLink>
 
-          <div
-            className="logout"
-            onClick={handleLogout}
-          >
-            <LogOut size={20} />
-            <span>Logout</span>
-          </div>
-        </nav>
+  <div className="logout" onClick={handleLogout}>
+    <LogOut size={20} />
+    <span>{t("logout")}</span>
+  </div>
+</nav>
       </aside>
     </>
   );

@@ -1,0 +1,37 @@
+{
+  "cropwise": "CropWise",
+  "smart_agriculture": "Smart Agriculture",
+
+  "welcome": "Welcome",
+  "dashboard": "Dashboard",
+  "recommendations": "Recommendations",
+  "farm_records": "Farm Records",
+  "weather": "Weather",
+  "soil_analysis": "Soil Analysis",
+
+  "admin_panel": "Admin Panel",
+  "profile": "Profile",
+  "settings": "Settings",
+  "logout": "Logout",
+
+  "guest": "Guest",
+  "no_email": "No Email",
+
+  "menu": "Menu",
+  "close": "Close",
+
+  "loading": "Loading...",
+  "error": "Something went wrong",
+
+  "notification": "Notification",
+  "notifications": "Notifications",
+
+  "analytics": "Analytics",
+  "prediction": "Crop Prediction",
+
+  "language": "Language",
+  "theme": "Theme",
+
+  "light": "Light",
+  "dark": "Dark"
+}

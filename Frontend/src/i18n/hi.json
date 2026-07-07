@@ -1,0 +1,37 @@
+{
+  "cropwise": "क्रॉपवाइज़",
+  "smart_agriculture": "स्मार्ट कृषि",
+
+  "welcome": "स्वागत है",
+  "dashboard": "डैशबोर्ड",
+  "recommendations": "सिफारिशें",
+  "farm_records": "फार्म रिकॉर्ड",
+  "weather": "मौसम",
+  "soil_analysis": "मृदा विश्लेषण",
+
+  "admin_panel": "एडमिन पैनल",
+  "profile": "प्रोफ़ाइल",
+  "settings": "सेटिंग्स",
+  "logout": "लॉग आउट",
+
+  "guest": "अतिथि",
+  "no_email": "कोई ईमेल नहीं",
+
+  "menu": "मेनू",
+  "close": "बंद करें",
+
+  "loading": "लोड हो रहा है...",
+  "error": "कुछ गलत हो गया",
+
+  "notification": "सूचना",
+  "notifications": "सूचनाएँ",
+
+  "analytics": "एनालिटिक्स",
+  "prediction": "फसल भविष्यवाणी",
+
+  "language": "भाषा",
+  "theme": "थीम",
+
+  "light": "लाइट",
+  "dark": "डार्क"
+}

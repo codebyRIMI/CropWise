@@ -1,0 +1,37 @@
+{
+  "cropwise": "ক্রপওয়াইজ",
+  "smart_agriculture": "স্মার্ট কৃষি",
+
+  "welcome": "স্বাগতম",
+  "dashboard": "ড্যাশবোর্ড",
+  "recommendations": "সুপারিশ",
+  "farm_records": "খামারের রেকর্ড",
+  "weather": "আবহাওয়া",
+  "soil_analysis": "মাটি বিশ্লেষণ",
+
+  "admin_panel": "অ্যাডমিন প্যানেল",
+  "profile": "প্রোফাইল",
+  "settings": "সেটিংস",
+  "logout": "লগ আউট",
+
+  "guest": "অতিথি",
+  "no_email": "কোনো ইমেইল নেই",
+
+  "menu": "মেনু",
+  "close": "বন্ধ করুন",
+
+  "loading": "লোড হচ্ছে...",
+  "error": "কিছু ভুল হয়েছে",
+
+  "notification": "বিজ্ঞপ্তি",
+  "notifications": "বিজ্ঞপ্তিসমূহ",
+
+  "analytics": "অ্যানালিটিক্স",
+  "prediction": "ফসল পূর্বাভাস",
+
+  "language": "ভাষা",
+  "theme": "থিম",
+
+  "light": "লাইট",
+  "dark": "ডার্ক"
+}
