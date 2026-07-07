@@ -1,4 +1,9 @@
-import React from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
+
 import AdminSidebar from "../components/AdminSidebar";
 import "../scss/adminNotification.scss";
 
@@ -21,42 +26,16 @@ import {
   FiSearch,
   FiCheckCircle,
   FiClock,
+  FiXCircle,
 } from "react-icons/fi";
 
-const notificationData = [
-  { name: "Weather Alerts", value: 42 },
-  { name: "Market Updates", value: 27 },
-  { name: "Crop Recommendations", value: 24 },
-  { name: "System Messages", value: 7 },
-];
 
-const deliveryData = [
-  {
-    batch: "Weather",
-    delivered: 1200,
-    failed: 50,
-  },
-  {
-    batch: "Market",
-    delivered: 850,
-    failed: 25,
-  },
-  {
-    batch: "Crop",
-    delivered: 700,
-    failed: 15,
-  },
-  {
-    batch: "System",
-    delivered: 600,
-    failed: 12,
-  },
-  {
-    batch: "General",
-    delivered: 280,
-    failed: 103,
-  },
-];
+import {
+  getDashboard,
+  searchNotificationHistory,
+} from "../api/adminNotificationApi";
+
+
 
 const COLORS = [
   "#2563eb",
@@ -66,81 +45,6 @@ const COLORS = [
 ];
 
 
-
-
-const notificationHistory = [
-  {
-    id: 1,
-    type: "Weather Alert",
-    recipient: "All Users",
-    sent: 1240,
-    delivered: 1198,
-    failed: 42,
-    rate: "97%",
-    timestamp: "2026-06-14 08:30",
-    status: "completed",
-  },
-  {
-    id: 2,
-    type: "Market Update",
-    recipient: "Active Users",
-    sent: 890,
-    delivered: 872,
-    failed: 18,
-    rate: "98%",
-    timestamp: "2026-06-13 14:00",
-    status: "completed",
-  },
-  {
-    id: 3,
-    type: "Crop Recommendation",
-    recipient: "Nueva Ecija",
-    sent: 145,
-    delivered: 140,
-    failed: 5,
-    rate: "97%",
-    timestamp: "2026-06-13 09:15",
-    status: "completed",
-  },
-  {
-    id: 4,
-    type: "System Maintenance",
-    recipient: "All Users",
-    sent: 1240,
-    delivered: 1105,
-    failed: 135,
-    rate: "89%",
-    timestamp: "2026-06-12 18:00",
-    status: "completed",
-  },
-  {
-    id: 5,
-    type: "Weather Alert",
-    recipient: "Davao Region",
-    sent: 320,
-    delivered: 315,
-    failed: 5,
-    rate: "98%",
-    timestamp: "2026-06-12 06:45",
-    status: "completed",
-  },
-  {
-    id: 6,
-    type: "Planting Season Alert",
-    recipient: "All Farmers",
-    sent: 1240,
-    delivered: 0,
-    failed: 0,
-    rate: "0%",
-    timestamp: "2026-06-14 10:00",
-    status: "sending",
-  },
-];
-
-
-
-
-
 const renderLegend = (props) => {
   const { payload } = props;
 
@@ -148,15 +52,21 @@ const renderLegend = (props) => {
     <ul className="custom-legend">
       {payload.map((entry, index) => (
         <li
-          key={index}
+          key={entry.value}
           style={{
-            color: COLORS[index],
+            color:
+              COLORS[
+                index % COLORS.length
+              ],
           }}
         >
           <span
             className="legend-dot"
             style={{
-              backgroundColor: COLORS[index],
+              backgroundColor:
+                COLORS[
+                  index % COLORS.length
+                ],
             }}
           />
           {entry.value}
@@ -171,7 +81,7 @@ const renderBarLegend = ({ payload }) => (
   <ul className="bar-legend">
     {payload.map((entry, index) => (
       <li
-        key={index}
+        key={entry.value}
         style={{
           color: entry.color,
         }}
@@ -191,12 +101,140 @@ const renderBarLegend = ({ payload }) => (
 
 
 const AdminNotification = () => {
-  const totalSent = 5075;
-  const delivered = 3630;
-  const failed = 205;
-  const deliveryRate = Math.round(
-    (delivered / totalSent) * 100
+
+  const [loading,setLoading] = useState(true);
+  const [error,setError] = useState("");
+  const [notificationData,setNotificationData] = useState([]);
+  const [deliveryData,setDeliveryData] = useState([]);
+  const [notificationHistory,setNotificationHistory] = useState([]);
+
+  const [summary,setSummary] = useState({
+    total_sent: 0,
+    delivered: 0,
+    failed: 0,
+    delivery_rate: 0,
+  });
+
+
+  const [search,setSearch] = useState("");
+
+  const loadDashboard =
+    async () => {
+      try {
+        setLoading(true);
+
+        const res =
+          await getDashboard();
+
+        setSummary(
+          res.data.summary
+        );
+
+        setNotificationData(
+          res.data.types
+        );
+
+        setDeliveryData(
+          res.data.delivery
+        );
+
+        setNotificationHistory(
+          res.data.history
+        );
+      }
+      catch (err) {
+        console.log(err);
+        setError(
+          "Unable to load notification dashboard."
+        );
+      }
+      finally {
+        setLoading(false);
+      }
+
+    };
+
+
+
+useEffect(() => {
+  loadDashboard();
+}, []);
+
+
+
+useEffect(() => {
+  const timeout = setTimeout(
+      async () => {
+        try {
+          if (
+            search.trim() === ""
+          ) {
+            loadDashboard();
+            return;
+          }
+          const res =
+            await searchNotificationHistory(
+              search
+            );
+          setNotificationHistory(
+            res.data
+          );
+        }
+        catch (err) {
+          console.log(err);
+        }
+      },
+      500
+    );
+  return () =>
+    clearTimeout(timeout);
+}, [search]);
+
+
+
+
+
+if (loading) {
+  return (
+    <div
+      className="admin-notification-page"
+    >
+      <AdminSidebar />
+      <main
+        className="notification-content"
+      >
+        <h2>
+          Loading...
+        </h2>
+      </main>
+    </div>
   );
+}
+
+
+
+
+
+if (error) {
+  return (
+    <div
+      className="admin-notification-page"
+    >
+      <AdminSidebar />
+      <main
+        className="notification-content"
+      >
+        <h2>
+          {error}
+        </h2>
+      </main>
+    </div>
+  );
+
+}
+
+
+
 
   return (
     <div className="admin-notification-page">
@@ -216,27 +254,29 @@ const AdminNotification = () => {
         <div className="stats-grid">
           <div className="stat-card">
             <span>TOTAL SENT</span>
-            <h2>{totalSent.toLocaleString()}</h2>
+            <h2>
+              {(summary.total_sent ?? 0).toLocaleString()}
+            </h2>
           </div>
 
           <div className="stat-card">
             <span>DELIVERED</span>
             <h2 className="success">
-              {delivered.toLocaleString()}
+              {(summary.delivered ?? 0).toLocaleString()}
             </h2>
           </div>
 
           <div className="stat-card">
             <span>FAILED</span>
             <h2 className="danger">
-              {failed.toLocaleString()}
+              {(summary.failed ?? 0).toLocaleString()}
             </h2>
           </div>
 
           <div className="stat-card">
             <span>DELIVERY RATE</span>
             <h2 className="primary">
-              {deliveryRate}%
+              {(summary.delivery_rate ?? 0).toLocaleString()}%
             </h2>
           </div>
         </div>
@@ -252,10 +292,13 @@ const AdminNotification = () => {
               <h3>Notifications by Type</h3>
             </div>
 
-            <ResponsiveContainer
-              width="100%"
-              height={350}
-            >
+            {
+              notificationData.length > 0 ? (
+
+              <ResponsiveContainer
+                  width="100%"
+                  height={350}
+              >
               <PieChart>
                 <Pie
                   data={notificationData}
@@ -267,14 +310,18 @@ const AdminNotification = () => {
                   paddingAngle={2}
                   strokeWidth={0}
                 >
-                  {notificationData.map(
-                    (entry, index) => (
-                      <Cell
-                        key={index}
-                        fill={COLORS[index]}
-                      />
-                    )
-                  )}
+                 {notificationData.map(
+                  (entry, index) => (
+                    <Cell
+                      key={entry.name}
+                      fill={
+                        COLORS[
+                          index % COLORS.length
+                        ]
+                      }
+                    />
+                  )
+                )}
                 </Pie>
 
                 <Tooltip />
@@ -293,6 +340,12 @@ const AdminNotification = () => {
                 />
               </PieChart>
             </ResponsiveContainer>
+            ) : (
+              <div className="empty-chart">
+                No notification data available.
+              </div>
+              )
+            }
           </div>
 
           {/* Bar Chart */}
@@ -303,6 +356,8 @@ const AdminNotification = () => {
                 Delivery Performance by Batch
               </h3>
             </div>
+          {
+              deliveryData.length > 0 ? (
 
             <ResponsiveContainer
               width="100%"
@@ -363,99 +418,130 @@ const AdminNotification = () => {
                 />
 
                 <Bar
+                  name="Delivered"
                   dataKey="delivered"
                   fill="#10b981"
                   radius={[6, 6, 0, 0]}
                 />
 
                 <Bar
+                  name="Failed"
                   dataKey="failed"
                   fill="#ef4444"
                   radius={[6, 6, 0, 0]}
                 />
               </BarChart>
             </ResponsiveContainer>
+
+            ) : (
+            <div className="empty-chart">
+              No delivery data available.
+            </div>
+            )
+          }
           </div>
         </div>
 
 
-        {/* notifivation history */}
+        {/* Notification History */}
         <div className="history-cardd">
           <div className="history-header">
             <h3>Notification History</h3>
 
             <div className="search-box">
               <FiSearch />
+
               <input
                 type="text"
                 placeholder="Search notifications..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
               />
             </div>
           </div>
 
           <div className="history-table-wrapper">
-            <table className="history-table">
-              <thead>
-                <tr>
-                  <th>TYPE</th>
-                  <th>RECIPIENT</th>
-                  <th>SENT</th>
-                  <th>DELIVERED</th>
-                  <th>FAILED</th>
-                  <th>RATE</th>
-                  <th>TIMESTAMP</th>
-                  <th>STATUS</th>
-                </tr>
-              </thead>
 
-              <tbody>
-                {notificationHistory.map((item) => (
-                  <tr key={item.id}>
-                    <td className="type">
-                      {item.type}
-                    </td>
+            {notificationHistory.length > 0 ? (
 
-                    <td>{item.recipient}</td>
-
-                    <td>
-                      {item.sent.toLocaleString()}
-                    </td>
-
-                    <td className="delivered">
-                      {item.delivered.toLocaleString()}
-                    </td>
-
-                    <td className="failed">
-                      {item.failed.toLocaleString()}
-                    </td>
-
-                    <td>{item.rate}</td>
-
-                    <td className="timestamp">
-                      {item.timestamp}
-                    </td>
-
-                    <td>
-                      <span
-                        className={`status-badge ${item.status}`}
-                      >
-                        {item.status === "completed" ? (
-                          <>
-                            <FiCheckCircle />
-                            Completed
-                          </>
-                        ) : (
-                          <>
-                            <FiClock />
-                            Sending...
-                          </>
-                        )}
-                      </span>
-                    </td>
+              <table className="history-table">
+                <thead>
+                  <tr>
+                    <th>TYPE</th>
+                    <th>RECIPIENT</th>
+                    <th>SENT</th>
+                    <th>DELIVERED</th>
+                    <th>FAILED</th>
+                    <th>RATE</th>
+                    <th>TIMESTAMP</th>
+                    <th>STATUS</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {notificationHistory.map((item) => (
+                    <tr key={item.id}>
+                      <td className="type">
+                        {item.type}
+                      </td>
+
+                      <td>
+                        {item.recipient}
+                      </td>
+
+                      <td>
+                        {(item.sent ?? 0).toLocaleString()}
+                      </td>
+
+                      <td className="delivered">
+                        {(item.delivered ?? 0).toLocaleString()}
+                      </td>
+
+                      <td className="failed">
+                        {(item.failed ?? 0).toLocaleString()}
+                      </td>
+
+                      <td>
+                        {item.rate}
+                      </td>
+
+                      <td className="timestamp">
+                        {item.timestamp}
+                      </td>
+
+                      <td>
+                        <span
+                          className={`status-badge ${item.status}`}
+                        >
+                          {item.status === "completed" ? (
+                            <>
+                              <FiCheckCircle />
+                              Completed
+                            </>
+                          ) : item.status === "failed" ? (
+                            <>
+                              <FiXCircle />
+                              Failed
+                            </>
+                          ) : (
+                            <>
+                              <FiClock />
+                              Sending...
+                            </>
+                          )}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="empty-history">
+                No notification history found.
+              </div>
+            )}
           </div>
         </div>
 

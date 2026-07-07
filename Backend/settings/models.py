@@ -33,6 +33,55 @@ class NotificationPreference(models.Model):
         return f"{self.user.username} settings"
 
 # notifications section =========
+class NotificationBatch(models.Model):
+
+    STATUS_CHOICES = [
+        ("sending", "Sending"),
+        ("completed", "Completed"),
+        ("failed", "Failed"),
+    ]
+
+    NOTIFICATION_TYPES = [
+        ("weather", "Weather"),
+        ("market", "Market"),
+        ("system", "System"),
+    ]
+
+    title = models.CharField(max_length=100)
+
+    notification_type = models.CharField(
+        max_length=20,
+        choices=NOTIFICATION_TYPES
+    )
+
+    recipient = models.CharField(
+        max_length=100,
+        default="All Users"
+    )
+
+    sent_count = models.PositiveIntegerField(default=0)
+
+    delivered_count = models.PositiveIntegerField(default=0)
+
+    failed_count = models.PositiveIntegerField(default=0)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="sending"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
 # schema of notifications for weather , system knowledge updates and market prices
 class Notification(models.Model):
     NOTIFICATION_TYPES = [
@@ -41,9 +90,23 @@ class Notification(models.Model):
         ("system", "System"),
     ]
 
+    DELIVERY_STATUS = [
+        ("pending", "Pending"),
+        ("delivered", "Delivered"),
+        ("failed", "Failed"),
+    ]
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        related_name="notifications"
+    )
+
+    batch = models.ForeignKey(
+        NotificationBatch,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
         related_name="notifications"
     )
 
@@ -57,10 +120,26 @@ class Notification(models.Model):
 
     is_read = models.BooleanField(default=False)
 
+    delivery_status = models.CharField(
+        max_length=20,
+        choices=DELIVERY_STATUS,
+        default="pending"
+    )
+
+    delivered_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+
+
+
+
 
 #  privacy section ===========
 # schema of user location

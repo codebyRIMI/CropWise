@@ -1,0 +1,151 @@
+import axios from "axios";
+
+const API = axios.create({
+  baseURL:
+    "http://127.0.0.1:8000/api/admin/notifications/",
+});
+
+
+
+// REQUEST INTERCEPTOR
+
+API.interceptors.request.use((config) => {
+
+  const token =
+    localStorage.getItem("access");
+
+  if (token) {
+
+    config.headers.Authorization =
+      `Bearer ${token}`;
+
+  }
+
+  return config;
+
+});
+
+
+
+// RESPONSE INTERCEPTOR
+
+API.interceptors.response.use(
+
+  (response) => response,
+
+  async (error) => {
+
+    const originalRequest =
+      error.config;
+
+    if (
+
+      error.response?.status === 401 &&
+
+      !originalRequest._retry
+
+    ) {
+
+      originalRequest._retry = true;
+
+      try {
+
+        const refresh =
+          localStorage.getItem(
+            "refresh"
+          );
+
+        if (!refresh) {
+
+          throw new Error(
+            "No refresh token found"
+          );
+
+        }
+
+        const res = await axios.post(
+
+          "http://127.0.0.1:8000/api/token/refresh/",
+
+          {
+            refresh,
+          }
+
+        );
+
+        const newAccess =
+          res.data.access;
+
+        localStorage.setItem(
+
+          "access",
+
+          newAccess
+
+        );
+
+        originalRequest.headers.Authorization =
+          `Bearer ${newAccess}`;
+
+        return API(
+          originalRequest
+        );
+
+      } catch (err) {
+
+        localStorage.removeItem(
+          "access"
+        );
+
+        localStorage.removeItem(
+          "refresh"
+        );
+
+        window.location.href =
+          "/login";
+
+        return Promise.reject(err);
+
+      }
+
+    }
+
+    return Promise.reject(error);
+
+  }
+
+);
+
+
+
+// DASHBOARD
+
+export const getDashboard = () =>
+  API.get("dashboard/");
+
+
+
+// HISTORY
+
+export const getNotificationHistory = () =>
+  API.get("history/");
+
+
+
+export const searchNotificationHistory = (
+  search
+) =>
+  API.get(
+    "history/",
+    {
+      params: {
+        search,
+      },
+    }
+  );
+
+
+
+// DEFAULT EXPORT
+
+export default API;
