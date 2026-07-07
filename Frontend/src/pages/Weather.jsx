@@ -317,6 +317,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../scss/weather.scss";
 import Sidebar from "../components/Sidebar";
+import { useTranslation } from "react-i18next";
 import {
   Cloud,
   Sun,
@@ -349,7 +350,7 @@ const WeatherDashboard = () => {
   const [query, setQuery] = useState("");
 
 const [testMode, setTestMode] = useState(null); 
-
+const { t } = useTranslation();
 
     const fetchWeather = async () => {
       setLoading(true);
@@ -565,13 +566,13 @@ if (loading)
     
         {/* HEADER */}
         <header className="weather-header">
-          <h2>Weather Dashboard</h2>
-          <p>Real-time weather data and forecasts for informed farming decisions</p>
+          <h2>{t("weather_dashboard")}</h2>
+          <p>{t("weather_dashboard_desc")}</p>
 
            <div className="location-search">
             <input
               type="text"
-              placeholder="Search city..."
+             placeholder={t("search_city")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyPress}
@@ -582,24 +583,44 @@ if (loading)
           <div className="city-name">
             <h4>
             {
-              city
-              ? `Showing results for ${city}`
-              : "Showing weather for your current location"
+                  city
+    ? t("showing_results_for", { city })
+    : t("showing_current_location")
             }
             </h4>
           </div>
         </header>
 
 
-        <div style={{ margin: "1rem 0" }}>
-          <button onClick={() => setTestMode("clear")}>Clear</button>
-          <button onClick={() => setTestMode("cloudy")}>Cloudy</button>
-          <button onClick={() => setTestMode("rain")}>Rain</button>
-          <button onClick={() => setTestMode("snow")}>Snow</button>
-          <button onClick={() => setTestMode("thunderstorm")}>Storm</button>
-          <button onClick={() => setTestMode("sunny")}>Sunny</button>
-          <button onClick={() => setTestMode(null)}>Real Data</button>
-        </div>
+      <div style={{ margin: "1rem 0" }}>
+  <button onClick={() => setTestMode("clear")}>
+    {t("test_clear")}
+  </button>
+
+  <button onClick={() => setTestMode("cloudy")}>
+    {t("test_cloudy")}
+  </button>
+
+  <button onClick={() => setTestMode("rain")}>
+    {t("test_rain")}
+  </button>
+
+  <button onClick={() => setTestMode("snow")}>
+    {t("test_snow")}
+  </button>
+
+  <button onClick={() => setTestMode("thunderstorm")}>
+    {t("test_storm")}
+  </button>
+
+  <button onClick={() => setTestMode("sunny")}>
+    {t("test_sunny")}
+  </button>
+
+  <button onClick={() => setTestMode(null)}>
+    {t("real_data")}
+  </button>
+</div>
 
 
 
@@ -629,31 +650,31 @@ if (loading)
         </section>
 
        <section className="current-weather">
-        <h2>Current Conditions</h2>
+        <h2>{t("current_conditions")}</h2>
 
         <div className="metrics">
           <div className="metric-card">
             <Thermometer />
             <h3>{current.temperature}°C</h3>
-            <p>Temperature</p>
+            <p>{t("temperature_label")}</p>
           </div>
 
           <div className="metric-card">
             <Droplet />
             <h3>{current.humidity}%</h3>
-            <p>Humidity</p>
+            <p>{t("humidity_label")}</p>
           </div>
 
           <div className="metric-card">
             <Wind />
             <h3>{current.wind_speed}</h3>
-            <p>km/h Wind</p>
+            <p>km/h {t("wind_speed")}</p>
           </div>
 
           <div className="metric-card">
             <Sun />
             <h3>{current.uv_index}</h3>
-            <p>UV Index</p>
+            <p>{t("uv_index")}</p>
           </div>
         </div>
       </section>
@@ -663,7 +684,7 @@ if (loading)
 
         {/* FORECAST */}
         <section className="forecast">
-          <h3>5-Day Forecast</h3>
+          <h3>{t("five_day_forecast")}</h3>
 
           <div className="forecast-grid">
             {forecast.map((day, index) => (
@@ -690,17 +711,17 @@ if (loading)
 
         {/* ALERTS */}
         <section className="alerts">
-        <h3>Farming Alerts & Recommendations</h3>
+        <h3>{t("farming_alerts")}</h3>
 
           {/* for high rain probability alert */}
         {forecast[0].precipitation_probability_avg > 50 && (
           <div className="alert yellow">
             <div className="alert-header">
               <AlertTriangle />
-              <h4>Heavy Rain Expected</h4>
+              <h4>{t("heavy_rain_expected")}</h4>
             </div>
             <p>
-              High chance of rainfall today. Consider protecting sensitive crops.
+             {t("heavy_rain_message")}
             </p>
           </div>
         )}
@@ -710,9 +731,9 @@ if (loading)
           <div className="alert blue">
             <div className="alert-header">
               <Calendar />
-              <h4>Optimal Irrigation Window</h4>   
+              <h4>{t("optimal_irrigation")}</h4>   
             </div>
-            <p>No rain expected. Good time for irrigation.</p>
+            <p>{t("optimal_irrigation_message")}</p>
           </div>
         )}
 
@@ -721,11 +742,12 @@ if (loading)
           <div className="alert red">
             <div className="alert-header">
               <AlertTriangle />
-              <h4>High UV Index</h4>            
+              <h4>{t("high_uv")}</h4>            
             </div>
             <p>
-              UV index at {current.uv_index}. Ensure proper protection during field
-              work.
+              {t("high_uv_message", {
+  uv: current.uv_index,
+})}
             </p>
           </div>
         )}
@@ -738,9 +760,9 @@ if (loading)
             <div className="alert green">
               <div className="alert-header">
                 <CheckCircle />
-                <h4>Normal Conditions</h4>
+                <h4>{t("normal_conditions")}</h4>
               </div>
-              <p>No significant weather risks today. Safe for regular farming activities.</p>
+              <p>{t("normal_conditions_message")}</p>
             </div>
         )}
           
@@ -748,34 +770,34 @@ if (loading)
 
         {/* METRICS SUMMARY */}
         <section className="metrics-summary">
-          <h3>Detailed Metrics</h3>
+          <h3>{t("detailed_metrics")}</h3>
 
           <div className="metrics-boxes">
             <div className="metric-box">
               <div className="metric-header">
                 <Eye />
-                <span>Visibility</span>
+                <span>{t("visibility")}</span>
               </div>
               <h2>{current.visibility} km</h2>
-              <p>Clear visibility for field operations</p>
+              <p>{t("visibility_desc")}</p>
             </div>
 
             <div className="metric-box">
               <div className="metric-header">
                 <Gauge />
-                <span>Atmospheric Pressure</span>
+                <span>{t("pressure")}</span>
               </div>
               <h2>{current.pressure}</h2>
-              <p>hPa - Stable conditions</p>
+              <p>{t("pressure_desc")}</p>
             </div>
 
             <div className="metric-box">
               <div className="metric-header">
                 <CloudRain />
-                <span>Rainfall Today</span>
+                <span>{t("rainfall_today")}</span>
               </div>
               <h2>{current.rain_intensity} mm</h2>
-              <p>No irrigation needed</p>
+              <p>{t("rainfall_today_desc")}</p>
             </div>
           </div>
         </section>

@@ -1,3 +1,4 @@
+
 {
   "cropwise": "CropWise",
   "smart_agriculture": "Smart Agriculture",
@@ -33,5 +34,668 @@
   "theme": "Theme",
 
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+
+
+  "your_farm": "Your Farm",
+  "dashboard_description": "Monitor your farm's performance, get AI-powered recommendations, and track your progress with comprehensive analytics and insights.",
+
+  "get_smart_recommendations": "Get Smart Recommendations",
+  "view_farm_analytics": "View Farm Analytics",
+
+  "your_farm_overview": "Your Farm Overview",
+
+  "farmers_helped": "Farmers Helped",
+  "total_improvement": "Total Improvement",
+  "success_rate": "Success Rate",
+  "crops_supported": "Crops Supported",
+
+  "recent_activity": "Recent Activity",
+
+  "latest_recommendations": "Latest Recommendations",
+
+  "wheat": "Wheat",
+  "maize": "Maize",
+  "soybean": "Soybean",
+
+  "winter_season": "Winter Season",
+  "monsoon_season": "Monsoon Season",
+  "post_monsoon": "Post-Monsoon",
+
+  "view_all_recommendations": "View All Recommendations",
+
+  "performance_highlights": "Performance Highlights",
+
+  "this_season_yield": "This Season's Yield:",
+  "cost_reduction": "Cost Reduction:",
+
+  "view_detailed_analysis": "View Detailed Analysis",
+
+  "everything_you_need": "Everything You Need for Smart Farming",
+
+  "everything_you_need_desc": "Our comprehensive platform provides all the tools and insights you need to make informed farming decisions.",
+
+  "smart_crop_recommendations": "Smart Crop Recommendations",
+
+  "smart_crop_recommendations_desc": "Get AI-powered crop suggestions based on soil, weather, and market conditions.",
+
+  "weather_insights": "Weather Insights",
+
+  "weather_insights_desc": "Real-time weather data and forecasts to optimize your farming decisions.",
+
+  "soil_analysis_desc": "Comprehensive soil testing and nutrient analysis for better yields.",
+
+  "analytics_dashboard": "Analytics Dashboard",
+
+  "analytics_dashboard_desc": "Track your farming performance and optimize your strategies.",
+
+  "learn_more": "Learn More",
+
+  "quick_actions": "Quick Actions",
+
+  "quick_actions_desc": "Access your most used tools and features quickly from your dashboard.",
+
+  "smart_crop_analysis": "Smart Crop Analysis",
+
+  "check_weather": "Check Weather",
+
+  "soil_testing": "Soil Testing",
+  
+
+
+  
+  "crop_recommendation": "Crop Recommendation",
+  "crop_recommendation_subtitle": "Get AI-powered crop recommendations based on soil and climate data",
+
+  "manual_input": "Manual Input",
+  "by_location": "By Location",
+  "history": "History",
+
+  "enter_soil_climate": "Enter Soil & Climate Data",
+
+  "nitrogen_placeholder": "Nitrogen (0-150)",
+  "phosphorus_placeholder": "Phosphorus (0-150)",
+  "potassium_placeholder": "Potassium (0-210)",
+  "temperature_placeholder": "Temperature (0-60°C)",
+  "humidity_placeholder": "Humidity (0-100%)",
+  "ph_placeholder": "pH (0-14)",
+  "rainfall_placeholder": "Rainfall (mm/month)",
+
+  "get_recommendation": "🚀 Get Recommendation",
+  "predicting": "Predicting...",
+  "clear": "Clear",
+
+  "location_prediction": "Location-Based Prediction",
+  "location_prediction_subtitle": "Weather data will be auto-fetched from your location",
+
+  "enter_state": "Enter State",
+  "enter_district": "Enter District",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+
+  "use_my_location": "Use My Location",
+  "fetching": "Fetching...",
+
+  "prediction_history": "Prediction History",
+  "no_history": "No history available",
+  "history_desc": "Your predictions will appear here",
+
+  "predict": "Prediction",
+
+  "invalid_input": "Invalid Input",
+
+  "no_prediction": "No prediction yet",
+  "no_prediction_desc": "Enter your data and click \"Get Recommendation\"",
+
+  "top_crop": "Top Crop Recommendation",
+
+  "soil_summary": "Soil & Climate Summary",
+
+  "nitrogen": "Nitrogen",
+  "phosphorus": "Phosphorus",
+  "potassium": "Potassium",
+  "temperature": "Temperature",
+  "humidity": "Humidity",
+  "ph": "pH",
+  "rainfall": "Rainfall",
+
+  "location_summary": "Location & Climate Summary",
+  "state": "State",
+  "district": "District",
+
+  "why_crop": "Why {{crop}}?",
+
+  "ai_analysis": "AI Analysis",
+
+  "unauthorized": "Unauthorized",
+  "server_error": "Server error! Try again.",
+  "location_failed": "Location prediction failed",
+
+  "permission_denied": "Permission denied",
+  "location_not_supported": "Geolocation not supported",
+  "failed_location": "Failed to fetch location details",
+  "fetch_location_first": "Please fetch location first",
+   "analysis_manual": "{{crop}} is recommended because the soil nutrients, pH, temperature, humidity, and rainfall closely match its ideal growing conditions. Based on AI analysis, {{crop}} has the highest suitability score.",
+
+  "analysis_location": "{{crop}} is recommended for {{district}}, {{state}} because the local weather conditions are highly favorable for its cultivation. AI determined {{crop}} as the best choice for this region.",
+  "reason_n": "Nitrogen level supports healthy vegetative growth.",
+  "reason_p": "Phosphorus promotes strong root development.",
+  "reason_k": "Potassium improves crop quality and disease resistance.",
+  "reason_ph": "The soil pH is within the ideal range.",
+  "reason_temp": "Temperature is favorable for crop growth.",
+  "reason_humidity": "Humidity is suitable for healthy plant development.",
+  "reason_rainfall": "Rainfall is sufficient for cultivation.",
+
+  "location_reason_temp": "Temperature conditions are favorable for crop growth.",
+  "location_reason_humidity": "Humidity supports healthy crop development.",
+  "location_reason_rainfall": "Rainfall is sufficient for cultivation.",
+  "location_reason_crop": "{{crop}} is suitable for the climatic conditions of {{district}}.",
+   "crop": {
+    "rice": "Rice",
+    "maize": "Maize",
+    "chickpea": "Chickpea",
+    "kidneybeans": "Kidney Beans",
+    "pigeonpeas": "Pigeon Peas",
+    "mothbeans": "Moth Beans",
+    "mungbean": "Mung Bean",
+    "blackgram": "Black Gram",
+    "lentil": "Lentil",
+    "pomegranate": "Pomegranate",
+    "banana": "Banana",
+    "mango": "Mango",
+    "grapes": "Grapes",
+    "watermelon": "Watermelon",
+    "muskmelon": "Muskmelon",
+    "apple": "Apple",
+    "orange": "Orange",
+    "papaya": "Papaya",
+    "coconut": "Coconut",
+    "cotton": "Cotton",
+    "jute": "Jute",
+    "coffee": "Coffee"
+  },
+
+  "farm_records_title": "Farm Records",
+  "farm_records_subtitle": "Enter your real farming data after each harvest to generate insights and performance analytics",
+
+  "planting": "Planting",
+  "harvest": "Harvest",
+  "sales": "Sales",
+  "expenses": "Expenses",
+  "resources": "Resources",
+
+  "add_planting_record": "Add Planting Record",
+  "planting_record_subtitle": "Record new crop plantings on your farm",
+
+  "planting_history": "Planting History",
+
+  "add_harvest_record": "Add Harvest Record",
+  "harvest_record_subtitle": "Log your crop harvests and yields",
+
+  "harvest_history": "Harvest History",
+
+  "add_sale_record": "Add Sale Record",
+  "sale_record_subtitle": "Record crop sales and revenue",
+
+  "sales_history": "Sales History",
+
+  "add_expense_record": "Add Expense Record",
+  "expense_record_subtitle": "Track farming costs and expenses",
+
+  "expense_history": "Expense History",
+
+  "add_resource_record": "Add Resource Usage",
+  "resource_record_subtitle": "Track water, fertilizer and other resource usage",
+
+  "resource_history": "Resource Usage History",
+
+  "records": "{{count}} records",
+
+  "planting_date": "Planting Date",
+  "harvest_date": "Harvest Date",
+  "sale_date": "Sale Date",
+  "date": "Date",
+
+  "Crop": "Crop",
+
+  "field_name": "Field Name",
+
+  "area": "Area",
+
+  "expected_yield": "Expected Yield",
+
+  "total_harvest": "Total Harvest",
+
+  "crop_quality": "Crop Quality",
+
+  "quality": "Quality",
+
+  "good": "Good",
+  "average": "Average",
+  "excellent": "Excellent",
+  "poor": "Poor",
+
+  "quantity": "Quantity",
+
+  "price_per_ton": "Price per Ton",
+
+  "buyer": "Buyer",
+
+  "category": "Category",
+
+  "amount": "Amount",
+
+  "description": "Description",
+
+  "resource_type": "Resource Type",
+
+  "unit": "Unit",
+
+  "field": "Field",
+
+  "expected_yield_label": "Expected Yield",
+
+  "total_yield": "Total Yield",
+
+  "revenue": "Revenue",
+
+  "north_field": "North Field",
+
+  "example_crop": "e.g., Wheat, Maize, Rice",
+
+  "example_area": "e.g., 10",
+
+  "example_expected_yield": "e.g., 4.5",
+
+  "example_total_harvest": "e.g., 51",
+
+  "example_quantity": "e.g., 50",
+
+  "example_price": "e.g., 25000",
+
+  "example_buyer": "e.g., Local Grain Market",
+
+  "example_amount": "e.g., 15000",
+
+  "example_description": "e.g., Wheat seeds - 200kg",
+
+  "example_resource_quantity": "e.g., 10000",
+
+  "example_unit": "e.g., Liters, Kg",
+
+  "water": "Water",
+
+  "fertilizer": "Fertilizer",
+
+  "pesticide": "Pesticide",
+
+  "seeds": "Seeds",
+
+  "labor": "Labor",
+
+  "equipment": "Equipment",
+
+  "other": "Other",
+
+  "tons": "tons",
+
+  "ton": "ton",
+
+  "hectares": "hectares",
+
+  "ha": "ha",
+
+  "t_per_ha": "T/Ha",
+
+  "delete": "Delete",
+
+
+
+
+
+
+  "weather_dashboard": "Weather Dashboard",
+  "weather_dashboard_desc": "Real-time weather data and forecasts for informed farming decisions",
+
+  "search_city": "Search city...",
+  "showing_results_for": "Showing results for {{city}}",
+  "showing_current_location": "Showing weather for your current location",
+
+  "fetching_latest_weather": "Fetching latest weather...",
+  "failed_weather": "Failed to fetch weather data",
+
+  "current_conditions": "Current Conditions",
+
+  "temperature_label": "Temperature",
+  "humidity_label": "Humidity",
+  "wind_speed": "Wind",
+  "uv_index": "UV Index",
+
+  "five_day_forecast": "5-Day Forecast",
+
+  "max_temperature": "Max Temperature",
+  "min_temperature": "Min Temperature",
+  "chance_of_rain": "Chance of Rain",
+
+  "farming_alerts": "Farming Alerts & Recommendations",
+
+  "heavy_rain_expected": "Heavy Rain Expected",
+  "heavy_rain_message": "High chance of rainfall today. Consider protecting sensitive crops.",
+
+  "optimal_irrigation": "Optimal Irrigation Window",
+  "optimal_irrigation_message": "No rain expected. Good time for irrigation.",
+
+  "high_uv": "High UV Index",
+  "high_uv_message": "UV index at {{uv}}. Ensure proper protection during field work.",
+
+  "normal_conditions": "Normal Conditions",
+  "normal_conditions_message": "No significant weather risks today. Safe for regular farming activities.",
+
+  "detailed_metrics": "Detailed Metrics",
+
+  "visibility": "Visibility",
+  "visibility_desc": "Clear visibility for field operations",
+
+  "pressure": "Atmospheric Pressure",
+  "pressure_desc": "hPa - Stable conditions",
+
+  "rainfall_today": "Rainfall Today",
+  "rainfall_today_desc": "No irrigation needed",
+
+  "weather_clear": "Clear",
+  "weather_sunny": "Sunny",
+  "weather_cloudy": "Cloudy",
+  "weather_rain": "Rain",
+  "weather_snow": "Snow",
+  "weather_storm": "Storm",
+
+  "test_clear": "Clear",
+  "test_cloudy": "Cloudy",
+  "test_rain": "Rain",
+  "test_snow": "Snow",
+  "test_storm": "Storm",
+  "test_sunny": "Sunny",
+  "real_data": "Real Data",
+
+
+
+
+
+
+  "soil_analysis_title": "Soil Analysis",
+  "soil_analysis_subtitle": "Monitor and analyze your soil health",
+
+  "image_analysis": "Image Analysis",
+  "new_test": "New Test",
+  "cancel": "Cancel",
+
+  "overall_health": "Overall Health",
+  "health_score": "Health Score",
+
+  "current_analysis": "Current Analysis",
+  "historical_data": "Historical Data",
+
+  "upload_soil_image": "Upload Soil Image",
+  "analyze": "Analyze",
+
+  "add_soil_test": "Add Soil Test",
+  "test_date": "Test Date",
+  "organic_carbon": "Organic Carbon",
+  "moisture": "Moisture",
+  "notes": "Notes",
+  "save_test": "Save Test",
+
+  "latest_soil_test": "Latest Soil Test",
+  "nutrient_distribution": "Nutrient Distribution",
+
+  "no_soil_tests": "No soil tests yet",
+  "create_first_soil_test": "Create your first soil test to see analysis",
+
+  "Field": "Field",
+  "status": "Status",
+
+  "nitrogen_short": "N",
+  "phosphorus_short": "P",
+  "potassium_short": "K",
+
+  "no_historical_data": "No historical data",
+  "history_empty_desc": "Add a soil test to view history",
+
+  "soil_suitability": "Soil Suitability",
+  "nutrient_insight": "Nutrient Insight",
+  "climate_fit": "Climate Fit",
+  "recommended_action": "Recommended Action",
+
+  "no_recommendations": "No recommendations",
+  "recommendation_empty_desc": "Create a soil test to get recommendations",
+
+  "analysis_result": "Analysis Result",
+  "soil_type": "Soil Type",
+  "fertility": "Fertility",
+  "confidence": "Confidence",
+  "suggested_crops": "Suggested Crops",
+
+  "saving_soil_test": "Saving soil test...",
+  "saved_successfully": "Saved successfully 🌱",
+  "save_failed": "Failed",
+
+  "select_image_first": "Select image first",
+  "analyzing": "Analyzing...",
+  "analysis_complete": "Analysis completed successfully 🌱",
+  "analysis_failed": "Analysis failed",
+
+
+
+
+
+  "landing_tagline": "Powered by AI & Machine Learning",
+  "landing_title_1": "Smart Farming",
+  "landing_title_2": "Made Simple",
+  "landing_description": "Get AI-powered crop recommendations, weather insights, and analytics to maximize your harvest and profits.",
+
+  "get_started": "Get Started",
+  "watch_demo": "Watch Demo",
+
+  "farmers": "Farmers",
+  "crops": "Crops",
+  "support": "Support",
+
+  "feature_ai_title": "AI-Powered Recommendations",
+  "feature_ai_desc": "Get personalized crop suggestions based on your soil, weather, and market data.",
+
+  "feature_weather_title": "Weather Insights",
+  "feature_weather_desc": "Access real-time weather forecasts and alerts to plan your farming activities.",
+
+  "feature_soil_title": "Soil Analysis",
+  "feature_soil_desc": "Understand your soil health with detailed analysis and improvement tips.",
+
+  "feature_market_title": "Market Trends",
+  "feature_market_desc": "Stay updated with the latest market prices and demand trends for various crops.",
+
+  "testimonials_title": "What Our Users Say?",
+
+  "testimonial1": "\"This platform transformed my farming business. The AI recommendations are spot on!\"",
+  "testimonial1_name": "- John D.",
+
+  "testimonial2": "\"The weather insights helped me avoid crop damage during unexpected storms.\"",
+  "testimonial2_name": "- Sarah K.",
+
+  "testimonial3": "\"I increased my profits by 30% using the market trend analysis.\"",
+  "testimonial3_name": "- Mike L.",
+
+  "auth_subtitle": "Sign in to your account or create a new one to get started.",
+
+  "sign_in": "Sign In",
+  "sign_up": "Sign Up",
+
+  "username": "Username",
+  "username_placeholder": "Enter your username",
+
+  "email": "Email",
+
+  "password": "Password",
+
+  "confirm_password": "Confirm Password",
+
+  "forgot_password": "Forgot Password?",
+
+  "send_otp": "Send OTP",
+
+  "otp": "OTP",
+
+  "new_password": "New Password",
+
+  "reset_password": "Reset Password",
+
+  "back_to_login": "Back to Login",
+
+  "verification_email_sent": "Verification email sent. Please check your inbox and click the verification link.",
+
+  "email_verified": "Email verified successfully. Please sign in.",
+
+  "password_reset_success": "Password reset successful. Please sign in.",
+
+  "something_wrong": "Something went wrong.",
+
+  "forgot_password_failed": "Failed to process forgot password request.",
+
+  "reset_password_failed": "Failed to reset password.",
+
+
+  "features": "Features",
+  "testimonials": "Testimonials",
+
+   "footer_description": "Empowering farmers with smart agriculture technology",
+
+  "privacy_policy": "Privacy Policy",
+
+  "terms_of_service": "Terms of Service",
+
+  "contact_us": "Contact Us",
+
+
+  
+  "my_profile": "My Profile",
+  "manage_profile_desc": "Manage your personal information and farming details",
+
+  "loading_profile": "Loading profile...",
+  "profile_not_found": "Profile not found",
+
+  "change_photo": "Change Photo",
+
+  "save": "Save",
+  "edit": "Edit",
+
+  "full_name": "Full Name",
+  "phone_number": "Phone Number",
+  "bio": "Bio",
+  "location": "Location",
+  "farm_name": "Farm Name",
+  "specialization": "Specialization",
+
+  "member_since": "Member Since",
+  "experience": "Experience",
+  "farm_size": "Farm Size",
+  "achievements": "Achievements",
+
+  "profile_updated": "Profile updated successfully! 🎉🤩",
+  "profile_update_failed": "Failed to save profile",
+
+  "not_available": "—",
+
+
+
+  
+  "settings_subtitle": "Customize your CropWise experience and manage your preferences",
+
+  "privacy": "Privacy",
+  "preferences": "Preferences",
+  "data_export": "Data & Export",
+  "account": "Account",
+
+  "notification_preferences": "Notification Preferences",
+  "notification_preferences_desc": "Choose what notifications you want to receive",
+
+  "weather_alerts": "Weather Alerts",
+  "weather_alerts_desc": "Get notified about weather changes that may affect your crops",
+
+  "system_announcements": "System Announcements",
+  "system_announcements_desc": "Get notified about new system features and updates",
+
+  "market_prices": "Market Prices",
+  "market_prices_desc": "Stay updated on crop prices and market trends",
+
+  "privacy_controls": "Privacy Controls",
+  "privacy_controls_desc": "Manage your privacy and data sharing preferences",
+
+  "location_access": "Location Access",
+  "location_access_desc": "Allow the app to access your device location for accurate recommendations and weather updates.",
+
+  "share_analytics": "Share Analytics",
+  "share_analytics_desc": "Allow anonymous usage data to improve CropWise features and performance.",
+
+  "browser_location_granted": "✓ Browser location permission granted.",
+  "browser_location_denied": "⚠ Browser location permission denied. Please enable it in your browser settings.",
+  "browser_location_prompt": "Location permission has not been chosen yet.",
+
+  "app_preferences": "App Preferences",
+  "app_preferences_desc": "Customize your application experience.",
+
+  "measurement_units": "Measurement Units",
+
+  "metric": "Metric (kg, hectare, Celsius)",
+  "imperial": "Imperial (lbs, acres, Fahrenheit)",
+
+  "english": "English",
+  "hindi": "Hindi",
+  "bengali": "Bengali",
+
+  "timezone": "Timezone",
+  "currency": "Currency",
+
+  "complete_data_export": "Complete Data Export",
+  "complete_data_export_desc": "Download all your farming data including analytics, reports, and recommendations.",
+  "export_all_data": "Export All Data",
+
+  "selective_export": "Selective Export",
+  "selective_export_desc": "Choose specific farming data categories for export.",
+  "choose_data": "Choose Data",
+
+  "data_storage": "Data Storage",
+  "data_storage_desc": "Information about your data storage and retention.",
+
+  "total_data": "Total Data",
+  "data_retention": "Data Retention",
+  "backup_frequency": "Backup Frequency",
+
+  "account_management": "Account Management",
+  "account_management_desc": "Manage your account settings and security preferences.",
+
+  "current_password": "Current Password",
+  "New_password": "New Password",
+  "confirm_new_password": "Confirm New Password",
+
+  "enter_current_password": "Enter current password",
+  "enter_new_password": "Enter new password",
+  "Confirm_password": "Confirm new password",
+
+  "update_password": "Update Password",
+
+  "danger_zone": "Danger Zone",
+  "delete_account_warning": "Deleting your account is irreversible. All your farming records, analytics, and history will be permanently removed.",
+  "delete_account": "Delete Account",
+
+  "updated": "Updated successfully.",
+  "update_failed": "Update failed.",
+
+  "geolocation_not_supported": "Geolocation is not supported by this browser.",
+  "location_blocked": "Location access is blocked in your browser settings."
+
+
+
+
+
 }
+
+
+

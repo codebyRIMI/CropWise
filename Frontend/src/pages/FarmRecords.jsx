@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../scss/FarmRecords.scss";
 import Sidebar from "../components/Sidebar";
+import { useTranslation } from "react-i18next";
 import {
   getPlantings,
   createPlanting,
@@ -25,6 +26,7 @@ import {
 
 const FarmRecords = () => {
   const [activeTab, setActiveTab] = useState("planting");
+  const { t } = useTranslation();
 
 // ================= PLANTINGS =================
 
@@ -353,10 +355,9 @@ useEffect(() => {
       <Sidebar />
       <div className="farm-records">
 
-        <h1>Farm Records</h1>
+        <h1>{t("farm_records_title")}</h1>
         <p className="subtitle">
-          Enter your real farming data after each harvest to generate insights and
-          performance analytics
+           {t("farm_records_subtitle")}
         </p>
 
         {/* Tabs */}
@@ -365,35 +366,35 @@ useEffect(() => {
             className={`farm-tab ${activeTab === "planting" ? "active" : ""}`}
             onClick={() => setActiveTab("planting")}
           >
-            🌱 Planting
+            🌱 {t("planting")}
           </button>
 
           <button
             className={`farm-tab ${activeTab === "harvest" ? "active" : ""}`}
             onClick={() => setActiveTab("harvest")}
           >
-            📈 Harvest
+            📈 {t("harvest")}
           </button>
 
           <button
             className={`farm-tab ${activeTab === "sales" ? "active" : ""}`}
             onClick={() => setActiveTab("sales")}
           >
-            💲 Sales
+            💲 {t("sales")}
           </button>
 
           <button
             className={`farm-tab ${activeTab === "expenses" ? "active" : ""}`}
             onClick={() => setActiveTab("expenses")}
           >
-            🧾 Expenses
+            🧾 {t("expenses")}
           </button>
 
           <button
             className={`farm-tab ${activeTab === "resources" ? "active" : ""}`}
             onClick={() => setActiveTab("resources")}
           >
-            💧 Resources
+            💧 {t("resources")}
           </button>
         </div>
 
@@ -401,15 +402,15 @@ useEffect(() => {
         {activeTab === "planting" && (
           <>
             <div className="card">
-              <h2>Add Planting Record</h2>
+              <h2>{t("add_planting_record")}</h2>
               <p className="card-subtitle">
-                Record new crop plantings on your farm
+                {t("planting_record_subtitle")}
               </p>
 
               <div className="form">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Planting Date *</label>
+                    <label>{t("planting_date")} *</label>
                     <input
                       type="date"
                       name="planting_date"
@@ -419,48 +420,48 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Crop *</label>
+                    <label>{t("Crop")} *</label>
                     <input
                       type="text"
                       name="crop"
                       value={plantingForm.crop}
                       onChange={handlePlantingChange}
-                      placeholder="e.g., Wheat, Maize, Rice"
+                    placeholder={t("example_crop")}
                     />                  
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Field Name *</label>
+                    <label>{t("field_name")} *</label>
                     <input
                       type="text"
                       name="field_name"
                       value={plantingForm.field_name}
                       onChange={handlePlantingChange}
-                      placeholder="e.g., North Field"
+                      placeholder={t("north_field")}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Area (hectares) *</label>
+                    <label>{t("area")} ({t("hectares")}) *</label>
                     <input
                       type="number"
                       name="area"
                       value={plantingForm.area}
                       onChange={handlePlantingChange}
-                      placeholder="e.g., 10"
+                      placeholder={t("example_area")}
                     />                  
                     </div>
 
                   <div className="form-group">
-                    <label>Expected Yield (T/Ha) *</label>
+                    <label>{t("expected_yield")} ({t("t_per_ha")}) *</label>
                     <input
                       type="number"
                       name="expected_yield"
                       value={plantingForm.expected_yield}
                       onChange={handlePlantingChange}
-                      placeholder="e.g., 4.5"
+                      placeholder={t("example_expected_yield")}
                     />
                   </div>
                 </div>
@@ -470,17 +471,17 @@ useEffect(() => {
                   onClick={handlePlantingSubmit}
                 >
                   <span>＋</span>
-                  Add Planting Record
+                   {t("add_planting_record")}
                 </button>
               </div>
             </div>
 
             {/* Planting History */}
             <div className="farm-history-card">
-              <h2>Planting History</h2>
+              <h2>{t("planting_history")}</h2>
 
               <p className="history-subtitle">
-                {plantings.length} records
+                {t("records",{count:plantings.length})}
               </p>
 
               {plantings.map((item) => (
@@ -495,7 +496,7 @@ useEffect(() => {
                       <h3>{item.crop}</h3>
 
                       <p>
-                        📍 {item.field_name} • {item.area} ha
+                        📍 {item.field_name} • {item.area} {t("ha")}
                       </p>
 
                       <p>
@@ -506,11 +507,11 @@ useEffect(() => {
 
                   <div className="right">
                     <p className="label">
-                      Expected Yield
+                     {t("expected_yield_label")}
                     </p>
 
                     <h3>
-                      {item.expected_yield} T/Ha
+                     {item.expected_yield} {t("t_per_ha")}
                     </h3>
                   </div>
 
@@ -534,15 +535,15 @@ useEffect(() => {
           <>
             {/* Harvest Form */}
             <div className="card">
-              <h2>Add Harvest Record</h2>
+              <h2>{t("add_harvest_record")}</h2>
               <p className="card-subtitle">
-                Log your crop harvests and yields
+                {t("harvest_record_subtitle")}
               </p>
 
               <div className="form">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Harvest Date *</label>
+                    <label>{t("harvest_date")} *</label>
                     <input
                       type="date"
                       name="harvest_date"
@@ -552,31 +553,31 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Crop *</label>
+                    <label>{t("Crop")} *</label>
                     <input
                       type="text"
                       name="crop"
                       value={harvestForm.crop}
                       onChange={handleHarvestChange}
-                      placeholder="e.g., Wheat, Maize, Rice"
+                      placeholder={t("example_crop")}
                     />
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Field Name *</label>
+                    <label>{t("field_name")} *</label>
                     <input
                       type="text"
                       name="field_name"
                       value={harvestForm.field_name}
                       onChange={handleHarvestChange}
-                      placeholder="e.g., North Field"
+                      placeholder={t("north_field")}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Area (hectares) *</label>
+                    <label> {t("area")} ({t("hectares")}) *</label>
                     <input
                       type="number"
                       name="area"
@@ -587,29 +588,29 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Total Harvest (tons) *</label>
+                    <label>{t("total_harvest")} ({t("tons")}) *</label>
                     <input
                       type="number"
                       name="total_harvest"
                       value={harvestForm.total_harvest}
                       onChange={handleHarvestChange}
-                      placeholder="e.g., 51"
+                      placeholder={t("example_total_harvest")}
                     />
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group full">
-                    <label>Crop Quality</label>
+                    <label>{t("crop_quality")}</label>
                     <select
                       name="quality"
                       value={harvestForm.quality}
                       onChange={handleHarvestChange}
                     >
-                      <option value="Good">Good</option>
-                      <option value="Average">Average</option>
-                      <option value="Excellent">Excellent</option>
-                      <option value="Poor">Poor</option>
+                      <option value="Good">{t("good")}</option>
+                     <option value="Average">{t("average")}</option>
+                     <option value="Excellent">{t("excellent")}</option>
+                     <option value="Poor">{t("poor")}</option>
                     </select>
                   </div>
                 </div>
@@ -618,17 +619,17 @@ useEffect(() => {
                   className="submit-btn"
                   onClick={handleHarvestSubmit}
                 >
-                  <span>＋</span> Add Harvest Record
+                  <span>＋</span> {t("add_harvest_record")}
                 </button>
               </div>
             </div>
 
             {/* Harvest History */}
             <div className="farm-history-card">
-              <h2>Harvest History</h2>
+              <h2>{t("harvest_history")}</h2>
 
               <p className="history-subtitle">
-                {harvests.length} records
+                {t("records", { count: harvests.length })}
               </p>
 
               {harvests.map((item) => (
@@ -662,11 +663,11 @@ useEffect(() => {
 
                   <div className="right">
                     <p className="label">
-                      Total Yield
+                      {t("total_yield")}
                     </p>
 
                     <h3>
-                      {item.total_harvest} tons
+                      {item.total_harvest} {t("tons")}
                     </h3>
 
                     <p className="yield">
@@ -676,7 +677,7 @@ useEffect(() => {
                             item.area
                           ).toFixed(2)
                         : "0.00"}{" "}
-                      T/Ha
+                     {t("t_per_ha")}
                     </p>
                   </div>
 
@@ -700,15 +701,15 @@ useEffect(() => {
           <>
             {/* Sales Form */}
             <div className="card">
-              <h2>Add Sale Record</h2>
+              <h2>{t("add_sale_record")}</h2>
               <p className="card-subtitle">
-                Record crop sales and revenue
+              {t("sale_record_subtitle")}
               </p>
 
               <div className="form">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Sale Date *</label>
+                    <label>{t("sale_date")} *</label>
                     <input
                       type="date"
                       name="sale_date"
@@ -718,50 +719,50 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Crop *</label>
+                    <label>{t("Crop")} *</label>
                     <input
                       type="text"
                       name="crop"
                       value={saleForm.crop}
                       onChange={handleSaleChange}
-                      placeholder="e.g., Wheat, Maize, Rice"
+                      placeholder={t("example_crop")}
                     />
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Quantity (tons) *</label>
+                    <label>{t("quantity")} ({t("tons")})*</label>
                     <input
                       type="number"
                       name="quantity"
                       value={saleForm.quantity}
                       onChange={handleSaleChange}
-                      placeholder="e.g., 50"
+                      placeholder={t("example_quantity")}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Price per Ton (₹) *</label>
+                    <label>{t("price_per_ton")} (₹) *</label>
                     <input
                       type="number"
                       name="price_per_ton"
                       value={saleForm.price_per_ton}
                       onChange={handleSaleChange}
-                      placeholder="e.g., 25000"
+                      placeholder={t("example_price")}
                     />
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group full">
-                    <label>Buyer *</label>
+                    <label>{t("buyer")} *</label>
                     <input
                       type="text"
                       name="buyer"
                       value={saleForm.buyer}
                       onChange={handleSaleChange}
-                      placeholder="e.g., Local Grain Market"
+                     placeholder={t("example_buyer")}
                     />
                   </div>
                 </div>
@@ -771,17 +772,17 @@ useEffect(() => {
                   onClick={handleSaleSubmit}
                 >
                   <span>＋</span>
-                  Add Sale Record
+                  {t("add_sale_record")}
                 </button>
               </div>
             </div>
 
             {/* Sales History */}
             <div className="farm-history-card">
-              <h2>Sales History</h2>
+              <h2>{t("sales_history")}</h2>
 
               <p className="history-subtitle">
-                {sales.length} records
+                {t("records",{count:sales.length})}
               </p>
 
               {sales.map((item) => (
@@ -795,12 +796,12 @@ useEffect(() => {
                     </div>
 
                     <div>
-                      <h3>{item.crop}</h3>
+                      <h3>{t(`crop.${item.crop.toLowerCase()}`, item.crop)}</h3>
 
                       <p>
-                        {item.quantity} tons × ₹
-                        {Number(item.price_per_ton).toLocaleString()}
-                        /ton
+                         {item.quantity} {t("tons")} × ₹
+          {Number(item.price_per_ton).toLocaleString()}
+          /{t("ton")}
                       </p>
 
                       <p>
@@ -811,7 +812,7 @@ useEffect(() => {
 
                   <div className="right">
                     <p className="label">
-                      Revenue
+                       {t("revenue")}
                     </p>
 
                     <h3 className="revenue">
@@ -844,15 +845,15 @@ useEffect(() => {
           <>
             {/* Expense Form */}
             <div className="card">
-              <h2>Add Expense Record</h2>
+              <h2>{t("add_expense_record")}</h2>
               <p className="card-subtitle">
-                Track farming costs and expenses
+                 {t("expense_record_subtitle")}
               </p>
 
               <div className="form">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Date *</label>
+                    <label>{t("date")} *</label>
                     <input
                       type="date"
                       name="date"
@@ -862,43 +863,57 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Category *</label>
+                    <label>{t("category")} *</label>
                     <select
                       name="category"
                       value={expenseForm.category}
                       onChange={handleExpenseChange}
                     >
-                      <option value="Fertilizer">Fertilizer</option>
-                      <option value="Seeds">Seeds</option>
-                      <option value="Labor">Labor</option>
-                      <option value="Equipment">Equipment</option>
-                      <option value="Other">Other</option>
+                      <option value="Fertilizer">
+                {t("fertilizer")}
+              </option>
+
+              <option value="Seeds">
+                {t("seeds")}
+              </option>
+
+              <option value="Labor">
+                {t("labor")}
+              </option>
+
+              <option value="Equipment">
+                {t("equipment")}
+              </option>
+
+              <option value="Other">
+                {t("other")}
+              </option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group full">
-                    <label>Amount (₹) *</label>
+                    <label>{t("amount")}  (₹) *</label>
                     <input
                       type="number"
                       name="amount"
                       value={expenseForm.amount}
                       onChange={handleExpenseChange}
-                      placeholder="e.g., 15000"
+                      placeholder={t("example_amount")}
                     />
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group full">
-                    <label>Description *</label>
+                    <label>{t("description")} *</label>
                     <input
                       type="text"
                       name="description"
                       value={expenseForm.description}
                       onChange={handleExpenseChange}
-                      placeholder="e.g., Wheat seeds - 200kg"
+                     placeholder={t("example_description")}
                     />
                   </div>
                 </div>
@@ -908,17 +923,17 @@ useEffect(() => {
                   onClick={handleExpenseSubmit}
                 >
                   <span>＋</span>
-                  Add Expense Record
+                  {t("add_expense_record")}
                 </button>
               </div>
             </div>
 
             {/* Expense History */}
             <div className="farm-history-card">
-              <h2>Expense History</h2>
+              <h2>{t("expense_history")}</h2>
 
               <p className="history-subtitle">
-                {expenses.length} records
+                 {t("records", { count: expenses.length })}
               </p>
 
               {expenses.map((item) => (
@@ -935,7 +950,7 @@ useEffect(() => {
                       <h3>{item.description}</h3>
 
                       <span className="tag">
-                        {item.category}
+                          {t(item.category.toLowerCase())}
                       </span>
 
                       <p>
@@ -969,15 +984,15 @@ useEffect(() => {
           <>
             {/* Resource Form */}
             <div className="card">
-              <h2>Add Resource Usage</h2>
+              <h2>{t("add_resource_record")}</h2>
               <p className="card-subtitle">
-                Track water, fertilizer, and other resource usage
+               {t("resource_record_subtitle")}
               </p>
 
               <div className="form">
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Date *</label>
+                    <label>{t("date")} *</label>
                     <input
                       type="date"
                       name="date"
@@ -987,50 +1002,50 @@ useEffect(() => {
                   </div>
 
                   <div className="form-group">
-                    <label>Resource Type *</label>
+                    <label>{t("resource_type")} *</label>
                     <select
                       name="resource_type"
                       value={resourceForm.resource_type}
                       onChange={handleResourceChange}
                     >
-                      <option value="Water">Water</option>
-                      <option value="Fertilizer">Fertilizer</option>
-                      <option value="Pesticide">Pesticide</option>
+                       <option value="Water">{t("water")}</option>
+              <option value="Fertilizer">{t("fertilizer")}</option>
+              <option value="Pesticide">{t("pesticide")}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Quantity *</label>
+                    <label>{t("quantity")}  *</label>
                     <input
                       type="number"
                       name="quantity"
                       value={resourceForm.quantity}
                       onChange={handleResourceChange}
-                      placeholder="e.g., 10000"
+                      placeholder={t("example_resource_quantity")}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Unit *</label>
+                    <label>{t("unit")} *</label>
                     <input
                       type="text"
                       name="unit"
                       value={resourceForm.unit}
                       onChange={handleResourceChange}
-                      placeholder="e.g., Liters, Kg"
+                      placeholder={t("example_unit")}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Field *</label>
+                    <label>{t("field")} *</label>
                     <input
                       type="text"
                       name="field_name"
                       value={resourceForm.field_name}
                       onChange={handleResourceChange}
-                      placeholder="e.g., North Field"
+                      placeholder={t("north_field")}
                     />
                   </div>
                 </div>
@@ -1040,17 +1055,19 @@ useEffect(() => {
                   onClick={handleResourceSubmit}
                 >
                   <span>＋</span>
-                  Add Resource Record
+                  {t("add_resource_record")}
                 </button>
               </div>
             </div>
 
             {/* Resource History */}
             <div className="farm-history-card">
-              <h2>Resource Usage History</h2>
+              <h2>{t("resource_history")}</h2>
 
               <p className="history-subtitle">
-                {resources.length} records
+                {t("records", {
+              count: resources.length,
+            })}
               </p>
 
               {resources.map((item) => (

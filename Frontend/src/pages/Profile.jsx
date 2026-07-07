@@ -170,8 +170,10 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import "../scss/profile.scss";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export default function Profile() {
+  const {t} = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -289,7 +291,7 @@ const [popupMessage, setPopupMessage] = useState("");
           marginTop: "5rem",
         }}
       >
-        Loading profile...
+       {t("loading_profile")}
       </p>
     );
 
@@ -305,7 +307,7 @@ const [popupMessage, setPopupMessage] = useState("");
           marginTop: "5rem",
         }}
       >
-        Profile not found
+       {t("profile_not_found")}
       </p>
     );
 
@@ -314,8 +316,8 @@ const [popupMessage, setPopupMessage] = useState("");
       <Sidebar />
       <div className="profile-page">
         <div className="top-header">
-          <h1>My Profile</h1>
-          <p>Manage your personal information and farming details</p>
+         <h1>{t("my_profile")}</h1>
+<p>{t("manage_profile_desc")}</p>
         </div>
 
         <div className="profile-card">
@@ -335,14 +337,14 @@ const [popupMessage, setPopupMessage] = useState("");
             <div className="profile-info">
               <h2>{profileData.full_name}</h2>
               <p className="specialization">
-                {profileData.specialization || "—"}
+               {profileData.specialization || t("not_available")}
               </p>
             </div>
 
             <div className="profile-actions">
               {isEditing && (
                 <label className="btn">
-                  📸 Change Photo
+                  📸 {t("change_photo")}
                   <input
                     type="file"
                     accept="image/*"
@@ -353,7 +355,7 @@ const [popupMessage, setPopupMessage] = useState("");
               )}
 
               <button className="btn edit" onClick={toggleEdit}>
-                {isEditing ? "💾 Save" : "✏️ Edit"}
+               {isEditing ? `💾 ${t("save")}` : `✏️ ${t("edit")}`}
               </button>
             </div>
           </div>
@@ -362,7 +364,7 @@ const [popupMessage, setPopupMessage] = useState("");
           <div className="profile-content">
             <div className="profile-left">
               <div className="field">
-                <strong>Full Name</strong>
+                <strong>{t("full_name")}</strong>
                 <input
                   type="text"
                   name="full_name"
@@ -378,7 +380,7 @@ const [popupMessage, setPopupMessage] = useState("");
               </div> */}
 
               <div className="field">
-                <strong>Phone Number</strong>
+                <strong>{t("phone_number")}</strong>
                 <input
                   type="text"
                   name="phone_number"
@@ -389,7 +391,7 @@ const [popupMessage, setPopupMessage] = useState("");
               </div>
 
               <div className="field bio-field">
-                <strong>Bio</strong>
+                <strong>{t("bio")}</strong>
                 <textarea
                   name="bio"
                   value={profileData.bio}
@@ -401,7 +403,7 @@ const [popupMessage, setPopupMessage] = useState("");
 
             <div className="profile-right">
               <div className="field">
-                <strong>Location</strong>
+                <strong>{t("location")}</strong>
                 <input
                   type="text"
                   name="location"
@@ -412,7 +414,7 @@ const [popupMessage, setPopupMessage] = useState("");
               </div>
 
               <div className="field">
-                <strong>Farm Name</strong>
+               <strong>{t("farm_name")}</strong>
                 <input
                   type="text"
                   name="farm_name"
@@ -423,7 +425,7 @@ const [popupMessage, setPopupMessage] = useState("");
               </div>
 
               <div className="field">
-                <strong>Specialization</strong>
+                <strong>{t("specialization")}</strong>
                 <input
                   type="text"
                   name="specialization"
@@ -438,7 +440,7 @@ const [popupMessage, setPopupMessage] = useState("");
           {/* STATS (STYLE UNCHANGED) */}
           <div className="profile-stats">
             <div className="stat-item">
-              <span>📅 Member Since</span>
+              <strong>{t("specialization")}</strong>
               <p>
                 {profileData.member_since
                   ? new Date(profileData.member_since).toLocaleDateString(
@@ -450,7 +452,7 @@ const [popupMessage, setPopupMessage] = useState("");
             </div>
 
             <div className="stat-item">
-              <span>🌾 Experience</span>
+             <span>🌾 {t("experience")}</span>
               {isEditing ? (
                 <input
                   type="text"
@@ -464,7 +466,7 @@ const [popupMessage, setPopupMessage] = useState("");
             </div>
 
             <div className="stat-item">
-              <span>📍 Farm Size</span>
+           <span>📍 {t("farm_size")}</span>
               {isEditing ? (
                 <input
                   type="text"
@@ -478,7 +480,7 @@ const [popupMessage, setPopupMessage] = useState("");
             </div>
 
             <div className="stat-item">
-              <span>🏆 Achievements</span>
+             <span>🏆 {t("achievements")}</span>
               {isEditing ? (
                 <input
                   type="number"

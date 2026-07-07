@@ -250,10 +250,11 @@ const handleToggle = async (field) => {
       <div className="settings">
 
         {/* Header */}
-        <h1 className="settings-title">Settings</h1>
-        <p className="settings-subtitle">
-          Customize your CropWise experience and manage your preferences
-        </p>
+        <h1 className="settings-title">{t("settings")}</h1>
+
+<p className="settings-subtitle">
+{t("settings_subtitle")}
+</p>
 
         {/* Tabs */}
         <div className="settings-tabs">
@@ -269,11 +270,11 @@ const handleToggle = async (field) => {
               onClick={() => setActiveTab(tab)}
               className={`tab ${activeTab === tab ? "active" : ""}`}
             >
-              {tab === "notifications" && "Notifications"}
-              {tab === "privacy" && "Privacy"}
-              {tab === "preferences" && "Preferences"}
-              {tab === "data" && "Data & Export"}
-              {tab === "account" && "Account"}
+             {tab === "notifications" && t("notifications")}
+{tab === "privacy" && t("privacy")}
+{tab === "preferences" && t("preferences")}
+{tab === "data" && t("data_export")}
+{tab === "account" && t("account")}
             </div>
           ))}
         </div>
@@ -283,27 +284,27 @@ const handleToggle = async (field) => {
         =========================== */}
         {activeTab === "notifications" && (
           <div className="settings-card fadeIn">
-            <h2 className="section-title">Notification Preferences</h2>
+            <h2 className="section-title">{t("notification_preferences")}</h2>
             <p className="section-subtext">
-              Choose what notifications you want to receive
+             {t("notification_preferences_desc")}
             </p>
 
             {[
               {
-                key: "weather_alerts",
-                title: "Weather Alerts",
-                text: "Get notified about weather changes that may affect your crops",
-              },
-              {
-                key: "systemknowledge_updates",
-                title: "System Announcements",
-                text: "Get notified about new system features and updates",
-              },
-              {
-                key: "market_prices",
-                title: "Market Prices",
-                text: "Stay updated on crop prices and market trends",
-              },
+    key: "weather_alerts",
+    title: t("weather_alerts"),
+    text: t("weather_alerts_desc"),
+  },
+  {
+    key: "systemknowledge_updates",
+    title: t("system_announcements"),
+    text: t("system_announcements_desc"),
+  },
+  {
+    key: "market_prices",
+    title: t("market_prices"),
+    text: t("market_prices_desc"),
+  },
             ].map((item, i) => (
               <div className="setting-item" key={i}>
                 <div>
@@ -326,137 +327,140 @@ const handleToggle = async (field) => {
         {/* ==========================
             PRIVACY
         =========================== */}
-          {activeTab === "privacy" && (
-            <div className="settings-card fadeIn">
-              <h2 className="section-title">Privacy Controls</h2>
-              <p className="section-subtext">
-                Manage your privacy and data sharing preferences
-              </p>
+        {activeTab === "privacy" && (
+  <div className="settings-card fadeIn">
+    <h2 className="section-title">
+      {t("privacy_controls")}
+    </h2>
 
-              {[
-                {
-                  key: "location_access",
-                  title: "Location Access",
-                  text: "Allow app to access your device location for accurate results",
-                },
-                {
-                  key: "share_analytics",
-                  title: "Share Analytics",
-                  text: "Allow anonymous usage data to improve product features",
-                },
-              ].map((item, i) => (
-                <div className="setting-item" key={i}>
-                  <div>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                    
-                    {item.key === "location_access" && (
-                      <>
-                        {locationPermission === "granted" && (
-                          <small className="permission-success">
-                            ✓ Browser location permission granted
-                          </small>
-                        )}
+    <p className="section-subtext">
+      {t("privacy_controls_desc")}
+    </p>
 
-                        {locationPermission === "denied" && (
-                          <small className="permission-warning">
-                            ⚠ Browser location permission denied.
-                            Enable it from Chrome settings.
-                          </small>
-                        )}
+    {[
+      {
+        key: "location_access",
+        title: t("location_access"),
+        text: t("location_access_desc"),
+      },
+      {
+        key: "share_analytics",
+        title: t("share_analytics"),
+        text: t("share_analytics_desc"),
+      },
+    ].map((item, i) => (
+      <div className="setting-item" key={i}>
+        <div>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
 
-                        {locationPermission === "prompt" && (
-                          <small className="permission-info">
-                            Location permission has not been chosen yet.
-                          </small>
-                        )}
-                      </>
-                    )}
-                  </div>
-                  <label className="switch">
-                    <input
-                      type="checkbox"
-                      checked={notifications[item.key] || false}
-                      onChange={() => handleToggle(item.key)}
-                    />
-                    <span></span>
-                  </label>
-                </div>
-              ))}
-            </div>
+          {item.key === "location_access" && (
+            <>
+              {locationPermission === "granted" && (
+                <small className="permission-success">
+                  {t("browser_location_granted")}
+                </small>
+              )}
+
+              {locationPermission === "denied" && (
+                <small className="permission-warning">
+                  {t("browser_location_denied")}
+                </small>
+              )}
+
+              {locationPermission === "prompt" && (
+                <small className="permission-info">
+                  {t("browser_location_prompt")}
+                </small>
+              )}
+            </>
           )}
+        </div>
+
+        <label className="switch">
+          <input
+            type="checkbox"
+            checked={notifications[item.key] || false}
+            onChange={() => handleToggle(item.key)}
+          />
+          <span></span>
+        </label>
+      </div>
+    ))}
+  </div>
+)}
 
         {/* ==========================
             PREFERENCES
         =========================== */}
-        {activeTab === "preferences" && (
+{activeTab === "preferences" && (
   <div className="settings-card fadeIn">
     <h2 className="section-title">
-      App Preferences
+      {t("app_preferences")}
     </h2>
 
     <p className="section-subtext">
-      Customize your app experience
+      {t("app_preferences_desc")}
     </p>
 
     <div className="preferences-grid">
 
       {/* Theme */}
       <div className="form-group">
-        <label>Theme</label>
+        <label>{t("theme")}</label>
         <select
           name="theme"
           value={preferences.theme}
           onChange={handlePreferenceChange}
         >
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
+          <option value="light">{t("light")}</option>
+          <option value="dark">{t("dark")}</option>
         </select>
       </div>
 
-      {/* Units */}
+      {/* Measurement Units */}
       <div className="form-group">
-        <label>Measurement Units</label>
+        <label>{t("measurement_units")}</label>
         <select
           name="measurement_unit"
           value={preferences.measurement_unit}
           onChange={handlePreferenceChange}
         >
           <option value="metric">
-            Metric (kg, hectare, Celsius)
+            {t("metric")}
           </option>
 
           <option value="imperial">
-            Imperial (lbs, acres, Fahrenheit)
+            {t("imperial")}
           </option>
         </select>
       </div>
 
       {/* Language */}
       <div className="form-group">
-        <label>Language</label>
+        <label>{t("language")}</label>
         <select
           name="language"
           value={preferences.language}
           onChange={handlePreferenceChange}
         >
           <option value="english">
-            English
+            {t("english")}
           </option>
 
           <option value="hindi">
-            Hindi
+            {t("hindi")}
           </option>
 
           <option value="bengali">
-            Bengali
+            {t("bengali")}
           </option>
         </select>
       </div>
 
       {/* Timezone */}
       <div className="form-group">
-        <label>Timezone</label>
+        <label>{t("timezone")}</label>
         <select
           name="timezone"
           value={preferences.timezone}
@@ -478,7 +482,7 @@ const handleToggle = async (field) => {
 
       {/* Currency */}
       <div className="form-group">
-        <label>Currency</label>
+        <label>{t("currency")}</label>
         <select
           name="currency"
           value={preferences.currency}
@@ -507,92 +511,123 @@ const handleToggle = async (field) => {
         {/* ==========================
             DATA & EXPORT
         =========================== */}
-        {activeTab === "data" && (
-          <div className="settings-card fadeIn">
+       {activeTab === "data" && (
+  <div className="settings-card fadeIn">
 
-            <h2 className="section-title">Data Export</h2>
-            <p className="section-subtext">
-              Download your farming data and reports
-            </p>
+    <h2 className="section-title">
+      {t("data_export")}
+    </h2>
 
-            <div className="export-grid">
+    <p className="section-subtext">
+      {t("data_export_desc")}
+    </p>
 
-              <div className="export-box">
-                <h3>Complete Data Export</h3>
-                <p>Download all your farming data including analytics & reports</p>
-                <button className="primary-btn">Export All Data</button>
-              </div>
+    <div className="export-grid">
 
-              <div className="export-box">
-                <h3>Selective Export</h3>
-                <p>Choose specific data categories</p>
-                <button className="secondary-btn">Choose Data</button>
-              </div>
+      <div className="export-box">
+        <h3>{t("complete_data_export")}</h3>
+        <p>{t("complete_data_export_desc")}</p>
+        <button className="primary-btn">
+          {t("export_all_data")}
+        </button>
+      </div>
 
-            </div>
+      <div className="export-box">
+        <h3>{t("selective_export")}</h3>
+        <p>{t("selective_export_desc")}</p>
+        <button className="secondary-btn">
+          {t("choose_data")}
+        </button>
+      </div>
 
-            <h2 className="section-title" style={{ marginTop: "2rem" }}>
-              Data Storage
-            </h2>
-            <p className="section-subtext">
-              Information about your data storage and retention
-            </p>
+    </div>
 
-            <div className="stats-grid">
-              <div className="stat-card">
-                <h1>2.4 GB</h1>
-                <p>Total Data</p>
-              </div>
-              <div className="stat-card">
-                <h1>4 Years</h1>
-                <p>Data Retention</p>
-              </div>
-              <div className="stat-card">
-                <h1>24 Hrs</h1>
-                <p>Backup Frequency</p>
-              </div>
-            </div>
-          </div>
-        )}
+    <h2
+      className="section-title"
+      style={{ marginTop: "2rem" }}
+    >
+      {t("data_storage")}
+    </h2>
 
+    <p className="section-subtext">
+      {t("data_storage_desc")}
+    </p>
+
+    <div className="stats-grid">
+
+      <div className="stat-card">
+        <h1>2.4 GB</h1>
+        <p>{t("total_data")}</p>
+      </div>
+
+      <div className="stat-card">
+        <h1>4 Years</h1>
+        <p>{t("data_retention")}</p>
+      </div>
+
+      <div className="stat-card">
+        <h1>24 Hrs</h1>
+        <p>{t("backup_frequency")}</p>
+      </div>
+
+    </div>
+
+  </div>
+)}
         {/* ==========================
             ACCOUNT
         =========================== */}
-        {activeTab === "account" && (
-          <div className="settings-card fadeIn">
-            <h2 className="section-title">Account Management</h2>
-            <p className="section-subtext">
-              Manage your account settings and preferences
-            </p>
+      {activeTab === "account" && (
+  <div className="settings-card fadeIn">
+    <h2 className="section-title">
+      {t("account_management")}
+    </h2>
 
-            <form className="account-form">
-              <div className="form-group">
-                <label>Current Password</label>
-                <input type="password" placeholder="Enter current password" />
-              </div>
+    <p className="section-subtext">
+      {t("account_management_desc")}
+    </p>
 
-              <div className="form-group">
-                <label>New Password</label>
-                <input type="password" placeholder="Enter new password" />
-              </div>
+    <form className="account-form">
+      <div className="form-group">
+        <label>{t("current_password")}</label>
+        <input
+          type="password"
+          placeholder={t("enter_current_password")}
+        />
+      </div>
 
-              <div className="form-group">
-                <label>Confirm New Password</label>
-                <input type="password" placeholder="Confirm new password" />
-              </div>
+      <div className="form-group">
+        <label>{t("new_password")}</label>
+        <input
+          type="password"
+          placeholder={t("enter_new_password")}
+        />
+      </div>
 
-              <button className="primary-btn">Update Password</button>
-            </form>
+      <div className="form-group">
+        <label>{t("confirm_new_password")}</label>
+        <input
+          type="password"
+          placeholder={t("confirm_password")}
+        />
+      </div>
 
-            <div className="danger-zone">
-              <h2>Danger Zone</h2>
-              <p>
-                Deleting your account is irreversible. All your data will be lost.
-              </p>
-              <button className="danger-btn">Delete Account</button>
-            </div>
-          </div>
-        )}
+      <button className="primary-btn">
+        {t("update_password")}
+      </button>
+    </form>
+
+    <div className="danger-zone">
+      <h2>{t("danger_zone")}</h2>
+
+      <p>{t("delete_account_warning")}</p>
+
+      <button className="danger-btn">
+        {t("delete_account")}
+      </button>
+    </div>
+  </div>
+)}
 
       </div>
     </>

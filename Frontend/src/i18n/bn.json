@@ -33,5 +33,674 @@
   "theme": "থিম",
 
   "light": "লাইট",
-  "dark": "ডার্ক"
+  "dark": "ডার্ক",
+
+
+
+
+
+
+
+  "your_farm": "আপনার খামার",
+
+  "dashboard_description": "আপনার খামারের কার্যকারিতা পর্যবেক্ষণ করুন, AI-ভিত্তিক সুপারিশ পান এবং বিস্তৃত বিশ্লেষণ ও তথ্যের মাধ্যমে আপনার অগ্রগতি ট্র্যাক করুন।",
+
+  "get_smart_recommendations": "স্মার্ট সুপারিশ পান",
+  "view_farm_analytics": "খামারের বিশ্লেষণ দেখুন",
+
+  "your_farm_overview": "আপনার খামারের সারসংক্ষেপ",
+
+  "farmers_helped": "সহায়তা প্রাপ্ত কৃষক",
+  "total_improvement": "মোট উন্নতি",
+  "success_rate": "সাফল্যের হার",
+  "crops_supported": "সমর্থিত ফসল",
+
+  "recent_activity": "সাম্প্রতিক কার্যকলাপ",
+
+  "latest_recommendations": "সর্বশেষ সুপারিশ",
+
+  "wheat": "গম",
+  "maize": "ভুট্টা",
+  "soybean": "সয়াবিন",
+
+  "winter_season": "শীতকাল",
+  "monsoon_season": "বর্ষাকাল",
+  "post_monsoon": "বর্ষা-পরবর্তী সময়",
+
+  "view_all_recommendations": "সব সুপারিশ দেখুন",
+
+  "performance_highlights": "কার্যকারিতার প্রধান দিক",
+
+  "this_season_yield": "এই মৌসুমের ফলন:",
+  "cost_reduction": "খরচ হ্রাস:",
+
+  "view_detailed_analysis": "বিস্তারিত বিশ্লেষণ দেখুন",
+
+  "everything_you_need": "স্মার্ট কৃষির জন্য আপনার প্রয়োজনীয় সবকিছু",
+
+  "everything_you_need_desc": "আমাদের সম্পূর্ণ প্ল্যাটফর্ম আপনাকে উন্নত কৃষি সিদ্ধান্ত নেওয়ার জন্য প্রয়োজনীয় সকল সরঞ্জাম ও তথ্য প্রদান করে।",
+
+  "smart_crop_recommendations": "স্মার্ট ফসলের সুপারিশ",
+
+  "smart_crop_recommendations_desc": "মাটি, আবহাওয়া এবং বাজার পরিস্থিতির ভিত্তিতে AI-এর মাধ্যমে ফসলের পরামর্শ পান।",
+
+  "weather_insights": "আবহাওয়ার তথ্য",
+
+  "weather_insights_desc": "রিয়েল-টাইম আবহাওয়ার তথ্য ও পূর্বাভাস পেয়ে আপনার কৃষি সিদ্ধান্ত আরও উন্নত করুন।",
+
+  "soil_analysis_desc": "উন্নত ফলনের জন্য সম্পূর্ণ মাটি পরীক্ষা ও পুষ্টি উপাদান বিশ্লেষণ।",
+
+  "analytics_dashboard": "বিশ্লেষণ ড্যাশবোর্ড",
+
+  "analytics_dashboard_desc": "আপনার কৃষি কার্যকারিতা পর্যবেক্ষণ করুন এবং আপনার কৌশল উন্নত করুন।",
+
+  "learn_more": "আরও জানুন",
+
+  "quick_actions": "দ্রুত কার্যক্রম",
+
+  "quick_actions_desc": "ড্যাশবোর্ড থেকে আপনার সবচেয়ে বেশি ব্যবহৃত টুল এবং ফিচার দ্রুত ব্যবহার করুন।",
+
+  "smart_crop_analysis": "স্মার্ট ফসল বিশ্লেষণ",
+
+  "check_weather": "আবহাওয়া দেখুন",
+
+  "soil_testing": "মাটি পরীক্ষা",
+
+
+
+  
+  "crop_recommendation": "ফসলের সুপারিশ",
+  "crop_recommendation_subtitle": "মাটি ও জলবায়ুর তথ্যের ভিত্তিতে AI দ্বারা ফসলের সুপারিশ পান",
+
+  "manual_input": "ম্যানুয়াল ইনপুট",
+  "by_location": "অবস্থান অনুযায়ী",
+  "history": "ইতিহাস",
+
+  "enter_soil_climate": "মাটি ও জলবায়ুর তথ্য দিন",
+
+  "nitrogen_placeholder": "নাইট্রোজেন (0-150)",
+  "phosphorus_placeholder": "ফসফরাস (0-150)",
+  "potassium_placeholder": "পটাশিয়াম (0-210)",
+  "temperature_placeholder": "তাপমাত্রা (0-60°C)",
+  "humidity_placeholder": "আর্দ্রতা (0-100%)",
+  "ph_placeholder": "pH (0-14)",
+  "rainfall_placeholder": "বৃষ্টিপাত (মিমি/মাস)",
+
+  "get_recommendation": "🚀 সুপারিশ পান",
+  "predicting": "পূর্বাভাস দেওয়া হচ্ছে...",
+  "clear": "মুছুন",
+
+  "location_prediction": "অবস্থানভিত্তিক পূর্বাভাস",
+  "location_prediction_subtitle": "আপনার অবস্থান থেকে আবহাওয়ার তথ্য স্বয়ংক্রিয়ভাবে সংগ্রহ করা হবে",
+
+  "enter_state": "রাজ্যের নাম লিখুন",
+  "enter_district": "জেলার নাম লিখুন",
+  "latitude": "অক্ষাংশ",
+  "longitude": "দ্রাঘিমাংশ",
+
+  "use_my_location": "আমার অবস্থান ব্যবহার করুন",
+  "fetching": "সংগ্রহ করা হচ্ছে...",
+
+  "prediction_history": "পূর্বাভাসের ইতিহাস",
+  "no_history": "কোনও ইতিহাস পাওয়া যায়নি",
+  "history_desc": "আপনার পূর্বাভাস এখানে দেখানো হবে",
+
+  "predict": "পূর্বাভাস",
+
+  "invalid_input": "ভুল তথ্য",
+
+  "no_prediction": "এখনও কোনও পূর্বাভাস নেই",
+  "no_prediction_desc": "তথ্য দিন এবং \"সুপারিশ পান\" বোতামে ক্লিক করুন",
+
+  "top_crop": "সেরা ফসলের সুপারিশ",
+
+  "soil_summary": "মাটি ও জলবায়ুর সারাংশ",
+
+  "nitrogen": "নাইট্রোজেন",
+  "phosphorus": "ফসফরাস",
+  "potassium": "পটাশিয়াম",
+  "temperature": "তাপমাত্রা",
+  "humidity": "আর্দ্রতা",
+  "ph": "পিএইচ",
+  "rainfall": "বৃষ্টিপাত",
+
+  "location_summary": "অবস্থান ও জলবায়ুর সারাংশ",
+  "state": "রাজ্য",
+  "district": "জেলা",
+
+  "why_crop": "{{crop}} কেন?",
+
+  "ai_analysis": "AI বিশ্লেষণ",
+
+  "unauthorized": "অননুমোদিত",
+  "server_error": "সার্ভার ত্রুটি! আবার চেষ্টা করুন।",
+  "location_failed": "অবস্থানভিত্তিক পূর্বাভাস ব্যর্থ হয়েছে।",
+
+  "permission_denied": "অনুমতি প্রত্যাখ্যাত",
+  "location_not_supported": "জিওলোকেশন সমর্থিত নয়",
+  "failed_location": "অবস্থানের তথ্য আনা যায়নি",
+  "fetch_location_first": "প্রথমে অবস্থান সংগ্রহ করুন",
+
+  "analysis_manual": "{{crop}} সুপারিশ করা হয়েছে কারণ মাটির পুষ্টি, pH, তাপমাত্রা, আর্দ্রতা এবং বৃষ্টিপাত এই ফসলের আদর্শ বৃদ্ধির জন্য উপযুক্ত। AI বিশ্লেষণ অনুযায়ী {{crop}} সবচেয়ে উপযুক্ত ফসল।",
+
+  "analysis_location": "{{district}}, {{state}} অঞ্চলের জন্য {{crop}} সুপারিশ করা হয়েছে কারণ এখানকার আবহাওয়া এই ফসলের চাষের জন্য অত্যন্ত উপযোগী। AI বিশ্লেষণে {{crop}}-কে এই অঞ্চলের সর্বোত্তম ফসল হিসেবে নির্বাচন করা হয়েছে।",
+
+  "reason_n": "নাইট্রোজেনের মাত্রা স্বাস্থ্যকর উদ্ভিদ বৃদ্ধিতে সহায়তা করে।",
+  "reason_p": "ফসফরাস শক্তিশালী শিকড় গঠনে সাহায্য করে।",
+  "reason_k": "পটাশিয়াম ফসলের গুণমান ও রোগ প্রতিরোধ ক্ষমতা বৃদ্ধি করে।",
+  "reason_ph": "মাটির pH আদর্শ সীমার মধ্যে রয়েছে।",
+  "reason_temp": "তাপমাত্রা ফসল বৃদ্ধির জন্য উপযুক্ত।",
+  "reason_humidity": "আর্দ্রতা সুস্থ ফসল বৃদ্ধির জন্য উপযোগী।",
+  "reason_rainfall": "চাষের জন্য পর্যাপ্ত বৃষ্টিপাত রয়েছে।",
+
+  "location_reason_temp": "তাপমাত্রা ফসল বৃদ্ধির জন্য অনুকূল।",
+  "location_reason_humidity": "আর্দ্রতা সুস্থ ফসল বৃদ্ধিতে সহায়ক।",
+  "location_reason_rainfall": "চাষের জন্য পর্যাপ্ত বৃষ্টিপাত রয়েছে।",
+  "location_reason_crop": "{{district}}-এর জলবায়ুর জন্য {{crop}} উপযুক্ত।",
+   "crop": {
+    "rice": "ধান",
+    "maize": "ভুট্টা",
+    "chickpea": "ছোলা",
+    "kidneybeans": "রাজমা",
+    "pigeonpeas": "আরহার",
+    "mothbeans": "মটরশুঁটি",
+    "mungbean": "মুগ",
+    "blackgram": "মাষকলাই",
+    "lentil": "মসুর",
+    "pomegranate": "ডালিম",
+    "banana": "কলা",
+    "mango": "আম",
+    "grapes": "আঙুর",
+    "watermelon": "তরমুজ",
+    "muskmelon": "বাঙ্গি",
+    "apple": "আপেল",
+    "orange": "কমলা",
+    "papaya": "পেঁপে",
+    "coconut": "নারকেল",
+    "cotton": "তুলা",
+    "jute": "পাট",
+    "coffee": "কফি"
+  },
+  
+  "farm_records_title": "খামারের রেকর্ড",
+  "farm_records_subtitle": "প্রতিটি ফসল কাটার পর প্রকৃত কৃষি তথ্য সংরক্ষণ করুন এবং বিশ্লেষণ ও কর্মক্ষমতা রিপোর্ট পান।",
+
+  "planting": "রোপণ",
+  "harvest": "ফসল সংগ্রহ",
+  "sales": "বিক্রয়",
+  "expenses": "ব্যয়",
+  "resources": "সম্পদ",
+
+  "add_planting_record": "রোপণের তথ্য যোগ করুন",
+  "planting_record_subtitle": "আপনার খামারে নতুন ফসল রোপণের তথ্য সংরক্ষণ করুন",
+
+  "planting_history": "রোপণের ইতিহাস",
+
+  "add_harvest_record": "ফসল সংগ্রহের তথ্য যোগ করুন",
+  "harvest_record_subtitle": "ফসল সংগ্রহ এবং উৎপাদনের তথ্য সংরক্ষণ করুন",
+
+  "harvest_history": "ফসল সংগ্রহের ইতিহাস",
+
+  "add_sale_record": "বিক্রয়ের তথ্য যোগ করুন",
+  "sale_record_subtitle": "ফসল বিক্রয় এবং আয়ের তথ্য সংরক্ষণ করুন",
+
+  "sales_history": "বিক্রয়ের ইতিহাস",
+
+  "add_expense_record": "ব্যয়ের তথ্য যোগ করুন",
+  "expense_record_subtitle": "চাষাবাদের খরচ সংরক্ষণ করুন",
+
+  "expense_history": "ব্যয়ের ইতিহাস",
+
+  "add_resource_record": "সম্পদের ব্যবহার যোগ করুন",
+  "resource_record_subtitle": "পানি, সার এবং অন্যান্য সম্পদের ব্যবহার সংরক্ষণ করুন",
+
+  "resource_history": "সম্পদ ব্যবহারের ইতিহাস",
+
+  "records": "{{count}} টি রেকর্ড",
+
+  "planting_date": "রোপণের তারিখ",
+  "harvest_date": "ফসল সংগ্রহের তারিখ",
+  "sale_date": "বিক্রয়ের তারিখ",
+  "date": "তারিখ",
+
+  "Crop": "ফসল",
+  "field_name": "জমির নাম",
+  "area": "এলাকা",
+  "expected_yield": "প্রত্যাশিত ফলন",
+  "total_harvest": "মোট ফলন",
+  "crop_quality": "ফসলের মান",
+  "quality": "মান",
+
+  "good": "ভাল",
+  "average": "মাঝারি",
+  "excellent": "চমৎকার",
+  "poor": "দুর্বল",
+
+  "quantity": "পরিমাণ",
+  "price_per_ton": "প্রতি টনের মূল্য",
+  "buyer": "ক্রেতা",
+  "category": "বিভাগ",
+  "amount": "পরিমাণ",
+  "description": "বিবরণ",
+  "resource_type": "সম্পদের ধরন",
+  "unit": "একক",
+  "field": "জমি",
+
+  "expected_yield_label": "প্রত্যাশিত ফলন",
+  "total_yield": "মোট ফলন",
+  "revenue": "মোট আয়",
+
+  "north_field": "উত্তর ক্ষেত",
+  "example_crop": "যেমন: ধান, গম, ভুট্টা",
+  "example_area": "যেমন: ১০",
+  "example_expected_yield": "যেমন: ৪.৫",
+  "example_total_harvest": "যেমন: ৫১",
+  "example_quantity": "যেমন: ৫০",
+  "example_price": "যেমন: ২৫০০০",
+  "example_buyer": "যেমন: স্থানীয় শস্য বাজার",
+  "example_amount": "যেমন: ১৫০০০",
+  "example_description": "যেমন: গমের বীজ - ২০০ কেজি",
+  "example_resource_quantity": "যেমন: ১০০০০",
+  "example_unit": "যেমন: লিটার, কেজি",
+
+  "water": "পানি",
+  "fertilizer": "সার",
+  "pesticide": "কীটনাশক",
+  "seeds": "বীজ",
+  "labor": "শ্রম",
+  "equipment": "যন্ত্রপাতি",
+  "other": "অন্যান্য",
+
+  "tons": "টন",
+  "ton": "টন",
+  "hectares": "হেক্টর",
+  "ha": "হেক্টর",
+  "t_per_ha": "টন/হেক্টর",
+
+  "delete": "মুছুন",
+
+
+
+  "weather_dashboard": "আবহাওয়া ড্যাশবোর্ড",
+  "weather_dashboard_desc": "স্মার্ট কৃষির জন্য রিয়েল-টাইম আবহাওয়ার তথ্য ও পূর্বাভাস।",
+
+  "search_city": "শহরের নাম লিখুন...",
+  "showing_results_for": "{{city}}-এর আবহাওয়া দেখানো হচ্ছে",
+  "showing_current_location": "আপনার বর্তমান অবস্থানের আবহাওয়া দেখানো হচ্ছে",
+
+  "fetching_latest_weather": "সর্বশেষ আবহাওয়ার তথ্য আনা হচ্ছে...",
+  "failed_weather": "আবহাওয়ার তথ্য আনতে ব্যর্থ হয়েছে।",
+
+  "current_conditions": "বর্তমান আবহাওয়ার অবস্থা",
+
+  "temperature_label": "তাপমাত্রা",
+  "humidity_label": "আর্দ্রতা",
+  "wind_speed": "বাতাসের গতি",
+  "uv_index": "ইউভি সূচক",
+
+  "five_day_forecast": "৫ দিনের আবহাওয়ার পূর্বাভাস",
+
+  "max_temperature": "সর্বোচ্চ তাপমাত্রা",
+  "min_temperature": "সর্বনিম্ন তাপমাত্রা",
+  "chance_of_rain": "বৃষ্টির সম্ভাবনা",
+
+  "farming_alerts": "কৃষি সতর্কতা ও পরামর্শ",
+
+  "heavy_rain_expected": "ভারী বৃষ্টির সম্ভাবনা",
+  "heavy_rain_message": "আজ ভারী বৃষ্টির সম্ভাবনা রয়েছে। সংবেদনশীল ফসল সুরক্ষিত রাখুন।",
+
+  "optimal_irrigation": "সেচের উপযুক্ত সময়",
+  "optimal_irrigation_message": "বৃষ্টির সম্ভাবনা নেই। সেচের জন্য এটি উপযুক্ত সময়।",
+
+  "high_uv": "উচ্চ ইউভি সূচক",
+  "high_uv_message": "বর্তমান ইউভি সূচক {{uv}}। মাঠে কাজ করার সময় প্রয়োজনীয় সুরক্ষা গ্রহণ করুন।",
+
+  "normal_conditions": "স্বাভাবিক আবহাওয়া",
+  "normal_conditions_message": "আজ উল্লেখযোগ্য কোনো আবহাওয়া ঝুঁকি নেই। নিয়মিত কৃষিকাজের জন্য উপযুক্ত দিন।",
+
+  "detailed_metrics": "বিস্তারিত আবহাওয়ার তথ্য",
+
+  "visibility": "দৃষ্টিসীমা",
+  "visibility_desc": "মাঠের কাজের জন্য পরিষ্কার দৃশ্যমানতা।",
+
+  "pressure": "বায়ুমণ্ডলীয় চাপ",
+  "pressure_desc": "hPa - আবহাওয়া স্থিতিশীল রয়েছে।",
+
+  "rainfall_today": "আজকের বৃষ্টিপাত",
+  "rainfall_today_desc": "আজ সেচের প্রয়োজন নেই।",
+
+  "weather_clear": "পরিষ্কার",
+  "weather_sunny": "রৌদ্রোজ্জ্বল",
+  "weather_cloudy": "মেঘলা",
+  "weather_rain": "বৃষ্টি",
+  "weather_snow": "তুষারপাত",
+  "weather_storm": "ঝড়",
+
+  "test_clear": "পরিষ্কার",
+  "test_cloudy": "মেঘলা",
+  "test_rain": "বৃষ্টি",
+  "test_snow": "তুষার",
+  "test_storm": "ঝড়",
+  "test_sunny": "রৌদ্রোজ্জ্বল",
+  "real_data": "বাস্তব তথ্য",
+
+
+
+
+
+  
+  "soil_analysis_title": "মাটির বিশ্লেষণ",
+  "soil_analysis_subtitle": "আপনার মাটির স্বাস্থ্য পর্যবেক্ষণ ও বিশ্লেষণ করুন",
+
+  "image_analysis": "ছবি বিশ্লেষণ",
+  "new_test": "নতুন পরীক্ষা",
+  "cancel": "বাতিল করুন",
+
+  "overall_health": "সামগ্রিক স্বাস্থ্য",
+
+  "health_score": "স্বাস্থ্য স্কোর",
+
+  "current_analysis": "বর্তমান বিশ্লেষণ",
+
+  "historical_data": "পূর্ববর্তী তথ্য",
+
+  "upload_soil_image": "মাটির ছবি আপলোড করুন",
+
+  "analyze": "বিশ্লেষণ করুন",
+
+  "add_soil_test": "মাটির পরীক্ষা যোগ করুন",
+
+  "test_date": "পরীক্ষার তারিখ",
+
+  "organic_carbon": "জৈব কার্বন",
+
+  "moisture": "আর্দ্রতা",
+
+  "notes": "মন্তব্য",
+
+  "save_test": "পরীক্ষা সংরক্ষণ করুন",
+
+  "latest_soil_test": "সর্বশেষ মাটির পরীক্ষা",
+
+  "nutrient_distribution": "পুষ্টি উপাদানের বণ্টন",
+
+  "no_soil_tests": "এখনও কোনো মাটির পরীক্ষা নেই",
+
+  "create_first_soil_test": "বিশ্লেষণ দেখতে আপনার প্রথম মাটির পরীক্ষা যোগ করুন",
+
+  "Field": "ক্ষেত",
+
+  "status": "অবস্থা",
+
+  "nitrogen_short": "N",
+
+  "phosphorus_short": "P",
+
+  "potassium_short": "K",
+
+  "no_historical_data": "কোনো পূর্ববর্তী তথ্য নেই",
+
+  "history_empty_desc": "ইতিহাস দেখতে একটি মাটির পরীক্ষা যোগ করুন",
+
+  "soil_suitability": "মাটির উপযোগিতা",
+
+  "nutrient_insight": "পুষ্টি সম্পর্কিত তথ্য",
+
+  "climate_fit": "আবহাওয়ার উপযোগিতা",
+
+  "recommended_action": "প্রস্তাবিত করণীয়",
+
+  "no_recommendations": "কোনো সুপারিশ নেই",
+
+  "recommendation_empty_desc": "সুপারিশ পেতে একটি মাটির পরীক্ষা যোগ করুন",
+
+  "analysis_result": "বিশ্লেষণের ফলাফল",
+
+  "soil_type": "মাটির ধরন",
+
+  "fertility": "উর্বরতা",
+
+  "confidence": "নির্ভরযোগ্যতা",
+
+  "suggested_crops": "প্রস্তাবিত ফসল",
+
+  "saving_soil_test": "মাটির পরীক্ষা সংরক্ষণ করা হচ্ছে...",
+
+  "saved_successfully": "সফলভাবে সংরক্ষণ করা হয়েছে 🌱",
+
+  "save_failed": "সংরক্ষণ ব্যর্থ হয়েছে ❌",
+
+  "select_image_first": "প্রথমে একটি ছবি নির্বাচন করুন",
+
+  "analyzing": "বিশ্লেষণ করা হচ্ছে...",
+
+  "analysis_complete": "বিশ্লেষণ সফলভাবে সম্পন্ন হয়েছে 🌱",
+
+  "analysis_failed": "বিশ্লেষণ ব্যর্থ হয়েছে ❌",
+
+
+
+  
+
+
+  "landing_tagline": "এআই এবং মেশিন লার্নিং দ্বারা পরিচালিত",
+
+  "landing_title_1": "স্মার্ট কৃষি",
+  "landing_title_2": "এখন আরও সহজ",
+
+  "landing_description": "এআই-ভিত্তিক ফসলের সুপারিশ, আবহাওয়ার তথ্য এবং বিশ্লেষণ পান যাতে আপনার ফলন ও লাভ সর্বাধিক হয়।",
+
+  "get_started": "শুরু করুন",
+
+  "watch_demo": "ডেমো দেখুন",
+
+  "farmers": "কৃষক",
+
+  "crops": "ফসল",
+
+  "support": "সহায়তা",
+
+  "feature_ai_title": "এআই-ভিত্তিক সুপারিশ",
+
+  "feature_ai_desc": "আপনার মাটি, আবহাওয়া এবং বাজারের তথ্যের ভিত্তিতে ব্যক্তিগতকৃত ফসলের পরামর্শ পান।",
+
+  "feature_weather_title": "আবহাওয়ার তথ্য",
+
+  "feature_weather_desc": "আপনার কৃষিকাজের পরিকল্পনার জন্য রিয়েল-টাইম আবহাওয়ার পূর্বাভাস ও সতর্কতা পান।",
+
+  "feature_soil_title": "মাটির বিশ্লেষণ",
+
+  "feature_soil_desc": "বিস্তারিত বিশ্লেষণ ও উন্নয়নের পরামর্শের মাধ্যমে আপনার মাটির স্বাস্থ্য সম্পর্কে জানুন।",
+
+  "feature_market_title": "বাজার প্রবণতা",
+
+  "feature_market_desc": "বিভিন্ন ফসলের সর্বশেষ বাজার মূল্য ও চাহিদার তথ্য জানুন।",
+
+  "testimonials_title": "আমাদের ব্যবহারকারীরা কী বলছেন?",
+
+  "testimonial1": "\"এই প্ল্যাটফর্মটি আমার কৃষিকাজকে সম্পূর্ণ বদলে দিয়েছে। এআই-এর সুপারিশগুলো একদম সঠিক!\"",
+  "testimonial1_name": "- জন ডি.",
+
+  "testimonial2": "\"আবহাওয়ার তথ্য আমাকে হঠাৎ হওয়া ঝড় থেকে ফসল রক্ষা করতে সাহায্য করেছে।\"",
+  "testimonial2_name": "- সারাহ কে.",
+
+  "testimonial3": "\"বাজার বিশ্লেষণ ব্যবহার করে আমি আমার লাভ ৩০% বৃদ্ধি করেছি।\"",
+  "testimonial3_name": "- মাইক এল.",
+
+  "auth_subtitle": "শুরু করতে আপনার অ্যাকাউন্টে সাইন ইন করুন অথবা একটি নতুন অ্যাকাউন্ট তৈরি করুন।",
+
+  "sign_in": "সাইন ইন",
+
+  "sign_up": "সাইন আপ",
+
+  "username": "ব্যবহারকারীর নাম",
+
+  "username_placeholder": "আপনার ব্যবহারকারীর নাম লিখুন",
+
+  "email": "ইমেইল",
+
+  "password": "পাসওয়ার্ড",
+
+  "confirm_password": "পাসওয়ার্ড নিশ্চিত করুন",
+
+  "forgot_password": "পাসওয়ার্ড ভুলে গেছেন?",
+
+  "send_otp": "ওটিপি পাঠান",
+
+  "otp": "ওটিপি",
+
+  "new_password": "নতুন পাসওয়ার্ড",
+
+  "reset_password": "পাসওয়ার্ড রিসেট করুন",
+
+  "back_to_login": "লগইনে ফিরে যান",
+
+  "verification_email_sent": "যাচাইকরণ ইমেইল পাঠানো হয়েছে। অনুগ্রহ করে আপনার ইনবক্স দেখুন এবং যাচাইকরণ লিঙ্কে ক্লিক করুন।",
+
+  "email_verified": "ইমেইল সফলভাবে যাচাই হয়েছে। অনুগ্রহ করে সাইন ইন করুন।",
+
+  "password_reset_success": "পাসওয়ার্ড সফলভাবে রিসেট হয়েছে। অনুগ্রহ করে সাইন ইন করুন।",
+
+  "something_wrong": "কিছু ভুল হয়েছে।",
+
+  "forgot_password_failed": "পাসওয়ার্ড পুনরুদ্ধারের অনুরোধ ব্যর্থ হয়েছে।",
+
+  "reset_password_failed": "পাসওয়ার্ড রিসেট করতে ব্যর্থ হয়েছে।",
+
+
+  "features": "বৈশিষ্ট্যসমূহ",
+  "testimonials": "ব্যবহারকারীদের মতামত",
+
+  "footer_description": "স্মার্ট কৃষি প্রযুক্তির মাধ্যমে কৃষকদের ক্ষমতায়ন",
+
+  "privacy_policy": "গোপনীয়তা নীতি",
+
+  "terms_of_service": "পরিষেবার শর্তাবলী",
+
+  "contact_us": "যোগাযোগ করুন",
+
+
+
+  
+  "my_profile": "আমার প্রোফাইল",
+  "manage_profile_desc": "আপনার ব্যক্তিগত তথ্য এবং কৃষি সংক্রান্ত বিবরণ পরিচালনা করুন",
+
+  "loading_profile": "প্রোফাইল লোড হচ্ছে...",
+  "profile_not_found": "প্রোফাইল পাওয়া যায়নি",
+
+  "change_photo": "ছবি পরিবর্তন করুন",
+
+  "save": "সংরক্ষণ করুন",
+  "edit": "সম্পাদনা করুন",
+
+  "full_name": "পূর্ণ নাম",
+  "phone_number": "ফোন নম্বর",
+  "bio": "পরিচিতি",
+  "location": "অবস্থান",
+  "farm_name": "খামারের নাম",
+  "specialization": "বিশেষজ্ঞতা",
+
+  "member_since": "সদস্য হয়েছেন",
+  "experience": "অভিজ্ঞতা",
+  "farm_size": "খামারের আকার",
+  "achievements": "অর্জনসমূহ",
+
+  "profile_updated": "প্রোফাইল সফলভাবে আপডেট হয়েছে! 🎉🤩",
+  "profile_update_failed": "প্রোফাইল সংরক্ষণ করা যায়নি",
+
+  "not_available": "—",
+
+
+  
+  "settings_subtitle": "আপনার CropWise অভিজ্ঞতা কাস্টমাইজ করুন এবং আপনার পছন্দসমূহ পরিচালনা করুন।",
+
+  "privacy": "গোপনীয়তা",
+  "preferences": "পছন্দসমূহ",
+  "data_export": "ডেটা ও এক্সপোর্ট",
+  "account": "অ্যাকাউন্ট",
+
+  "notification_preferences": "বিজ্ঞপ্তি পছন্দসমূহ",
+  "notification_preferences_desc": "আপনি কোন কোন বিজ্ঞপ্তি পেতে চান তা নির্বাচন করুন।",
+
+  "weather_alerts": "আবহাওয়া সতর্কতা",
+  "weather_alerts_desc": "আপনার ফসলকে প্রভাবিত করতে পারে এমন আবহাওয়ার পরিবর্তনের বিজ্ঞপ্তি পান।",
+
+  "system_announcements": "সিস্টেম ঘোষণা",
+  "system_announcements_desc": "নতুন ফিচার এবং সিস্টেম আপডেট সম্পর্কে জানুন।",
+
+  "market_prices": "বাজার মূল্য",
+  "market_prices_desc": "ফসলের দাম এবং বাজারের প্রবণতা সম্পর্কে আপডেট থাকুন।",
+
+  "privacy_controls": "গোপনীয়তা নিয়ন্ত্রণ",
+  "privacy_controls_desc": "আপনার গোপনীয়তা এবং ডেটা শেয়ারিং পছন্দসমূহ পরিচালনা করুন।",
+
+  "location_access": "অবস্থান অ্যাক্সেস",
+  "location_access_desc": "সঠিক সুপারিশ এবং আবহাওয়ার আপডেটের জন্য অ্যাপকে আপনার অবস্থান ব্যবহারের অনুমতি দিন।",
+
+  "share_analytics": "অ্যানালিটিক্স শেয়ার করুন",
+  "share_analytics_desc": "CropWise-এর ফিচার এবং কার্যক্ষমতা উন্নত করতে বেনামী ব্যবহার তথ্য শেয়ার করুন।",
+
+  "browser_location_granted": "✓ ব্রাউজারে অবস্থানের অনুমতি প্রদান করা হয়েছে।",
+  "browser_location_denied": "⚠ ব্রাউজারে অবস্থানের অনুমতি প্রত্যাখ্যান করা হয়েছে। অনুগ্রহ করে ব্রাউজার সেটিংস থেকে এটি চালু করুন।",
+  "browser_location_prompt": "অবস্থানের অনুমতি এখনো নির্বাচন করা হয়নি।",
+
+  "app_preferences": "অ্যাপ পছন্দসমূহ",
+  "app_preferences_desc": "আপনার অ্যাপ ব্যবহারের অভিজ্ঞতা কাস্টমাইজ করুন।",
+
+  "measurement_units": "পরিমাপের একক",
+
+  "metric": "মেট্রিক (কেজি, হেক্টর, সেলসিয়াস)",
+  "imperial": "ইম্পেরিয়াল (পাউন্ড, একর, ফারেনহাইট)",
+
+  "english": "ইংরেজি",
+  "hindi": "হিন্দি",
+  "bengali": "বাংলা",
+
+  "timezone": "সময় অঞ্চল",
+  "currency": "মুদ্রা",
+
+  "complete_data_export": "সম্পূর্ণ ডেটা এক্সপোর্ট",
+  "complete_data_export_desc": "বিশ্লেষণ, রিপোর্ট এবং সুপারিশসহ আপনার সকল কৃষি তথ্য ডাউনলোড করুন।",
+  "export_all_data": "সমস্ত ডেটা এক্সপোর্ট করুন",
+
+  "selective_export": "নির্বাচিত ডেটা এক্সপোর্ট",
+  "selective_export_desc": "নির্দিষ্ট কৃষি তথ্যের বিভাগ নির্বাচন করুন।",
+  "choose_data": "ডেটা নির্বাচন করুন",
+
+  "data_storage": "ডেটা সংরক্ষণ",
+  "data_storage_desc": "আপনার ডেটা সংরক্ষণ এবং সংরক্ষণকাল সম্পর্কিত তথ্য।",
+
+  "total_data": "মোট ডেটা",
+  "data_retention": "ডেটা সংরক্ষণকাল",
+  "backup_frequency": "ব্যাকআপের সময়সূচি",
+
+  "account_management": "অ্যাকাউন্ট পরিচালনা",
+  "account_management_desc": "আপনার অ্যাকাউন্ট সেটিংস এবং নিরাপত্তা পছন্দসমূহ পরিচালনা করুন।",
+
+  "current_password": "বর্তমান পাসওয়ার্ড",
+  "New_password": "নতুন পাসওয়ার্ড",
+  "confirm_new_password": "নতুন পাসওয়ার্ড নিশ্চিত করুন",
+
+  "enter_current_password": "বর্তমান পাসওয়ার্ড লিখুন",
+  "enter_new_password": "নতুন পাসওয়ার্ড লিখুন",
+  "Confirm_password": "নতুন পাসওয়ার্ড নিশ্চিত করুন",
+
+  "update_password": "পাসওয়ার্ড আপডেট করুন",
+
+  "danger_zone": "সতর্কতা অঞ্চল",
+  "delete_account_warning": "আপনার অ্যাকাউন্ট মুছে ফেলা অপরিবর্তনীয়। আপনার সমস্ত কৃষি রেকর্ড, বিশ্লেষণ এবং ইতিহাস স্থায়ীভাবে মুছে যাবে।",
+  "delete_account": "অ্যাকাউন্ট মুছে ফেলুন",
+
+  "updated": "সফলভাবে আপডেট হয়েছে।",
+  "update_failed": "আপডেট ব্যর্থ হয়েছে।",
+
+  "geolocation_not_supported": "এই ব্রাউজারে জিওলোকেশন সমর্থিত নয়।",
+  "location_blocked": "ব্রাউজারের সেটিংসে অবস্থানের অনুমতি ব্লক করা হয়েছে।"
+
+
+
+
+
+
+  
 }

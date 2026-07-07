@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../scss/dashboard.scss";
 import Sidebar from "../components/Sidebar";
+import { useTranslation } from "react-i18next";
 const Dashboard = () => {
-    
+    const { t } = useTranslation();
   return (
      <>
       <Sidebar />
@@ -11,16 +12,19 @@ const Dashboard = () => {
       <div className="dashboard">
       {/* Header Section */}
       <header className="dashboard-header">
-        <h1>Your Farm <span>Dashboard</span></h1>
-        <p>
-          Monitor your farm’s performance, get AI-powered recommendations, and
-          track your progress with comprehensive analytics and insights.
-        </p>
+       <h1>
+  {t("your_farm")} <span>{t("dashboard")}</span>
+</h1>
+        <p>{t("dashboard_description")}</p>
         <div className="header-buttons">
           <Link to="/recommendations">
-          <button className="primary-btn">Get Smart Recommendations</button>
+          <button className="primary-btn">
+             {t("get_smart_recommendations")}
+          </button>
           </Link>
-          <button className="secondary-btn">View Farm Analytics</button>
+          <button className="secondary-btn">
+           {t("view_farm_analytics")}
+          </button>
         </div>
       </header>
 
@@ -34,101 +38,149 @@ const Dashboard = () => {
 
       {/* Farm Overview Section */}
       <section className="farm-overview">
-        <h2>Your Farm Overview</h2>
+         <h2>{t("your_farm_overview")}</h2>
         <div className="overview-grid">
           <div className="overview-card">
             <h3>10,000+</h3>
-            <p>Farmers Helped</p>
+              <p>{t("farmers_helped")}</p>
           </div>
           <div className="overview-card">
             <h3>35%</h3>
-            <p>Total Improvement</p>
+            <p>{t("total_improvement")}</p>
           </div>
           <div className="overview-card">
             <h3>94%</h3>
-            <p>Success Rate</p>
+             <p>{t("success_rate")}</p>
           </div>
           <div className="overview-card">
             <h3>50+</h3>
-            <p>Crops Supported</p>
+             <p>{t("crops_supported")}</p>
           </div>
         </div>
       </section>
 
       {/* Recent Activity Section */}
       <section className="recent-activity">
-        <h2>Recent Activity</h2>
+        <h2>{t("recent_activity")}</h2>
         <div className="activity-grid">
           <div className="activity-card">
-            <h4>Latest Recommendations</h4>
+            <h4>{t("latest_recommendations")}</h4>
             <ul>
-              <li><b>Wheat</b> – Winter Season</li>
-              <li><b>Maize</b> – Monsoon Season</li>
-              <li><b>Soybean</b> – Post-Monsoon</li>
+                      <li>
+  <b>{t("wheat")}</b> – {t("winter_season")}
+</li>
+
+<li>
+  <b>{t("maize")}</b> – {t("monsoon_season")}
+</li>
+
+<li>
+  <b>{t("soybean")}</b> – {t("post_monsoon")}
+</li>
             </ul>
-             <button className="link-btn">View All Recommendations</button>
+             <button className="link-btn">
+  {t("view_all_recommendations")}
+</button>
           </div>
           <div className="activity-card">
-            <h4>Performance Highlights</h4>
-            <p>This Season’s Yield: <b>+15%</b></p>
-            <p>Cost Reduction: <b>₹5,000</b></p>
-            <p>Success Rate: <b>94%</b></p>
-            <button className="link-btn">View Detailed Analysis</button>
+                  <h4>{t("performance_highlights")}</h4>
+
+<p>
+  {t("this_season_yield")} <b>+15%</b>
+</p>
+
+<p>
+  {t("cost_reduction")} <b>₹5,000</b>
+</p>
+
+<p>
+  {t("success_rate")} <b>94%</b>
+</p>
+
+<button className="link-btn">
+  {t("view_detailed_analysis")}
+</button>
           </div>
         </div>
       </section>
 
       {/* Smart Farming Tools */}
       <section className="smart-farming">
-        <h2>Everything You Need for Smart Farming</h2>
-        <p className="section-desc">
-          Our comprehensive platform provides all the tools and insights you need
-          to make informed farming decisions.
-        </p>
+          <h2>{t("everything_you_need")}</h2>
+           
+           <p className="section-desc">
+  {t("everything_you_need_desc")}
+</p>
         <div className="tools-grid">
           <div className="tool-card">
             <div className="icon green">🌾</div>
-            <h4>Smart Crop Recommendations</h4>
-            <p>Get AI-powered crop suggestions based on soil, weather, and market conditions.</p>
-            <button className="learn-btn">Learn More</button>
+              
+              <h4>{t("smart_crop_recommendations")}</h4>
+
+<p>{t("smart_crop_recommendations_desc")}</p>
+
+<button className="learn-btn">
+  {t("learn_more")}
+</button>
           </div>
 
           <div className="tool-card">
             <div className="icon blue">☁️</div>
-            <h4>Weather Insights</h4>
-            <p>Real-time weather data and forecasts to optimize your farming decisions.</p>
-            <button className="learn-btn">Learn More</button>
+               
+               <h4>{t("weather_insights")}</h4>
+
+<p>{t("weather_insights_desc")}</p>
+
+<button className="learn-btn">
+  {t("learn_more")}
+</button>
           </div>
           
           <div className="tool-card">
             <div className="icon orange">🧪</div>
-            <h4>Soil Analysis</h4>
-            <p>Comprehensive soil testing and nutrient analysis for better yields.</p>
-            <button className="learn-btn">Learn More</button>
+            <h4>{t("soil_analysis")}</h4>
+
+<p>{t("soil_analysis_desc")}</p>
+
+<button className="learn-btn">
+  {t("learn_more")}
+</button>
           </div>
 
           <div className="tool-card">
             <div className="icon purple">📊</div>
-            <h4>Analytics Dashboard</h4>
-            <p>Track your farming performance and optimize your strategies.</p>
-            <button className="learn-btn">Learn More</button>
+               <h4>{t("analytics_dashboard")}</h4>
+
+<p>{t("analytics_dashboard_desc")}</p>
+
+<button className="learn-btn">
+  {t("learn_more")}
+</button>
           </div>
         </div>
       </section>
 
       {/* Quick Actions */}
       <section className="quick-actions">
-        <h2>Quick Actions</h2>
-        <p>Access your most used tools and features quickly from your dashboard.</p>
+            <h2>{t("quick_actions")}</h2>
+
+<p>{t("quick_actions_desc")}</p>
+        
         <div className="action-buttons">
           <Link to='/recommendations'>
-           <button className="primary-btn" >Smart Crop Analysis</button>
+              <button className="primary-btn">
+  {t("smart_crop_analysis")}
+</button>
           </Link>
           <Link to='/weather'>
-          <button className="secondary-btn">Check Weather</button>
+             <button className="secondary-btn">
+  {t("check_weather")}
+</button>
           </Link>
           <Link to='/soil-analysis'>
-          <button className="tertiary-btn">Soil Testing</button>
+             <button className="tertiary-btn">
+  {t("soil_testing")}
+</button>
           </Link>
          
         </div>
