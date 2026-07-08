@@ -196,41 +196,34 @@ useEffect(() => {
 
 if (loading) {
   return (
-    <div
-      className="admin-notification-page"
-    >
+    <div className="admin-notification-page">
       <AdminSidebar />
-      <main
-        className="notification-content"
-      >
-        <h2>
-          Loading...
-        </h2>
+
+      <main className="notification-content notification-loading">
+        <div className="status-card">
+          <div className="loader"></div>
+          <h2>Loading Notifications</h2>
+          <p>Please wait while we fetch the latest data...</p>
+        </div>
       </main>
     </div>
   );
 }
 
-
-
-
-
 if (error) {
   return (
-    <div
-      className="admin-notification-page"
-    >
+    <div className="admin-notification-page">
       <AdminSidebar />
-      <main
-        className="notification-content"
-      >
-        <h2>
-          {error}
-        </h2>
+
+      <main className="notification-content notification-error">
+        <div className="status-card">
+          <div className="error-icon">!</div>
+          <h2>Something went wrong</h2>
+          <p>{error}</p>
+        </div>
       </main>
     </div>
   );
-
 }
 
 
