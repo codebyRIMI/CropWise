@@ -1,7 +1,7 @@
 // // import { NavLink } from "react-router-dom";
 // // import "../scss/sidebar.scss";
 // // import {
-  
+
 // //   Home,
 // //   Lightbulb,
 // //   CloudSun,
@@ -10,12 +10,11 @@
 // //   User,
 // //   Settings,
 // //   LogOut,
-// // } from "lucide-react"; 
+// // } from "lucide-react";
 // // import axios from "axios";
 // // import { useNavigate } from "react-router-dom";
 
 // // export default function Sidebar() {
-
 
 // //   const navigate = useNavigate();
 
@@ -42,10 +41,6 @@
 // //     navigate("/",{ replace: true });
 // //   }
 // // };
-
-
-
-
 
 // //   return (
 // //     <aside className="sidebar">
@@ -85,7 +80,7 @@
 // //         {/* <NavLink to="/analytics">
 // //           <BarChart2 size={18} />
 // //           Analytics
-// //         </NavLink> */} 
+// //         </NavLink> */}
 // //       </nav>
 
 // //       {/* Bottom Section */}
@@ -235,10 +230,6 @@
 //   );
 // }
 
-
-
-
-
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../scss/sidebar.scss";
@@ -295,7 +286,7 @@ export default function Sidebar() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access")}`,
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Logout failed:", error);
@@ -323,10 +314,7 @@ export default function Sidebar() {
       {/* OVERLAY */}
 
       {menuOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setMenuOpen(false)}
-        />
+        <div className="sidebar-overlay" onClick={() => setMenuOpen(false)} />
       )}
 
       {/* SIDEBAR */}
@@ -337,26 +325,18 @@ export default function Sidebar() {
         <div className="top-section">
           <h2 className="logo">🌱 CropWise</h2>
 
-          <p className="subtitle">
-            Smart Agriculture
-          </p>
+          <p className="subtitle">Smart Agriculture</p>
         </div>
 
         {/* USER */}
 
         <div className="user">
-          <div className="avatar">
-            A
-          </div>
+          <div className="avatar">A</div>
 
           <div className="userinfo">
-            <p className="name">
-              Aritra
-            </p>
+            <p className="name">Aritra</p>
 
-            <p className="email">
-              a@gmail.com
-            </p>
+            <p className="email">a@gmail.com</p>
           </div>
         </div>
 
@@ -388,6 +368,11 @@ export default function Sidebar() {
             Soil Analysis
           </NavLink>
 
+          <NavLink to="/analytics" onClick={() => setMenuOpen(false)}>
+            <BarChart2 size={18} />
+            Analytics
+          </NavLink>
+
           <NavLink to="/markets">
             <BarChart2 size={20} />
             Markets
@@ -412,10 +397,7 @@ export default function Sidebar() {
             Settings
           </NavLink>
 
-          <div
-            className="logout"
-            onClick={handleLogout}
-          >
+          <div className="logout" onClick={handleLogout}>
             <LogOut size={20} />
             Logout
           </div>

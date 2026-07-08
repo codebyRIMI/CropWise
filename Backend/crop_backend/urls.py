@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/weather/', include('weather.urls')),
     path('api/settings/', include('settings.urls')),
     path("api/records/", include("records.urls")),
+    path("api/analytics/", include("analytics.urls")),
     #new code
     path('api/soil/', include('soil.urls')),
 
