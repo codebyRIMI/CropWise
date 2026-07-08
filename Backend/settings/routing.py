@@ -1,5 +1,6 @@
 # settings/routing.py
-# print("ROUTING LOADED")
+
+
 from django.urls import path
 from .consumers import NotificationConsumer
 
@@ -10,3 +11,4 @@ websocket_urlpatterns = [
         NotificationConsumer.as_asgi()
     ),
 ]
+

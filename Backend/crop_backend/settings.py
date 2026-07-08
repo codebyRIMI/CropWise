@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
+    "daphne",
+    'channels',
     "analytics",
     
     'django.contrib.admin',
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django_extensions',
-    'channels',
+    
     'api',
     'users',
     'profiles',

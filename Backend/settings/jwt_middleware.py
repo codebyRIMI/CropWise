@@ -23,7 +23,9 @@ class JWTAuthMiddleware:
     def __init__(self, inner):
         self.inner = inner
 
+
     async def __call__(
+        
         self,
         scope,
         receive,

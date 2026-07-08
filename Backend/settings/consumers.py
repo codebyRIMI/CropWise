@@ -5,7 +5,6 @@ import json
 class NotificationConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
-        # print("USER OBJECT:", self.scope["user"])
         self.user = self.scope["user"]
 
         if self.user.is_anonymous:
