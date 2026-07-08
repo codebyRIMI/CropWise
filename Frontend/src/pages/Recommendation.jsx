@@ -1,4 +1,4 @@
-
+import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Sidebar from "../components/Sidebar";
@@ -26,7 +26,7 @@ export default function Recommendation() {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   };
-
+const { t } = useTranslation();
   // FORM DATA
   const [formData, setFormData] = useState({
     N: "",
@@ -60,33 +60,38 @@ export default function Recommendation() {
   const [aiAnalysis, setAiAnalysis] = useState("");
   const [locationAnalysis, setLocationAnalysis] = useState(null);
 
-  const generateAnalysis = (crop) => {
-  return `${crop} is recommended because the current soil nutrient levels, pH balance, temperature, humidity, and rainfall conditions closely match the optimal growth requirements for ${crop}. The recommendation engine found ${crop} to be the most suitable crop among all available options based on the provided environmental and soil parameters.`;
+//   const generateAnalysis = (crop) => {
+//   return `${crop} is recommended because the current soil nutrient levels, pH balance, temperature, humidity, and rainfall conditions closely match the optimal growth requirements for ${crop}. The recommendation engine found ${crop} to be the most suitable crop among all available options based on the provided environmental and soil parameters.`;
+// };
+
+const generateAnalysis = (crop) => {
+  return t("analysis_manual", {
+    crop: t(`crop.${crop.toLowerCase()}`),
+  });
 };
 
 const getReasons = () => {
   const reasons = [];
 
   if (Number(formData.N) > 50)
-    reasons.push("Nitrogen level supports healthy vegetative growth.");
+    reasons.push(t("reason_n"));
 
   if (Number(formData.P) > 30)
-    reasons.push("Phosphorus content promotes strong root development.");
+    reasons.push(t("reason_p"));
 
   if (Number(formData.K) > 30)
-    reasons.push("Potassium level improves crop productivity and resistance.");
+    reasons.push(t("reason_k"));
 
   if (Number(formData.ph) >= 6 && Number(formData.ph) <= 7.5)
-    reasons.push("Soil pH is within the optimal range.");
+   reasons.push(t("reason_ph"));
 
   if (Number(formData.temperature) >= 20 && Number(formData.temperature) <= 35)
-    reasons.push("Temperature conditions are favorable.");
+    reasons.push(t("reason_temp"));
 
   if (Number(formData.humidity) >= 50)
-    reasons.push("Humidity level supports crop growth.");
-
+    reasons.push(t("reason_humidity"));
   if (Number(formData.rainfall) >= 50)
-    reasons.push("Rainfall availability is sufficient.");
+    reasons.push(t("reason_rainfall"));
 
   return reasons;
 };
@@ -193,7 +198,7 @@ const getReasons = () => {
   // GET CURRENT LOCATION
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
-      alert("Geolocation not supported");
+      alert(t("location_not_supported"));
       return;
     }
 
@@ -222,10 +227,10 @@ const getReasons = () => {
               "",
           });
         } catch {
-          alert("Failed to fetch location details");
+          alert(t("failed_location"));
         }
       },
-      () => alert("Permission denied")
+      () => alert(t("permission_denied"))
     );
   };
 
@@ -258,19 +263,22 @@ const getReasons = () => {
       );
 
       if (res.status === 401) {
-        setError("Unauthorized");
+        setError(t("unauthorized"));
         return;
       }
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Invalid input");
+        setError(data.message || t("invalid_input"));
         setErrorDetails(data.errors || {});
         return;
       }
 
-      setResult(data.crops[0]?.name);
+      // setResult(data.crops[0]?.name);
+      const cropName = data.crops[0]?.name.toLowerCase();
+
+      setResult(t(`crop.${cropName}`));
 
       //analysis section added for batter approch
       setAiAnalysis(generateAnalysis(data.crops[0]?.name));
@@ -279,12 +287,12 @@ const getReasons = () => {
 
       setChartData(
         data.crops.map((item) => ({
-          name: item.name,
+          name: t(`crop.${item.name.toLowerCase()}`),
           score: Number(((item.score / maxScore) * 100).toFixed(2)),
         }))
       );
     } catch {
-      setError("Server error! Try again.");
+      setError(t("server_error"));
     } finally {
       setLoading(false);
     }
@@ -293,7 +301,7 @@ const getReasons = () => {
   // LOCATION SUBMIT
   const handleLocationSubmit = async () => {
     if (!location.latitude || !location.longitude) {
-      alert("Please fetch location first");
+      alert(t("fetch_location_first"));
       return;
     }
 
@@ -327,7 +335,9 @@ const getReasons = () => {
         return;
       }
 
-      setResult(data.crop);
+      // setResult(data.crop);
+      const cropName = data.crops[0]?.name.toLowerCase();
+      setResult(t(`crop.${cropName}`));
       
       //analysis
 //       setLocationAnalysis({
@@ -365,7 +375,7 @@ setAiAnalysis(
 
       setChartData(
         data.crops.map((item) => ({
-          name: item.name,
+           name: t(`crop.${item.name.toLowerCase()}`),
           score: Number(((item.score / maxScore) * 100).toFixed(2)),
         }))
       );
@@ -384,42 +394,45 @@ setAiAnalysis(
 
   if (locationAnalysis.temperature >= 20 &&
       locationAnalysis.temperature <= 35) {
-    reasons.push(
-      "Temperature conditions are favorable for crop growth."
-    );
+    reasons.push(t("location_reason_temp"));
   }
 
   if (locationAnalysis.humidity >= 50) {
-    reasons.push(
-      "Humidity level supports healthy crop development."
-    );
+    reasons.push(t("location_reason_humidity"));
   }
 
   if (locationAnalysis.rainfall >= 50) {
-    reasons.push(
-      "Rainfall availability is sufficient for cultivation."
-    );
+    reasons.push(t("location_reason_rainfall"));
   }
 
   reasons.push(
-    `${result} is suitable for the climatic conditions of ${locationAnalysis.district}.`
-  );
+t("location_reason_crop",{
+    crop: t(`crop.${result.toLowerCase()}`),
+    district: locationAnalysis.district
+})
+);
 
   return reasons;
 };
+// const generateLocationAnalysis = (crop, district, state) => {
+//   return `${crop} is recommended for ${district}, ${state} because the local temperature, humidity, and rainfall conditions closely match the environmental requirements of ${crop}. Based on the weather profile and regional agricultural suitability, ${crop} has the highest recommendation score among all candidate crops.`;
+// };
 const generateLocationAnalysis = (crop, district, state) => {
-  return `${crop} is recommended for ${district}, ${state} because the local temperature, humidity, and rainfall conditions closely match the environmental requirements of ${crop}. Based on the weather profile and regional agricultural suitability, ${crop} has the highest recommendation score among all candidate crops.`;
+  return t("analysis_location", {
+    crop: t(`crop.${crop.toLowerCase()}`),
+    district,
+    state,
+  });
 };
-
 
   return (
     <>
       <Sidebar />
       {/* your existing JSX remains exactly same */}
              <div className="recommendation-page">
-        <h1>🌿 Crop Recommendation</h1>
+        <h1>🌿 {t("crop_recommendation")}</h1>
         <p className="subtitle">
-          Get AI-powered crop recommendations based on soil and climate data
+         {t("crop_recommendation_subtitle")}
         </p>
 
         {/* 🔹 TABS */}
@@ -428,14 +441,14 @@ const generateLocationAnalysis = (crop, district, state) => {
             className={`tab ${activeTab === 'manual' ? 'active' : ''}`}
             onClick={() => setActiveTab('manual')}
           >
-            Manual Input
+            {t("manual_input")}
           </button>
 
           <button
             className={`tab ${activeTab === 'location' ? 'active' : ''}`}
             onClick={() => setActiveTab('location')}
           >
-            By Location
+            {t("by_location")}
           </button>
 
           {/* <button className={`tab ${activeTab === 'history' ? 'active' : ''}`} onClick={() => setActiveTab('history')}>History</button> */}
@@ -444,7 +457,7 @@ const generateLocationAnalysis = (crop, district, state) => {
          className={`tab ${activeTab === 'history' ? 'active' : ''}`}
          onClick={() => handleTabChange('history')}
          >
-        History
+          {t("history")}
         </button>
         </div>
 
@@ -453,22 +466,22 @@ const generateLocationAnalysis = (crop, district, state) => {
           {/* 🔹 MANUAL FORM */}
           {activeTab === "manual" && (
             <form onSubmit={handleSubmit} className="form-card">
-              <h2>Enter Soil & Climate Data</h2>
+              <h2>{t("enter_soil_climate")}</h2>
 
               <div className="grid">
-                <input type="number" name="N" placeholder="Nitrogen (0-150)" value={formData.N} onChange={handleChange} required />
-                <input type="number" name="P" placeholder="Phosphorus (0-150)" value={formData.P} onChange={handleChange} required />
-                <input type="number" name="K" placeholder="Potassium (0-210)" value={formData.K} onChange={handleChange} required />
-                <input type="number" name="temperature" placeholder="Temperature (0-60°C)" value={formData.temperature} onChange={handleChange} required />
-                <input type="number" name="humidity" placeholder="Humidity (0-100%)" value={formData.humidity} onChange={handleChange} required />
-                <input type="number" step="0.1" name="ph" placeholder="pH (0-14)" value={formData.ph} onChange={handleChange} required />
+                <input type="number" name="N" placeholder={t("nitrogen_placeholder")} value={formData.N} onChange={handleChange} required />
+                <input type="number" name="P" placeholder={t("phosphorus_placeholder")} value={formData.P} onChange={handleChange} required />
+                <input type="number" name="K" placeholder={t("potassium_placeholder")} value={formData.K} onChange={handleChange} required />
+                <input type="number" name="temperature" placeholder={t("temperature_placeholder")} value={formData.temperature} onChange={handleChange} required />
+                <input type="number" name="humidity" placeholder={t("humidity_placeholder")} value={formData.humidity} onChange={handleChange} required />
+                <input type="number" step="0.1" name="ph" placeholder={t("ph_placeholder")} value={formData.ph} onChange={handleChange} required />
               </div>
 
               <input
                 className="full"
                 type="number"
                 name="rainfall"
-                placeholder="Rainfall (mm/month)"
+                placeholder={t("rainfall_placeholder")}
                 value={formData.rainfall}
                 onChange={handleChange}
                 required
@@ -476,10 +489,10 @@ const generateLocationAnalysis = (crop, district, state) => {
 
               <div className="button-group">
                 <button type="submit" className="predict-btn" disabled={loading}>
-                  {loading ? "Predicting..." : "🚀 Get Recommendation"}
+                  {loading ? t("predicting") : t("get_recommendation")}
                 </button>
                 <button type="button" className="clear-btn" onClick={handleClear}>
-                  Clear
+                  {t("clear")}
                 </button>
               </div>
             </form>
@@ -488,10 +501,10 @@ const generateLocationAnalysis = (crop, district, state) => {
           {/* 🔹 LOCATION FORM */}
           {activeTab === "location" && (
             <div className="form-card">
-              <h2> <LocationOnIcon style={{ marginRight: "6px" }} /> Location-Based Prediction</h2>
+              <h2> <LocationOnIcon style={{ marginRight: "6px" }} /> {t("location_prediction")}</h2>
 
               <p className="subtitle">
-                Weather data will be auto-fetched from your location
+                {t("location_prediction_subtitle")}
               </p>
 
               <div className="grid">
@@ -499,7 +512,7 @@ const generateLocationAnalysis = (crop, district, state) => {
     <input
       type="text"
       name="state"
-      placeholder="Enter State"
+      placeholder={t("enter_state")}
       value={location.state}
       onChange={handleLocationChange} 
       required
@@ -508,7 +521,7 @@ const generateLocationAnalysis = (crop, district, state) => {
     <input
       type="text"
       name="district"
-      placeholder="Enter District"
+      placeholder={t("enter_district")}
       value={location.district}
       onChange={handleLocationChange}
       required
@@ -517,7 +530,7 @@ const generateLocationAnalysis = (crop, district, state) => {
       {/* LAT */}
     <input
       type="text"
-      placeholder="Latitude"
+      placeholder={t("latitude")}
       value={location.latitude}
       readOnly
       onFocus={fetchCoordinatesFromAddress}
@@ -526,7 +539,7 @@ const generateLocationAnalysis = (crop, district, state) => {
     {/* LON */}
     <input
       type="text"
-      placeholder="Longitude"
+     placeholder={t("longitude")}
       value={location.longitude}
       readOnly
       onFocus={fetchCoordinatesFromAddress}
@@ -544,12 +557,12 @@ const generateLocationAnalysis = (crop, district, state) => {
     {loading ? (
       <>
         <span className="spinner"></span>
-        Fetching...
+       {t("fetching")}
       </>
     ) : (
       <>
         <LocationOnIcon className="icon" />
-        <span>Use My Location</span>
+        <span>{t("use_my_location")}</span>
       </>
     )}
   </button>
@@ -560,7 +573,7 @@ const generateLocationAnalysis = (crop, district, state) => {
   className="clear-btn"
   onClick={handleClear}
 >
-  Clear
+ {t("clear")}
 </button>
 
  <button
@@ -569,7 +582,7 @@ const generateLocationAnalysis = (crop, district, state) => {
   onClick={handleLocationSubmit}
   disabled={loading}
 >
-  {loading ? "Predicting..." : "🚀 Get Recommendation"}
+  {loading ? t("predicting") : t("get_recommendation")}
 </button>
 
 </div>
@@ -578,12 +591,12 @@ const generateLocationAnalysis = (crop, district, state) => {
 
           {activeTab === "history" && (
   <div className="form-card history-card">
-    <h2>📜 Prediction History</h2>
+    <h2>📜 {t("prediction_history")}</h2>
 
     {history.length === 0 ? (
       <div className="empty">
-        <h3>No history available</h3>
-        <p>Your predictions will appear here</p>
+        <h3>{t("no_history")}</h3>
+        <p>{t("history_desc")}</p>
       </div>
     ) : (
       <div className="history-list">
@@ -593,15 +606,27 @@ const generateLocationAnalysis = (crop, district, state) => {
 
   {/* LEFT */}
   <div className="left">
-    <div className="crop">🌱 {item.crop}</div>
+    <div className="crop">🌱 {t(`crop.${item.crop.toLowerCase()}`)}</div>
 
     <div className="details">
-      N:{item.N} | P:{item.P} | K:{item.K}
+     {t("nitrogen")}: {item.N} |
+  {t("phosphorus")}: {item.P} |
+  {t("potassium")}: {item.K}
     </div>
 
     <div className="details">
-      🌡 {item.temperature}°C | 💧 {item.humidity}%
+       🌡 {t("temperature")}: {item.temperature}°C
+       &nbsp;|&nbsp;
+  💧 {t("humidity")}: {item.humidity}%
     </div>
+
+    <div className="details">
+  🌧 {t("rainfall")}: {item.rainfall} mm
+</div>
+
+<div className="details">
+  🧪 pH: {item.ph}
+</div>
   </div>
 
   {/* RIGHT */}
@@ -611,7 +636,7 @@ const generateLocationAnalysis = (crop, district, state) => {
     </div>
 
     <div className="badge">
-      Prediction
+      {t("predict")}
     </div>
   </div>
 
@@ -631,7 +656,7 @@ const generateLocationAnalysis = (crop, district, state) => {
     <div className="error-box">
       <div className="error-icon">⚠️</div>
 
-      <h2>Invalid Input</h2>
+      <h2>{t("invalid_input")}</h2>
 
    
 
@@ -650,14 +675,14 @@ const generateLocationAnalysis = (crop, district, state) => {
 
     <div className="empty">
       <div className="icon">🤖</div>
-      <h3>No prediction yet</h3>
-      <p>Enter your data and click "Get Recommendation"</p>
+      <h3>{t("no_prediction")}</h3>
+      <p>{t("no_prediction_desc")}</p>
     </div>
 
   ) : (
 
     <div className="result">
-      <h2>🌱 Top Crop Recommendation</h2>
+      <h2>🌱 {t("top_crop")}</h2>
       <div className="crop-name">{result}</div>
 
       <div style={{ width: "100%", height: 300 }}>
@@ -687,24 +712,24 @@ const generateLocationAnalysis = (crop, district, state) => {
   <>
     {/* Existing Soil Summary */}
     <div className="soil-summary1">
-  <h3>📊 Soil & Climate Summary</h3>
+  <h3>📊 {t("soil_summary")}</h3>
 
   <div className="summary-grid1">
-    <div><span>Nitrogen :</span><strong>{formData.N}kg</strong></div>
-    <div><span>Phosphorus :</span><strong>{formData.P}kg</strong></div>
-    <div><span>Potassium :</span><strong>{formData.K}kg</strong></div>
-    <div><span>Temperature :</span><strong>{formData.temperature}°C</strong></div>
-    <div><span>Humidity :</span><strong>{formData.humidity}%</strong></div>
+    <div><span>{t("nitrogen")} :</span><strong>{formData.N}kg</strong></div>
+    <div><span>{t("phosphorus")} :</span><strong>{formData.P}kg</strong></div>
+    <div><span>{t("potassium")} :</span><strong>{formData.K}kg</strong></div>
+    <div><span>{t("temperature")} :</span><strong>{formData.temperature}°C</strong></div>
+    <div><span>{t("humidity")} :</span><strong>{formData.humidity}%</strong></div>
     <div><span>pH :</span><strong>{formData.ph}</strong></div>
     <div className="full">
-      <span>Rainfall</span>
+      <span>{t("rainfall")}</span>
       <strong>{formData.rainfall} mm</strong>
     </div>
   </div>
 </div>
 
     <div className="crop-reasons">
-      <h3>🌱 Why {result}?</h3>
+     <h3>🌱 {t("why_crop", { crop: result })}</h3>
 
       <ul>
         {getReasons().map((reason, index) => (
@@ -713,7 +738,7 @@ const generateLocationAnalysis = (crop, district, state) => {
       </ul>
     </div>
     <div className="ai-analysis">
-  <h3>🤖 AI Analysis</h3>
+  <h3>🤖 {t("ai_analysis")}</h3>
 
   <p>{aiAnalysis}</p>
 </div>
@@ -722,48 +747,48 @@ const generateLocationAnalysis = (crop, district, state) => {
   <>
     {/* Location Summary */}
     <div className="soil-summary1">
-      <h3>📍 Location & Climate Summary</h3>
+      <h3>📍 {t("location_summary")}</h3>
 
       <div className="summary-grid1">
         <div>
-          <span>State :</span>
+          <span>{t("state")} :</span>
           <strong>{locationAnalysis?.state}</strong>
         </div>
 
         <div>
-          <span>District :</span>
+          <span>{t("district")} :</span>
           <strong>{locationAnalysis?.district}</strong>
         </div>
 
         <div>
-          <span>Latitude :</span>
+          <span>{t("latitude")} :</span>
           <strong>{locationAnalysis?.latitude}</strong>
         </div>
 
         <div>
-          <span>Longitude :</span>
+          <span>{t("longitude")} :</span>
           <strong>{locationAnalysis?.longitude}</strong>
         </div>
 
         <div>
-          <span>Temperature :</span>
+          <span>{t("temperature")} :</span>
           <strong>{locationAnalysis?.temperature}°C</strong>
         </div>
 
         <div>
-          <span>Humidity :</span>
+          <span>{t("humidity")} :</span>
           <strong>{locationAnalysis?.humidity}%</strong>
         </div>
 
         <div className="full">
-          <span>Rainfall :</span>
+          <span>{t("rainfall")} :</span>
           <strong>{locationAnalysis?.rainfall} mm</strong>
         </div>
       </div>
     </div>
 
     <div className="crop-reasons">
-      <h3>🌱 Why {result}?</h3>
+      <h3>🌱 {t("why_crop", { crop: result })}</h3>
 
       <ul>
         {getLocationReasons().map((reason, index) => (

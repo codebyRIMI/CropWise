@@ -1,110 +1,11 @@
-// // import { NavLink } from "react-router-dom";
-// // import "../scss/sidebar.scss";
-// // import {
 
-// //   Home,
-// //   Lightbulb,
-// //   CloudSun,
-// //   FlaskConical,
-// //   BarChart2,
-// //   User,
-// //   Settings,
-// //   LogOut,
-// // } from "lucide-react";
-// // import axios from "axios";
-// // import { useNavigate } from "react-router-dom";
 
-// // export default function Sidebar() {
+// import { NavLink, useNavigate, useLocation } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import axios from "axios";
 
-// //   const navigate = useNavigate();
-
-// //   const handleLogout = async () => {
-// //   try {
-// //     await axios.post(
-// //       'http://127.0.0.1:8000/api/auth/logout',
-// //       {
-// //         refresh: localStorage.getItem("refresh"),
-// //       },
-// //       {
-// //         headers: {
-// //           Authorization: `Bearer ${localStorage.getItem("access")}`,
-// //         },
-// //       }
-// //     );
-// //   } catch (error) {
-// //     console.error("Logout failed:", error);
-// //   } finally {
-// //     // Always clear local state
-// //     localStorage.removeItem("access");
-// //     localStorage.removeItem("refresh");
-
-// //     navigate("/",{ replace: true });
-// //   }
-// // };
-
-// //   return (
-// //     <aside className="sidebar">
-// //       {/* Logo Section */}
-// //       <div className="top-section">
-// //         <h2 className="logo">🌱 CropWise</h2>
-// //         <p className="subtitle">Smart Agriculture</p>
-// //       </div>
-
-// //       {/* User Info */}
-// //       <div className="user">
-// //         <div className="avatar">A</div>
-// //         <div className="userinfo">
-// //           <p className="name">a</p>
-// //           <p className="email">a@gmail.com</p>
-// //         </div>
-// //       </div>
-
-// //       {/* Navigation */}
-// //       <nav className="nav-links">
-// //         <NavLink to="/dashboard" end>
-// //           <Home size={18} />
-// //           Dashboard
-// //         </NavLink>
-// //         <NavLink to="/recommendations">
-// //           <Lightbulb size={18} />
-// //           Recommendations
-// //         </NavLink>
-// //         <NavLink to="/weather">
-// //           <CloudSun size={18} />
-// //           Weather
-// //         </NavLink>
-// //         <NavLink to="/soil-analysis">
-// //           <FlaskConical size={18} />
-// //           Soil Analysis
-// //         </NavLink>
-// //         {/* <NavLink to="/analytics">
-// //           <BarChart2 size={18} />
-// //           Analytics
-// //         </NavLink> */}
-// //       </nav>
-
-// //       {/* Bottom Section */}
-// //       <nav className="bottom-links">
-// //         <NavLink to="/profile">
-// //           <User size={18} />
-// //           Profile
-// //         </NavLink>
-// //         <NavLink to="/settings">
-// //           <Settings size={18} />
-// //           Settings
-// //         </NavLink>
-// //          <div className="logout" onClick={handleLogout}>
-// //           <LogOut size={18} />
-// //            Logout
-// //         </div>
-// //       </nav>
-// //     </aside>
-// //   );
-// // }
-
-// import { NavLink, useNavigate } from "react-router-dom";
-// import { useState } from "react";
 // import "../scss/sidebar.scss";
+
 // import {
 //   Home,
 //   Lightbulb,
@@ -115,18 +16,75 @@
 //   LogOut,
 //   Menu,
 //   X,
-//   BarChart2
+//   BarChart2,
 // } from "lucide-react";
-// import axios from "axios";
 
 // export default function Sidebar() {
 //   const navigate = useNavigate();
+//   const location = useLocation();
+
 //   const [menuOpen, setMenuOpen] = useState(false);
 
+//   // User State
+//   // const [user, setUser] = useState(() => {
+//   //   return JSON.parse(localStorage.getItem("user")) || {};
+//   // });
+//    // for getting 'user' data from local storage, so that we can display
+//   // admin button in sidebar if user is admin
+//   // const user = JSON.parse(localStorage.getItem("user"));
+//     const user = JSON.parse(localStorage.getItem("user")) || {};
+
+//   // Close sidebar when route changes
+//   useEffect(() => {
+//     setMenuOpen(false);
+//   }, [location.pathname]);
+
+//   // Prevent body scroll when sidebar is open
+//   useEffect(() => {
+//     document.body.style.overflow = menuOpen ? "hidden" : "auto";
+
+//     return () => {
+//       document.body.style.overflow = "auto";
+//     };
+//   }, [menuOpen]);
+
+//   // Fetch latest user profile
+//   useEffect(() => {
+//     const fetchUserProfile = async () => {
+//       try {
+//         const access = localStorage.getItem("access");
+
+//         if (!access) return;
+
+//     const response = await axios.get(
+//         "http://127.0.0.1:8000/api/profiles/profile",
+//         {
+//        headers: {
+//        Authorization: `Bearer ${access}`,
+//     },
+//       }
+//      );
+//         setUser(response.data);
+
+//         localStorage.setItem(
+//           "user",
+//           JSON.stringify(response.data)
+//         );
+//       } catch (error) {
+//         console.log("Unable to fetch profile", error);
+//       }
+//     };
+
+//     fetchUserProfile();
+//   }, []);
+
+//   // Logout
 //   const handleLogout = async () => {
+//     setMenuOpen(false);
+
 //     try {
 //       await axios.post(
-//         "http://127.0.0.1:8000/api/auth/logout",
+//         "http://127.0.0.1:8000/api/auth/logout/",
 //         {
 //           refresh: localStorage.getItem("refresh"),
 //         },
@@ -137,25 +95,31 @@
 //         }
 //       );
 //     } catch (error) {
-//       console.error("Logout failed:", error);
+//       console.log(error);
 //     } finally {
 //       localStorage.removeItem("access");
 //       localStorage.removeItem("refresh");
-//       navigate("/", { replace: true });
+//       localStorage.removeItem("user");
+
+//       navigate("/", {
+//         replace: true,
+//       });
 //     }
 //   };
 
 //   return (
 //     <>
-//       {/* mobile menu button */}
+//       {/* Mobile Menu Button */}
+
 //       <button
 //         className="menu-toggle"
 //         onClick={() => setMenuOpen(!menuOpen)}
 //       >
-//         {menuOpen ? <X size={28} /> : <Menu size={28} />}
+//         {menuOpen ? <X size={24} /> : <Menu size={24} />}
 //       </button>
 
-//       {/* overlay */}
+//       {/* Overlay */}
+
 //       {menuOpen && (
 //         <div
 //           className="sidebar-overlay"
@@ -163,66 +127,107 @@
 //         />
 //       )}
 
+//       {/* Sidebar */}
+
 //       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
+//         {/* Logo */}
+
 //         <div className="top-section">
 //           <h2 className="logo">🌱 CropWise</h2>
+
 //           <p className="subtitle">Smart Agriculture</p>
 //         </div>
 
+//         {/* User Card */}
+
 //         <div className="user">
-//           <div className="avatar">A</div>
+//           <div className="avatar">
+//             {user?.profile_image ? (
+//               <img
+//                 src={`http://127.0.0.1:8000${user.profile_image}`}
+//                 alt="Profile"
+//               />
+//             ) : (
+//               (user?.first_name?.charAt(0) ||
+//                 user?.username?.charAt(0) ||
+//                 "U").toUpperCase()
+//             )}
+//           </div>
+
 //           <div className="userinfo">
-//             <p className="name">Aritra</p>
-//             <p className="email">a@gmail.com</p>
+//             <p className="name">
+//               {user?.first_name || user?.last_name
+//                 ? `${user.first_name ?? ""} ${user.last_name ?? ""}`.trim()
+//                 : user?.username || "Guest"}
+//             </p>
+
+//             <p className="email">
+//               {user?.email || "No Email"}
+//             </p>
 //           </div>
 //         </div>
 
+//         {/* Navigation */}
+
 //         <nav className="nav-links">
-//           <NavLink to="/dashboard" onClick={() => setMenuOpen(false)}>
-//             <Home size={18} />
-//             Dashboard
+//           <NavLink to="/dashboard">
+//             <Home size={20} />
+//             <span>Dashboard</span>
 //           </NavLink>
 
-//           <NavLink to="/recommendations" onClick={() => setMenuOpen(false)}>
-//             <Lightbulb size={18} />
-//             Recommendations
+//           <NavLink to="/recommendations">
+//             <Lightbulb size={20} />
+//             <span>Recommendations</span>
 //           </NavLink>
 
-//           <NavLink to="/farm-records" onClick={() => setMenuOpen(false)}>
-//             <BarChart2 size={18} />
-//             Farm Records
+//           <NavLink to="/farm-records">
+//             <BarChart2 size={20} />
+//             <span>Farm Records</span>
 //           </NavLink>
 
-//           <NavLink to="/weather" onClick={() => setMenuOpen(false)}>
-//             <CloudSun size={18} />
-//             Weather
+//           <NavLink to="/weather">
+//             <CloudSun size={20} />
+//             <span>Weather</span>
 //           </NavLink>
 
-//           <NavLink to="/soil-analysis" onClick={() => setMenuOpen(false)}>
-//             <FlaskConical size={18} />
-//             Soil Analysis
-//           </NavLink>
-
-//           <NavLink to="/markets" onClick={() => setMenuOpen(false)}>
-//             <BarChart2 size={18} />
-//             Markets
+//           <NavLink to="/soil-analysis">
+//             <FlaskConical size={20} />
+//             <span>Soil Analysis</span>
 //           </NavLink>
 //         </nav>
 
+//             {/* <NavLink to="/markets">
+//              <BarChart2 size={20} />
+//              Markets
+//            </NavLink> */}
+         
+
+//         {/* Bottom Links */}
+
 //         <nav className="bottom-links">
-//           <NavLink to="/profile" onClick={() => setMenuOpen(false)}>
-//             <User size={18} />
-//             Profile
+//           {user?.is_staff && (
+//             <NavLink to="/admin-dashboard">
+//               <User size={20} />
+//               <span>Admin Panel</span>
+//             </NavLink>
+//           )}
+
+//           <NavLink to="/profile">
+//             <User size={20} />
+//             <span>Profile</span>
 //           </NavLink>
 
-//           <NavLink to="/settings" onClick={() => setMenuOpen(false)}>
-//             <Settings size={18} />
-//             Settings
+//           <NavLink to="/settings">
+//             <Settings size={20} />
+//             <span>Settings</span>
 //           </NavLink>
 
-//           <div className="logout" onClick={handleLogout}>
-//             <LogOut size={18} />
-//             Logout
+//           <div
+//             className="logout"
+//             onClick={handleLogout}
+//           >
+//             <LogOut size={20} />
+//             <span>Logout</span>
 //           </div>
 //         </nav>
 //       </aside>
@@ -230,12 +235,17 @@
 //   );
 // }
 
+
+
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useTranslation } from "react-i18next";
 import "../scss/sidebar.scss";
 
 import {
   Home,
+  TrendingUp,
   Lightbulb,
   CloudSun,
   FlaskConical,
@@ -247,38 +257,81 @@ import {
   BarChart2,
 } from "lucide-react";
 
-import axios from "axios";
-
 export default function Sidebar() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* Close sidebar when route changes */
+  // User State
+  const [user, setUser] = useState(() => {
+    return JSON.parse(localStorage.getItem("user")) || {};
+  });
+
+  // Close sidebar on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  /* Prevent background scroll */
+  // Prevent body scroll
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    document.body.style.overflow = menuOpen ? "hidden" : "auto";
 
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [menuOpen]);
 
+  // Fetch latest profile
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const access = localStorage.getItem("access");
+
+        if (!access) return;
+
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/profiles/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${access}`,
+            },
+          }
+        );
+
+        console.log("Profile:", response.data);
+
+        // Preserve fields like is_staff
+        const oldUser =
+          JSON.parse(localStorage.getItem("user")) || {};
+
+        const updatedUser = {
+          ...oldUser,
+          ...response.data,
+        };
+
+        setUser(updatedUser);
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(updatedUser)
+        );
+      } catch (error) {
+        console.error("Unable to fetch profile", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+  // Logout
   const handleLogout = async () => {
     setMenuOpen(false);
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/auth/logout",
+        "http://127.0.0.1:8000/api/auth/logout/",
         {
           refresh: localStorage.getItem("refresh"),
         },
@@ -286,13 +339,14 @@ export default function Sidebar() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access")}`,
           },
-        },
+        }
       );
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.log(error);
     } finally {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
+      localStorage.removeItem("user");
 
       navigate("/", {
         replace: true,
@@ -300,108 +354,133 @@ export default function Sidebar() {
     }
   };
 
+  const profileImage = user?.profile_image
+    ? user.profile_image.startsWith("http")
+      ? user.profile_image
+      : `http://127.0.0.1:8000${user.profile_image}`
+    : null;
+
   return (
     <>
-      {/* MOBILE MENU BUTTON */}
+      {/* Mobile Button */}
 
       <button
         className="menu-toggle"
-        onClick={() => setMenuOpen((prev) => !prev)}
+        onClick={() => setMenuOpen(!menuOpen)}
       >
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* OVERLAY */}
+      {/* Overlay */}
 
       {menuOpen && (
-        <div className="sidebar-overlay" onClick={() => setMenuOpen(false)} />
+        <div
+          className="sidebar-overlay"
+          onClick={() => setMenuOpen(false)}
+        />
       )}
 
-      {/* SIDEBAR */}
+      {/* Sidebar */}
 
       <aside className={`sidebar ${menuOpen ? "open" : ""}`}>
-        {/* LOGO */}
+        {/* Logo */}
 
+       
         <div className="top-section">
-          <h2 className="logo">🌱 CropWise</h2>
-
-          <p className="subtitle">Smart Agriculture</p>
-        </div>
-
-        {/* USER */}
+  <h2 className="logo">🌱 {t("cropwise")}</h2>
+  <p className="subtitle">{t("smart_agriculture")}</p>
+</div>
+        {/* User */}
 
         <div className="user">
-          <div className="avatar">A</div>
+          <div className="avatar">
+            {profileImage ? (
+              <img
+                src={profileImage}
+                alt="Profile"
+              />
+            ) : (
+              <span>
+                {(
+                  user?.first_name?.charAt(0) ||
+                  user?.username?.charAt(0) ||
+                  "U"
+                ).toUpperCase()}
+              </span>
+            )}
+          </div>
 
           <div className="userinfo">
-            <p className="name">Aritra</p>
+            <p className="name">
+  {`${user?.first_name || ""} ${user?.last_name || ""}`.trim() ||
+    user?.username ||
+    t("guest")}
+</p>
 
-            <p className="email">a@gmail.com</p>
+<p className="email">
+  {user?.email || t("no_email")}
+</p>
           </div>
         </div>
 
-        {/* NAVIGATION */}
+        {/* Navigation */}
 
         <nav className="nav-links">
-          <NavLink to="/dashboard">
-            <Home size={20} />
-            Dashboard
-          </NavLink>
+  <NavLink to="/dashboard">
+    <Home size={20} />
+    <span>{t("dashboard")}</span>
+  </NavLink>
 
-          <NavLink to="/recommendations">
-            <Lightbulb size={20} />
-            Recommendations
-          </NavLink>
+  <NavLink to="/recommendations">
+    <Lightbulb size={20} />
+    <span>{t("recommendations")}</span>
+  </NavLink>
 
-          <NavLink to="/farm-records">
-            <BarChart2 size={20} />
-            Farm Records
-          </NavLink>
+  <NavLink to="/farm-records">
+    <BarChart2 size={20} />
+    <span>{t("farm_records")}</span>
+  </NavLink>
 
-          <NavLink to="/weather">
-            <CloudSun size={20} />
-            Weather
-          </NavLink>
+  <NavLink to="/weather">
+    <CloudSun size={20} />
+    <span>{t("weather")}</span>
+  </NavLink>
 
-          <NavLink to="/soil-analysis">
-            <FlaskConical size={20} />
-            Soil Analysis
-          </NavLink>
+  <NavLink to="/soil-analysis">
+    <FlaskConical size={20} />
+    <span>{t("soil_analysis")}</span>
+  </NavLink>
 
-          <NavLink to="/analytics" onClick={() => setMenuOpen(false)}>
-            <BarChart2 size={18} />
-            Analytics
-          </NavLink>
+   <NavLink to="/analytics">
+    <TrendingUp size={20} />
+    <span>{t("analytics")}</span>
+  </NavLink>
+</nav>
+        {/* Bottom */}
 
-          <NavLink to="/markets">
-            <BarChart2 size={20} />
-            Markets
-          </NavLink>
-        </nav>
+      <nav className="bottom-links">
+  {user?.is_staff && (
+    <NavLink to="/admin-dashboard">
+      <User size={20} />
+      <span>{t("admin_panel")}</span>
+    </NavLink>
+  )}
 
-        {/* BOTTOM LINKS */}
+  <NavLink to="/profile">
+    <User size={20} />
+    <span>{t("profile")}</span>
+  </NavLink>
 
-        <nav className="bottom-links">
-          <NavLink to="/admin-dashboard">
-            <User size={20} />
-            Admin Panel
-          </NavLink>
+  <NavLink to="/settings">
+    <Settings size={20} />
+    <span>{t("settings")}</span>
+  </NavLink>
 
-          <NavLink to="/profile">
-            <User size={20} />
-            Profile
-          </NavLink>
-
-          <NavLink to="/settings">
-            <Settings size={20} />
-            Settings
-          </NavLink>
-
-          <div className="logout" onClick={handleLogout}>
-            <LogOut size={20} />
-            Logout
-          </div>
-        </nav>
+  <div className="logout" onClick={handleLogout}>
+    <LogOut size={20} />
+    <span>{t("logout")}</span>
+  </div>
+</nav>
       </aside>
     </>
   );

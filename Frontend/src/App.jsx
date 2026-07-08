@@ -1,6 +1,6 @@
 import './App.css'
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes , Navigate} from 'react-router-dom'
 import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import Recommendation from './pages/Recommendation'
@@ -11,7 +11,10 @@ import Analytics from './pages/Analytics'
 import Markets from './pages/Markets'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
-import ProtectedRoute from './authMiddleware/protected'
+import {
+  ProtectedRoute,
+  AdminRoute
+} from "./authMiddleware/protected";
 import NotificationPanel from './components/NotificationPanel'
 import { Outlet } from 'react-router-dom';
 
@@ -24,7 +27,6 @@ import Feedback from './admin/Feedback'
 import SystemStatus from './admin/SystemStatus'
 
 function App() {
-
 
   function TopBarLayout() {
     return (
@@ -81,13 +83,14 @@ function App() {
           </Route>
 
           {/* Admin Routes */}
-          <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
-          <Route path='/admin-users' element={<Users/>}/>
-          <Route path='/admin-analytics' element={<AdminAnalytics/>}/>
-          <Route path='/admin-notifications' element={<AdminNotification/>}/>  
-          <Route path='/admin-feedback' element={<Feedback/>}/>
-          <Route path='/admin-system-status' element={<SystemStatus/>}/>
-        
+          <Route element={<AdminRoute />}> 
+            <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
+            <Route path='/admin-users' element={<Users/>}/>
+            <Route path='/admin-analytics' element={<AdminAnalytics/>}/>
+            <Route path='/admin-notifications' element={<AdminNotification/>}/>  
+            <Route path='/admin-feedback' element={<Feedback/>}/>
+            <Route path='/admin-system-status' element={<SystemStatus/>}/>
+          </Route>
         </Route>
         
       </Routes>

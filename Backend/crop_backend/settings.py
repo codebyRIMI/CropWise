@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'settings',
     'soil',
     "records",
+    "admin_notifications",
 ]
 
 ASGI_APPLICATION = "crop_backend.asgi.application"

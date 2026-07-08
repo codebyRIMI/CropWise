@@ -1,5 +1,6 @@
 //updated soilAnalysis.jsx
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
  PieChart,
   Pie,
@@ -15,6 +16,7 @@ import { soilAPI } from "../api/soilApi";
 import toast from "react-hot-toast";
 
 export default function SoilAnalysis() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("current");
   const [showForm, setShowForm] = useState(false);
   const [showImageForm, setShowImageForm] = useState(false);
@@ -258,8 +260,8 @@ const loadAllData = async () => {
 
         <div className="top-header">
           <div>
-            <h1>🧪 Soil Analysis</h1>
-            <p>Monitor and analyze your soil health</p>
+            <h1>🧪 {t("soil_analysis_title")}</h1>
+            <p>{t("soil_analysis_subtitle")}</p>
           </div>
 
           {(activeTab === "current" || activeTab === "history" || activeTab==="recommendation") && (
@@ -273,7 +275,7 @@ const loadAllData = async () => {
                 }}
               >
                 {showImageForm ? <FiX /> : <FiUpload />}
-                {showImageForm ? "Cancel" : "Image Analysis"}
+                {showImageForm ? t("cancel") : t("image_analysis")}
               </button>
 
               <button
@@ -284,7 +286,7 @@ const loadAllData = async () => {
                 }}
               >
                 {showForm ? <FiX /> : <FiPlus />}
-                {showForm ? "Cancel" : "New Test"}
+                {showForm ? t("cancel") : t("new_test")}
               </button>
 
             </div>
@@ -306,7 +308,7 @@ const loadAllData = async () => {
         <h2 className={getStatusColor(summary?.overall_health)}>
           {summary?.overall_health}
         </h2>
-        <p>Overall Health</p>
+        <p>{t("overall_health")}</p>
       </div>
     </div>
 
@@ -318,7 +320,7 @@ const loadAllData = async () => {
   {summary?.health_score}
   <span>/100</span>
 </h2>
-        <p>Health Score</p>
+        <p>{t("health_score")}</p>
       </div>
     </div>
 
@@ -334,7 +336,7 @@ const loadAllData = async () => {
         <h2 className={getStatusColor(summary?.nutrient_status?.nitrogen)}>
           {summary?.nutrient_status?.nitrogen}
         </h2>
-        <p>Nitrogen</p>
+       <p>{t("nitrogen")}</p>
       </div>
     </div>
 
@@ -350,7 +352,7 @@ const loadAllData = async () => {
         <h2 className={getStatusColor(summary?.nutrient_status?.phosphorus)}>
           {summary?.nutrient_status?.phosphorus}
         </h2>
-        <p>Phosphorus</p>
+        <p>{t("phosphorus")}</p>
       </div>
     </div>
 
@@ -366,7 +368,7 @@ const loadAllData = async () => {
         <h2 className={getStatusColor(summary?.nutrient_status?.potassium)}>
           {summary?.nutrient_status?.potassium}
         </h2>
-        <p>Potassium</p>
+       <p>{t("potassium")}</p>
       </div>
     </div>
 
@@ -382,7 +384,7 @@ const loadAllData = async () => {
         <h2 className={getStatusColor(summary?.nutrient_status?.ph)}>
           {summary?.nutrient_status?.ph}
         </h2>
-        <p>pH</p>
+      <p>{t("ph")}</p>
       </div>
     </div>
 
@@ -395,21 +397,21 @@ const loadAllData = async () => {
             className={activeTab === "current" ? "active" : ""}
             onClick={() => handleTabChange("current")}
           >
-            Current Analysis
+            {t("current_analysis")}
           </button>
 
           <button
             className={activeTab === "history" ? "active" : ""}
             onClick={() => handleTabChange("history")}
           >
-            Historical Data
+           {t("recommendations")}
           </button>
 
           <button
             className={activeTab === "recommendation" ? "active" : ""}
             onClick={() => handleTabChange("recommendation")}
           >
-            Recommendations
+            {t("recommendations")}
           </button>
         </div>
 
@@ -418,8 +420,7 @@ const loadAllData = async () => {
           <>
             {showImageForm && (
               <div className="image-box">
-                <h3>Upload Soil Image</h3>
-
+               <h3>{t("upload_soil_image")}</h3>
                 <input
                   type="file"
                   accept="image/*"
@@ -434,7 +435,7 @@ const loadAllData = async () => {
                   className="analyze-btn"
                   onClick={handleImageUpload}
                 >
-                  Analyze
+                  {t("analyze")}
                 </button>
               </div>
             )}
@@ -442,13 +443,13 @@ const loadAllData = async () => {
       
             {showForm && (
   <div className="manual-form-box">
-    <h2>Add Soil Test</h2>
+    <h2>{t("add_soil_test")}</h2>
 
     <form onSubmit={handleSubmit}>
 
       <div className="form-grid two">
         <div>
-          <label>Field Name *</label>
+          <label>{t("field_name")} *</label>
           <input
             type="text"
             name="field_name"
@@ -459,7 +460,7 @@ const loadAllData = async () => {
         </div>
 
         <div>
-          <label>Test Date *</label>
+          <label>{t("test_date")} *</label>
           <input
             type="date"
             name="test_date"
@@ -472,7 +473,7 @@ const loadAllData = async () => {
 
       <div className="form-grid three">
         <div>
-          <label>Nitrogen</label>
+          <label>{t("nitrogen")}</label>
           <input
             type="number"
             name="nitrogen"
@@ -484,7 +485,7 @@ const loadAllData = async () => {
         </div>
 
         <div>
-          <label>Phosphorus</label>
+          <label>{t("phosphorus")}</label>
           <input
             type="number"
             name="phosphorus"
@@ -496,7 +497,7 @@ const loadAllData = async () => {
         </div>
 
         <div>
-          <label>Potassium</label>
+          <label>{t("potassium")}</label>
           <input
             type="number"
             name="potassium"
@@ -510,7 +511,7 @@ const loadAllData = async () => {
 
       <div className="form-grid three">
         <div>
-          <label>pH</label>
+          <label>{t("ph")}</label>
           <input
             type="number"
             step="0.1"
@@ -523,7 +524,7 @@ const loadAllData = async () => {
         </div>
 
         <div>
-          <label>Organic Carbon</label>
+          <label>{t("organic_carbon")}</label>
           <input
             type="number"
             step="0.1"
@@ -536,7 +537,7 @@ const loadAllData = async () => {
         </div>
 
         <div>
-          <label>Moisture</label>
+          <label>{t("moisture")}</label>
           <input
             type="number"
             step="0.1"
@@ -550,7 +551,7 @@ const loadAllData = async () => {
       </div>
 
       <div className="notes">
-        <label>Notes</label>
+        <label>{t("notes")}</label>
         <textarea
           rows="5"
           name="notes"
@@ -562,7 +563,7 @@ const loadAllData = async () => {
 
       <button type="submit" className="save-btn">
         <FiPlus />
-        Save Test
+        {t("save_test")}
       </button>
 
     </form>
@@ -574,44 +575,44 @@ const loadAllData = async () => {
    <div className="content-box modern-current-box">
 
               <div className="current-left">
-                <h2>Latest Soil Test - {latestTest.field}</h2>
-                <p>Date: {latestTest.date}</p>
+                <h2>{t("latest_soil_test")}  - {latestTest.field}</h2>
+                <p>{t("date")}: {latestTest.date}</p>
 
                 <div className="metric-grid">
                   <div className="metric-card">
                     <h3>{latestTest.nitrogen} kg/ha</h3>
-                    <span>Nitrogen</span>
+                    <span>{t("nitrogen")}</span>
                   </div>
 
                   <div className="metric-card">
                     <h3>{latestTest.phosphorus} kg/ha</h3>
-                    <span>Phosphorus</span>
+                    <span>{t("phosphorus")}</span>
                   </div>
 
                   <div className="metric-card">
                     <h3>{latestTest.potassium} kg/ha</h3>
-                    <span>Potassium</span>
+                    <span>{t("potassium")}</span>
                   </div>
 
                   <div className="metric-card">
                     <h3>{latestTest.ph}</h3>
-                    <span>pH</span>
+                    <span>{t("ph")}</span>
                   </div>
 
                   <div className="metric-card">
                     <h3>{latestTest.organicCarbon}%</h3>
-                    <span>Organic Carbon</span>
+                    <span>{t("organic_carbon")}</span>
                   </div>
 
                   <div className="metric-card">
                     <h3>{latestTest.moisture}%</h3>
-                    <span>Moisture</span>
+                    <span>{t("moisture")}</span>
                   </div>
                 </div>
               </div>
 
               <div className="chart-side">
-                <h2>Nutrient Distribution</h2>
+                <h2>{t("nutrient_distribution")}</h2>
 
                 <PieChart width={450} height={300}>
                  
@@ -652,8 +653,8 @@ const loadAllData = async () => {
 ):(
    <div className="empty-state">
     <div className="empty-icon">🧪</div>
-    <h2>No soil tests yet</h2>
-    <p>Create your first soil test to see analysis</p>
+    <h2>{t("no_soil_tests")}</h2>
+    <p>{t("create_first_soil_test")}</p>
   </div>
 )
 }    
@@ -667,8 +668,8 @@ const loadAllData = async () => {
     {/* image upload form */}
     {showImageForm && (
       <div className="image-box">
-        <h3>Upload Soil Image</h3>
-
+        <h3>{t("upload_soil_image")}</h3>
+      
         <input
           type="file"
           accept="image/*"
@@ -683,7 +684,7 @@ const loadAllData = async () => {
           className="analyze-btn"
           onClick={handleImageUpload}
         >
-          Analyze
+          {t("analyze")}
         </button>
       </div>
     )}
@@ -691,12 +692,12 @@ const loadAllData = async () => {
     {/* manual form */}
     {showForm && (
       <div className="manual-form-box">
-        <h2>Add Soil Test</h2>
+        <h2>{t("add_soil_test")}</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="form-grid two">
             <div>
-              <label>Field Name *</label>
+              <label>{t("field_name")} *</label>
               <input
                 type="text"
                 name="field_name"
@@ -707,7 +708,7 @@ const loadAllData = async () => {
             </div>
 
             <div>
-              <label>Test Date *</label>
+              <label>{t("test_date")} *</label>
               <input
                 type="date"
                 name="test_date"
@@ -720,7 +721,7 @@ const loadAllData = async () => {
 
           <div className="form-grid three">
             <div>
-              <label>Nitrogen</label>
+              <label>{t("nitrogen")}</label>
               <input
                 type="number"
                 name="nitrogen"
@@ -731,7 +732,7 @@ const loadAllData = async () => {
             </div>
 
             <div>
-              <label>Phosphorus</label>
+              <label>{t("phosphorus")}</label>
               <input
                 type="number"
                 name="phosphorus"
@@ -742,7 +743,7 @@ const loadAllData = async () => {
             </div>
 
             <div>
-              <label>Potassium</label>
+              <label>{t("potassium")}</label>
               <input
                 type="number"
                 name="potassium"
@@ -755,7 +756,7 @@ const loadAllData = async () => {
 
           <div className="form-grid three">
             <div>
-              <label>pH</label>
+              <label>{t("ph")}</label>
               <input
                 type="number"
                 step="0.1"
@@ -767,7 +768,7 @@ const loadAllData = async () => {
             </div>
 
             <div>
-              <label>Organic Carbon</label>
+              <label>{t("organic_carbon")}</label>
               <input
                 type="number"
                 step="0.1"
@@ -779,7 +780,7 @@ const loadAllData = async () => {
             </div>
 
             <div>
-              <label>Moisture</label>
+              <label>{t("moisture")}</label>
               <input
                 type="number"
                 step="0.1"
@@ -792,7 +793,7 @@ const loadAllData = async () => {
           </div>
 
           <div className="notes">
-            <label>Notes</label>
+            <label>{t("notes")}</label>
             <textarea
               rows="4"
               name="notes"
@@ -803,7 +804,7 @@ const loadAllData = async () => {
 
           <button className="save-btn">
             <FiPlus />
-            Save Test
+           {t("save_test")}
           </button>
         </form>
       </div>
@@ -815,13 +816,19 @@ const loadAllData = async () => {
         <table>
           <thead>
             <tr>
-              <th>Field</th>
-              <th>Date</th>
-              <th>N</th>
-              <th>P</th>
-              <th>K</th>
-              <th>pH</th>
-              <th>Status</th>
+              <th>{t("Field")}</th>
+
+<th>{t("date")}</th>
+
+<th>{t("nitrogen_short")}</th>
+
+<th>{t("phosphorus_short")}</th>
+
+<th>{t("potassium_short")}</th>
+
+<th>{t("ph")}</th>
+
+<th>{t("status")}</th>
             </tr>
           </thead>
 
@@ -849,8 +856,8 @@ const loadAllData = async () => {
     ) : (
       <div className="empty-state">
         <div className="empty-icon">📊</div>
-        <h2>No historical data</h2>
-        <p>Add a soil test to view history</p>
+        <h2>{t("no_historical_data")}</h2>
+        <p>{t("history_empty_desc")}</p>
       </div>
     )}
   </>
@@ -1013,7 +1020,7 @@ const loadAllData = async () => {
               <div className="crop-details">
                 {item.soil_reason && (
                   <p>
-                    <strong>Soil Suitability:</strong>
+                    <strong>{t("soil_suitability")}:</strong>
                     {" "}
                     {item.soil_reason}
                   </p>
@@ -1021,7 +1028,7 @@ const loadAllData = async () => {
 
                 {item.nutrient_notes && (
                   <p>
-                    <strong>Nutrient Insight:</strong>
+                    <strong>{t("nutrient_insight")}:</strong>
                     {" "}
                     {item.nutrient_notes}
                   </p>
@@ -1029,7 +1036,7 @@ const loadAllData = async () => {
 
                 {item.climate_notes && (
                   <p>
-                    <strong>Climate Fit:</strong>
+                    <strong>{t("climate_fit")}:</strong>
                     {" "}
                     {item.climate_notes}
                   </p>
@@ -1038,7 +1045,7 @@ const loadAllData = async () => {
 
               {item.action_required && (
                 <div className="action-box">
-                  <strong>Recommended Action:</strong>
+                  <strong>{t("recommended_action")}:</strong>
                   <p>{item.action_required}</p>
                 </div>
               )}
@@ -1057,8 +1064,8 @@ const loadAllData = async () => {
       !showImageForm && (
         <div className="empty-state">
           <div className="empty-icon">✅</div>
-          <h2>No recommendations</h2>
-          <p>Create a soil test to get recommendations</p>
+          <h2>{t("no_recommendations")}</h2>
+          <p>{t("recommendation_empty_desc")}</p>
         </div>
       )
     )}
@@ -1077,35 +1084,35 @@ const loadAllData = async () => {
               <FiX />
             </button>
 
-            <h2>🌱 Analysis Result</h2>
+            <h2>🌱 {t("analysis_result")}</h2>
 
             <div className="popup-result-grid">
               <div className="result-card">
                  
 
-                <h3>Soil Type : {analysisResult.soil_type}</h3>
+                <h3>{t("soil_type")}  : {analysisResult.soil_type}</h3>
                
               </div>
 
               <div className="result-card">
                 
-                <h3>Moisture : {analysisResult.moisture}</h3>
+                <h3>{t("moisture")} : {analysisResult.moisture}</h3>
                 
               </div>
 
               <div className="result-card">
-                <h3>Fertility : {analysisResult.fertility}</h3>
+                <h3>{t("fertility")} : {analysisResult.fertility}</h3>
                
               </div>
 
               <div className="result-card">
-           <h3>Confidence: {(analysisResult.confidence * 100).toFixed(2)}%</h3>
+           <h3>{t("confidence")}: {(analysisResult.confidence * 100).toFixed(2)}%</h3>
           
          </div>
          <div className="result-card crop-card">
   <div className="crop-header">
     <span className="crop-icon">🌾</span>
-    <h3>Suggested Crops</h3>
+    <h3>{t("suggested_crops")}</h3>
   </div>
 
   <div className="crop-list">

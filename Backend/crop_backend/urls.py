@@ -35,6 +35,13 @@ urlpatterns = [
     #new code
     path('api/soil/', include('soil.urls')),
 
+    path(
+        "api/admin/notifications/",
+        include(
+            "admin_notifications.urls"
+        ),
+    ),
+
      # JWT token routes
     path('api/token/', TokenObtainPairView.as_view(),
          name='token_obtain_pair'),

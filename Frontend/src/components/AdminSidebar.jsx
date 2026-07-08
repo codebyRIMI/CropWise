@@ -10,8 +10,42 @@ import {
   Shield,
   LogOut,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const AdminSidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    // setMenuOpen(false);
+
+    try {
+      await axios.post(
+        "http://127.0.0.1:8000/api/auth/logout",
+        {
+          refresh: localStorage.getItem("refresh"),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+
+      navigate("/", {
+        replace: true,
+      });
+    }
+  };
+
+
+
+
   return (
     <aside className="adminSidebar">
       {/* Header */}
@@ -95,10 +129,24 @@ const AdminSidebar = () => {
 
       {/* Bottom Logout */}
       <div className="logoutSection">
-        <NavLink to="/login" className="menuItem adminlogout">
-          <LogOut size={20} />
-          <span>Logout</span>
-        </NavLink>
+
+          <NavLink to="/dashboard" className="menuItem">
+            <LayoutDashboard size={20} />
+            Farmer View
+          </NavLink>
+
+       
+
+ 
+          <div 
+            className="menuItem adminlogout"
+            onClick={handleLogout}
+          >
+            <LogOut size={20} />
+            <span>Logout</span>
+          </div>
+
+
       </div>
     </aside>
   );
