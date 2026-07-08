@@ -1,340 +1,16 @@
-# import os
-# import requests
-# from datetime import datetime
-# from dotenv import load_dotenv
-# from django.core.cache import cache
-# from rest_framework.decorators import api_view, permission_classes
-# from rest_framework.response import Response
-# from rest_framework import permissions
-# from settings.models import UserLocation
-# from settings.utils import(
-#     check_weather_alerts,
-#     log_analytics_event, 
-#     create_notification, 
-# )
-
-# load_dotenv()
-
-# API_KEY = os.getenv("WEATHER_API_KEY")
-# BASE_URL = "https://api.tomorrow.io/v4/weather"
-
-# WEATHER_CODE_MAP = {
-#     1000: "Clear",
-#     1100: "Mostly Clear",
-#     1101: "Partly Cloudy",
-#     1102: "Mostly Cloudy",
-#     1001: "Cloudy",
-#     2000: "Fog",
-#     2100: "Light Fog",
-#     3000: "Light Wind",
-#     3001: "Wind",
-#     3002: "Strong Wind",
-#     4000: "Drizzle",
-#     4001: "Rain",
-#     4200: "Light Rain",
-#     4201: "Heavy Rain",
-#     5000: "Snow",
-#     5001: "Flurries",
-#     5100: "Light Snow",
-#     5101: "Heavy Snow",
-#     6000: "Freezing Drizzle",
-#     6001: "Freezing Rain",
-#     6200: "Light Freezing Rain",
-#     6201: "Heavy Freezing Rain",
-#     7000: "Ice Pellets",
-#     7100: "Light Ice Pellets",
-#     7101: "Heavy Ice Pellets",
-#     7102: "Mixed Ice Pellets",
-#     8000: "Thunderstorm",
-#     8001: "Severe Thunderstorm"
-# }
-
-
-# def weather_text(code):
-#     if code not in WEATHER_CODE_MAP:
-#         print(f"⚠️ Unknown weather code: {code}")
-#     return WEATHER_CODE_MAP.get(code, "Unknown")
-
-# @api_view(["GET"])
-# @permission_classes([permissions.IsAuthenticated])
-# def weather_now_and_forecast(request):
-
-#     # this endpoint can be called with ?city=CityName or it will use 
-#     # saved location from user profile.
-#     city = request.GET.get("city")
-
-#     location = city
-
-#     if not city:
-#         try:
-#             user_location = UserLocation.objects.get(
-#                 user=request.user
-#             )
-
-#             if (
-#                 user_location.latitude is None or
-#                 user_location.longitude is None
-#             ):
-#                 return Response(
-#                     {"error": "No saved location found"},
-#                     status=400
-#                 )
-
-#             location = (
-#                 f"{user_location.latitude},"
-#                 f"{user_location.longitude}"
-#             )
-
-#         except UserLocation.DoesNotExist:
-#             return Response(
-#                 {"error": "No saved location found"},
-#                 status=400
-#             )
-
-
-#     cache_key = f"weather:{str(location).lower().replace(',', '_')}"
-#     cached = cache.get(cache_key)
-
-#     # 1️⃣ Return fresh cache immediately
-#     if cached:
-
-#         # Analytics
-#         log_analytics_event(
-#             request.user,
-#             "weather_check"
-#         )
-
-#         return Response({
-#             **cached["data"],
-#             "source": "cache",
-#             "cached_at": cached["cached_at"]
-#         })
-
-#     headers = {"accept": "application/json"}
-
-#     try:
-     
-#         # REALTIME
-  
-#         realtime_res = requests.get(
-#             f"{BASE_URL}/realtime",
-#             params={"location": location, "apikey": API_KEY},
-#             headers=headers,
-#             timeout=5
-#         )
-
-#         realtime_res.raise_for_status()
-#         realtime_values = realtime_res.json()["data"]["values"]
-
-#         current = {
-#             # Temperature
-#             "temperature": realtime_values.get("temperature"),
-#             "feels_like": realtime_values.get("temperatureApparent"),
-#             "dew_point": realtime_values.get("dewPoint"),
-
-#             # Atmosphere
-#             "humidity": realtime_values.get("humidity"),
-#             "pressure": realtime_values.get("pressureSurfaceLevel"),
-#             "visibility": realtime_values.get("visibility"),
-
-#             # Clouds
-#             "cloud_base": realtime_values.get("cloudBase"),
-#             "cloud_ceiling": realtime_values.get("cloudCeiling"),
-#             "cloud_cover": realtime_values.get("cloudCover"),
-
-#             # Precipitation probability
-#             "precipitation_probability": realtime_values.get("precipitationProbability"),
-
-#             # Precipitation intensity (by type)
-#             "rain_intensity": realtime_values.get("rainIntensity"),
-#             "snow_intensity": realtime_values.get("snowIntensity"),
-#             "sleet_intensity": realtime_values.get("sleetIntensity"),
-#             "freezing_rain_intensity": realtime_values.get("freezingRainIntensity"),
-
-#             # Wind
-#             "wind_speed": realtime_values.get("windSpeed"),
-#             "wind_gust": realtime_values.get("windGust"),
-#             "wind_direction": realtime_values.get("windDirection"),
-
-#             # UV
-#             "uv_index": realtime_values.get("uvIndex"),
-#             "uv_health_concern": realtime_values.get("uvHealthConcern"),
-
-#             # Weather description
-#             "weather_code": realtime_values.get("weatherCode"),
-#             "weather": weather_text(realtime_values.get("weatherCode"))
-            
-#         }
-        
-
-
-
-#         # check_weather_alerts(
-#         #     request.user,
-#         #     city,
-#         #     current
-#         # )
-        
-       
-#         # FORECAST
-      
-#         forecast_res = requests.get(
-#             f"{BASE_URL}/forecast",
-#             params={"location": location, "timesteps": "1d", "apikey": API_KEY},
-#             headers=headers,
-#             timeout=5
-#         )
-
-#         forecast_res.raise_for_status()
-#         daily = forecast_res.json()["timelines"]["daily"]
-
-#         forecast = []
-#         for day in daily[:5]:
-#             v = day["values"]
-#             forecast.append({
-#                 # Date
-#                 "date": day["time"].split("T")[0],
-
-#                 # Temperature
-#                 "temp_min": v.get("temperatureMin"),
-#                 "temp_max": v.get("temperatureMax"),
-#                 "temp_avg": v.get("temperatureAvg"),
-#                 "feels_like_avg": v.get("temperatureApparentAvg"),
-#                 "dew_point_avg": v.get("dewPointAvg"),
-
-#                 # Atmosphere
-#                 "humidity_avg": v.get("humidityAvg"),
-#                 "pressure_surface_avg": v.get("pressureSurfaceLevelAvg"),
-#                 "pressure_sea_avg": v.get("pressureSeaLevelAvg"),
-#                 "visibility_avg": v.get("visibilityAvg"),
-
-#                 # Clouds
-#                 "cloud_cover_avg": v.get("cloudCoverAvg"),
-#                 "cloud_base_avg": v.get("cloudBaseAvg"),
-#                 "cloud_ceiling_avg": v.get("cloudCeilingAvg"),
-
-#                 # Precipitation probability
-#                 "precipitation_probability_avg": v.get("precipitationProbabilityAvg"),
-
-#                 # Precipitation intensity
-#                 "rain_intensity_avg": v.get("rainIntensityAvg"),
-#                 "snow_intensity_avg": v.get("snowIntensityAvg"),
-#                 "sleet_intensity_avg": v.get("sleetIntensityAvg"),
-#                 "freezing_rain_intensity_avg": v.get("freezingRainIntensityAvg"),
-
-#                 # Hail (new in your data)
-#                 "hail_probability_avg": v.get("hailProbabilityAvg"),
-#                 "hail_size_avg": v.get("hailSizeAvg"),
-
-#                 # Wind
-#                 "wind_speed_avg": v.get("windSpeedAvg"),
-#                 "wind_gust_avg": v.get("windGustAvg"),
-#                 "wind_direction_avg": v.get("windDirectionAvg"),
-
-#                 # UV
-#                 "uv_index_avg": v.get("uvIndexAvg"),
-#                 "uv_health_concern_avg": v.get("uvHealthConcernAvg"),
-
-#                 # Weather
-#                 "weather_code": v.get("weatherCodeMax"),
-#                 "weather": weather_text(v.get("weatherCodeMax"))
-#             })
-
-#         location_name = city
-
-#         if not city:
-#             location_name = user_location.city
-
-#         response_data = {
-#             "location": location_name,
-#             "current": current,
-#             "forecast": forecast
-#         }
-
-#         # Analytics
-#         log_analytics_event(
-#             request.user,
-#             "weather_check"
-#         )
-
-#         # Cache for 30 minutes
-#         cache.set(
-#             cache_key,
-#             {
-#                 "data": response_data,
-#                 "cached_at": datetime.utcnow().isoformat()
-#             },
-#             timeout=60 * 30
-#         )
-
-#         return Response({
-#             **response_data,
-#             "source": "live"
-#         })
-
-#     except Exception:
-#         # 2️⃣ API FAILED → FALL BACK TO STALE CACHE
-#         stale = cache.get(cache_key, default=None)
-
-#         if stale:
-
-#             # Analytics
-#             log_analytics_event(
-#                 request.user,
-#                 "weather_check"
-#             )
-
-
-#             return Response({
-#                 **stale["data"],
-#                 "source": "stale-cache",
-#                 "cached_at": stale["cached_at"],
-#                 "warning": "Live weather unavailable, showing last known data"
-#             })
-
-#         # 3️⃣ No cache at all
-#         return Response(
-#             {"error": "Weather service unavailable"},
-#             status=503
-#         )
-
-
-
-
-
-
-
-
-
-
-
-# # EXPLANATION:
-
-# # The API first checks if the requested city’s weather is stored in cache (30-minute TTL).
-# # If cached data exists, it immediately returns it as "source": "cache". 
-# # If not, it calls Tomorrow.io’s realtime API for current weather and forecast API for next 5 days, 
-# # converts numeric weather codes to text, builds a response, stores it in cache,
-# # and returns it as "source": "live". If any API call fails, the code attempts to 
-# # return the last cached data (stale fallback). If no cache exists, it returns a 503
-# # Service Unavailable error. This design ensures fast responses, reduces API calls,
-# # handles rate limits, and gracefully degrades during downtime.
-
-#error free
 import os
-import traceback
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
-
 from django.core.cache import cache
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import permissions
-
 from settings.models import UserLocation
-from settings.utils import (
-    log_analytics_event,
+from settings.utils import(
+    check_weather_alerts,
+    log_analytics_event, 
+    create_notification, 
 )
 
 load_dotenv()
@@ -370,298 +46,622 @@ WEATHER_CODE_MAP = {
     7101: "Heavy Ice Pellets",
     7102: "Mixed Ice Pellets",
     8000: "Thunderstorm",
-    8001: "Severe Thunderstorm",
+    8001: "Severe Thunderstorm"
 }
 
 
 def weather_text(code):
+    if code not in WEATHER_CODE_MAP:
+        print(f"⚠️ Unknown weather code: {code}")
     return WEATHER_CODE_MAP.get(code, "Unknown")
-
 
 @api_view(["GET"])
 @permission_classes([permissions.IsAuthenticated])
 def weather_now_and_forecast(request):
 
+    # this endpoint can be called with ?city=CityName or it will use 
+    # saved location from user profile.
     city = request.GET.get("city")
 
-    DEFAULT_CITY = "Kolkata"
+    location = city
 
-    # -----------------------------------
-    # Determine location
-    # -----------------------------------
-
-    if city:
-        location = city
-        location_name = city
-
-    else:
+    if not city:
         try:
-            user_location = UserLocation.objects.get(user=request.user)
+            user_location = UserLocation.objects.get(
+                user=request.user
+            )
 
             if (
-                user_location.latitude is not None
-                and user_location.longitude is not None
+                user_location.latitude is None or
+                user_location.longitude is None
             ):
-                location = f"{user_location.latitude},{user_location.longitude}"
-                location_name = (
-                    user_location.city
-                    if user_location.city
-                    else DEFAULT_CITY
+                return Response(
+                    {"error": "No saved location found"},
+                    status=400
                 )
 
-            else:
-                location = DEFAULT_CITY
-                location_name = DEFAULT_CITY
+            location = (
+                f"{user_location.latitude},"
+                f"{user_location.longitude}"
+            )
 
         except UserLocation.DoesNotExist:
-            location = DEFAULT_CITY
-            location_name = DEFAULT_CITY
+            return Response(
+                {"error": "No saved location found"},
+                status=400
+            )
 
-    # -----------------------------------
-    # Cache
-    # -----------------------------------
 
-    cache_key = f"weather:{location.lower().replace(',', '_')}"
+    cache_key = f"weather:{str(location).lower().replace(',', '_')}"
     cached = cache.get(cache_key)
 
+    # 1️⃣ Return fresh cache immediately
     if cached:
-        log_analytics_event(request.user, "weather_check")
 
-        return Response(
-            {
-                **cached["data"],
-                "source": "cache",
-                "cached_at": cached["cached_at"],
-            }
+        # Analytics
+        log_analytics_event(
+            request.user,
+            "weather_check"
         )
 
-    headers = {
-        "accept": "application/json"
-    }
+        return Response({
+            **cached["data"],
+            "source": "cache",
+            "cached_at": cached["cached_at"]
+        })
+
+    headers = {"accept": "application/json"}
 
     try:
-
-        # ===================================
-        # Current Weather
-        # ===================================
-
+     
+        # REALTIME
+  
         realtime_res = requests.get(
             f"{BASE_URL}/realtime",
-            params={
-                "location": location,
-                "apikey": API_KEY,
-            },
+            params={"location": location, "apikey": API_KEY},
             headers=headers,
-            timeout=10,
+            timeout=5
         )
 
         realtime_res.raise_for_status()
-
         realtime_values = realtime_res.json()["data"]["values"]
 
         current = {
+            # Temperature
             "temperature": realtime_values.get("temperature"),
             "feels_like": realtime_values.get("temperatureApparent"),
             "dew_point": realtime_values.get("dewPoint"),
 
+            # Atmosphere
             "humidity": realtime_values.get("humidity"),
             "pressure": realtime_values.get("pressureSurfaceLevel"),
             "visibility": realtime_values.get("visibility"),
 
+            # Clouds
             "cloud_base": realtime_values.get("cloudBase"),
             "cloud_ceiling": realtime_values.get("cloudCeiling"),
             "cloud_cover": realtime_values.get("cloudCover"),
 
-            "precipitation_probability":
-                realtime_values.get("precipitationProbability"),
+            # Precipitation probability
+            "precipitation_probability": realtime_values.get("precipitationProbability"),
 
-            "rain_intensity":
-                realtime_values.get("rainIntensity"),
+            # Precipitation intensity (by type)
+            "rain_intensity": realtime_values.get("rainIntensity"),
+            "snow_intensity": realtime_values.get("snowIntensity"),
+            "sleet_intensity": realtime_values.get("sleetIntensity"),
+            "freezing_rain_intensity": realtime_values.get("freezingRainIntensity"),
 
-            "snow_intensity":
-                realtime_values.get("snowIntensity"),
+            # Wind
+            "wind_speed": realtime_values.get("windSpeed"),
+            "wind_gust": realtime_values.get("windGust"),
+            "wind_direction": realtime_values.get("windDirection"),
 
-            "sleet_intensity":
-                realtime_values.get("sleetIntensity"),
+            # UV
+            "uv_index": realtime_values.get("uvIndex"),
+            "uv_health_concern": realtime_values.get("uvHealthConcern"),
 
-            "freezing_rain_intensity":
-                realtime_values.get("freezingRainIntensity"),
-
-            "wind_speed":
-                realtime_values.get("windSpeed"),
-
-            "wind_gust":
-                realtime_values.get("windGust"),
-
-            "wind_direction":
-                realtime_values.get("windDirection"),
-
-            "uv_index":
-                realtime_values.get("uvIndex"),
-
-            "uv_health_concern":
-                realtime_values.get("uvHealthConcern"),
-
-            "weather_code":
-                realtime_values.get("weatherCode"),
-
-            "weather":
-                weather_text(realtime_values.get("weatherCode")),
+            # Weather description
+            "weather_code": realtime_values.get("weatherCode"),
+            "weather": weather_text(realtime_values.get("weatherCode"))
+            
         }
+        
 
-        # ===================================
-        # Forecast
-        # ===================================
 
+
+        # check_weather_alerts(
+        #     request.user,
+        #     city,
+        #     current
+        # )
+        
+       
+        # FORECAST
+      
         forecast_res = requests.get(
             f"{BASE_URL}/forecast",
-            params={
-                "location": location,
-                "timesteps": "1d",
-                "apikey": API_KEY,
-            },
+            params={"location": location, "timesteps": "1d", "apikey": API_KEY},
             headers=headers,
-            timeout=10,
+            timeout=5
         )
 
         forecast_res.raise_for_status()
-
         daily = forecast_res.json()["timelines"]["daily"]
 
         forecast = []
-
         for day in daily[:5]:
-
             v = day["values"]
+            forecast.append({
+                # Date
+                "date": day["time"].split("T")[0],
 
-            forecast.append(
-                {
-                    "date": day["time"].split("T")[0],
+                # Temperature
+                "temp_min": v.get("temperatureMin"),
+                "temp_max": v.get("temperatureMax"),
+                "temp_avg": v.get("temperatureAvg"),
+                "feels_like_avg": v.get("temperatureApparentAvg"),
+                "dew_point_avg": v.get("dewPointAvg"),
 
-                    "temp_min": v.get("temperatureMin"),
-                    "temp_max": v.get("temperatureMax"),
-                    "temp_avg": v.get("temperatureAvg"),
+                # Atmosphere
+                "humidity_avg": v.get("humidityAvg"),
+                "pressure_surface_avg": v.get("pressureSurfaceLevelAvg"),
+                "pressure_sea_avg": v.get("pressureSeaLevelAvg"),
+                "visibility_avg": v.get("visibilityAvg"),
 
-                    "feels_like_avg":
-                        v.get("temperatureApparentAvg"),
+                # Clouds
+                "cloud_cover_avg": v.get("cloudCoverAvg"),
+                "cloud_base_avg": v.get("cloudBaseAvg"),
+                "cloud_ceiling_avg": v.get("cloudCeilingAvg"),
 
-                    "dew_point_avg":
-                        v.get("dewPointAvg"),
+                # Precipitation probability
+                "precipitation_probability_avg": v.get("precipitationProbabilityAvg"),
 
-                    "humidity_avg":
-                        v.get("humidityAvg"),
+                # Precipitation intensity
+                "rain_intensity_avg": v.get("rainIntensityAvg"),
+                "snow_intensity_avg": v.get("snowIntensityAvg"),
+                "sleet_intensity_avg": v.get("sleetIntensityAvg"),
+                "freezing_rain_intensity_avg": v.get("freezingRainIntensityAvg"),
 
-                    "pressure_surface_avg":
-                        v.get("pressureSurfaceLevelAvg"),
+                # Hail (new in your data)
+                "hail_probability_avg": v.get("hailProbabilityAvg"),
+                "hail_size_avg": v.get("hailSizeAvg"),
 
-                    "pressure_sea_avg":
-                        v.get("pressureSeaLevelAvg"),
+                # Wind
+                "wind_speed_avg": v.get("windSpeedAvg"),
+                "wind_gust_avg": v.get("windGustAvg"),
+                "wind_direction_avg": v.get("windDirectionAvg"),
 
-                    "visibility_avg":
-                        v.get("visibilityAvg"),
+                # UV
+                "uv_index_avg": v.get("uvIndexAvg"),
+                "uv_health_concern_avg": v.get("uvHealthConcernAvg"),
 
-                    "cloud_cover_avg":
-                        v.get("cloudCoverAvg"),
+                # Weather
+                "weather_code": v.get("weatherCodeMax"),
+                "weather": weather_text(v.get("weatherCodeMax"))
+            })
 
-                    "cloud_base_avg":
-                        v.get("cloudBaseAvg"),
+        location_name = city
 
-                    "cloud_ceiling_avg":
-                        v.get("cloudCeilingAvg"),
-
-                    "precipitation_probability_avg":
-                        v.get("precipitationProbabilityAvg"),
-
-                    "rain_intensity_avg":
-                        v.get("rainIntensityAvg"),
-
-                    "snow_intensity_avg":
-                        v.get("snowIntensityAvg"),
-
-                    "sleet_intensity_avg":
-                        v.get("sleetIntensityAvg"),
-
-                    "freezing_rain_intensity_avg":
-                        v.get("freezingRainIntensityAvg"),
-
-                    "hail_probability_avg":
-                        v.get("hailProbabilityAvg"),
-
-                    "hail_size_avg":
-                        v.get("hailSizeAvg"),
-
-                    "wind_speed_avg":
-                        v.get("windSpeedAvg"),
-
-                    "wind_gust_avg":
-                        v.get("windGustAvg"),
-
-                    "wind_direction_avg":
-                        v.get("windDirectionAvg"),
-
-                    "uv_index_avg":
-                        v.get("uvIndexAvg"),
-
-                    "uv_health_concern_avg":
-                        v.get("uvHealthConcernAvg"),
-
-                    "weather_code":
-                        v.get("weatherCodeMax"),
-
-                    "weather":
-                        weather_text(v.get("weatherCodeMax")),
-                }
-            )
+        if not city:
+            location_name = user_location.city
 
         response_data = {
             "location": location_name,
             "current": current,
-            "forecast": forecast,
+            "forecast": forecast
         }
 
+        # Analytics
+        log_analytics_event(
+            request.user,
+            "weather_check"
+        )
+
+        # Cache for 30 minutes
         cache.set(
             cache_key,
             {
                 "data": response_data,
-                "cached_at": datetime.utcnow().isoformat(),
+                "cached_at": datetime.utcnow().isoformat()
             },
-            timeout=60 * 30,
+            timeout=60 * 30
         )
 
-        log_analytics_event(request.user, "weather_check")
+        return Response({
+            **response_data,
+            "source": "live"
+        })
 
-        return Response(
-            {
-                **response_data,
-                "source": "live",
-            }
-        )
-
-    except Exception as e:
-
-        traceback.print_exc()
-
-        print("Weather API Error:", str(e))
-
-        stale = cache.get(cache_key)
+    except Exception:
+        # 2️⃣ API FAILED → FALL BACK TO STALE CACHE
+        stale = cache.get(cache_key, default=None)
 
         if stale:
 
-            log_analytics_event(request.user, "weather_check")
-
-            return Response(
-                {
-                    **stale["data"],
-                    "source": "stale-cache",
-                    "cached_at": stale["cached_at"],
-                    "warning": "Using cached weather because live API failed.",
-                }
+            # Analytics
+            log_analytics_event(
+                request.user,
+                "weather_check"
             )
 
+
+            return Response({
+                **stale["data"],
+                "source": "stale-cache",
+                "cached_at": stale["cached_at"],
+                "warning": "Live weather unavailable, showing last known data"
+            })
+
+        # 3️⃣ No cache at all
         return Response(
-            {
-                "error": "Weather service unavailable",
-                "details": str(e),
-            },
-            status=503,
+            {"error": "Weather service unavailable"},
+            status=503
         )
+
+
+
+
+
+
+
+
+
+
+
+# # EXPLANATION:
+
+# # The API first checks if the requested city’s weather is stored in cache (30-minute TTL).
+# # If cached data exists, it immediately returns it as "source": "cache". 
+# # If not, it calls Tomorrow.io’s realtime API for current weather and forecast API for next 5 days, 
+# # converts numeric weather codes to text, builds a response, stores it in cache,
+# # and returns it as "source": "live". If any API call fails, the code attempts to 
+# # return the last cached data (stale fallback). If no cache exists, it returns a 503
+# # Service Unavailable error. This design ensures fast responses, reduces API calls,
+# # handles rate limits, and gracefully degrades during downtime.
+
+#error free
+# import os
+# import traceback
+# import requests
+# from datetime import datetime
+# from dotenv import load_dotenv
+
+# from django.core.cache import cache
+
+# from rest_framework.decorators import api_view, permission_classes
+# from rest_framework.response import Response
+# from rest_framework import permissions
+
+# from settings.models import UserLocation
+# from settings.utils import (
+#     log_analytics_event,
+# )
+
+# load_dotenv()
+
+# API_KEY = os.getenv("WEATHER_API_KEY")
+# BASE_URL = "https://api.tomorrow.io/v4/weather"
+
+# WEATHER_CODE_MAP = {
+#     1000: "Clear",
+#     1100: "Mostly Clear",
+#     1101: "Partly Cloudy",
+#     1102: "Mostly Cloudy",
+#     1001: "Cloudy",
+#     2000: "Fog",
+#     2100: "Light Fog",
+#     3000: "Light Wind",
+#     3001: "Wind",
+#     3002: "Strong Wind",
+#     4000: "Drizzle",
+#     4001: "Rain",
+#     4200: "Light Rain",
+#     4201: "Heavy Rain",
+#     5000: "Snow",
+#     5001: "Flurries",
+#     5100: "Light Snow",
+#     5101: "Heavy Snow",
+#     6000: "Freezing Drizzle",
+#     6001: "Freezing Rain",
+#     6200: "Light Freezing Rain",
+#     6201: "Heavy Freezing Rain",
+#     7000: "Ice Pellets",
+#     7100: "Light Ice Pellets",
+#     7101: "Heavy Ice Pellets",
+#     7102: "Mixed Ice Pellets",
+#     8000: "Thunderstorm",
+#     8001: "Severe Thunderstorm",
+# }
+
+
+# def weather_text(code):
+#     return WEATHER_CODE_MAP.get(code, "Unknown")
+
+
+# @api_view(["GET"])
+# @permission_classes([permissions.IsAuthenticated])
+# def weather_now_and_forecast(request):
+
+#     city = request.GET.get("city")
+
+#     DEFAULT_CITY = "Kolkata"
+
+#     # -----------------------------------
+#     # Determine location
+#     # -----------------------------------
+
+#     if city:
+#         location = city
+#         location_name = city
+
+#     else:
+#         try:
+#             user_location = UserLocation.objects.get(user=request.user)
+
+#             if (
+#                 user_location.latitude is not None
+#                 and user_location.longitude is not None
+#             ):
+#                 location = f"{user_location.latitude},{user_location.longitude}"
+#                 location_name = (
+#                     user_location.city
+#                     if user_location.city
+#                     else DEFAULT_CITY
+#                 )
+
+#             else:
+#                 location = DEFAULT_CITY
+#                 location_name = DEFAULT_CITY
+
+#         except UserLocation.DoesNotExist:
+#             location = DEFAULT_CITY
+#             location_name = DEFAULT_CITY
+
+#     # -----------------------------------
+#     # Cache
+#     # -----------------------------------
+
+#     cache_key = f"weather:{location.lower().replace(',', '_')}"
+#     cached = cache.get(cache_key)
+
+#     if cached:
+#         log_analytics_event(request.user, "weather_check")
+
+#         return Response(
+#             {
+#                 **cached["data"],
+#                 "source": "cache",
+#                 "cached_at": cached["cached_at"],
+#             }
+#         )
+
+#     headers = {
+#         "accept": "application/json"
+#     }
+
+#     try:
+
+#         # ===================================
+#         # Current Weather
+#         # ===================================
+
+#         realtime_res = requests.get(
+#             f"{BASE_URL}/realtime",
+#             params={
+#                 "location": location,
+#                 "apikey": API_KEY,
+#             },
+#             headers=headers,
+#             timeout=10,
+#         )
+
+#         realtime_res.raise_for_status()
+
+#         realtime_values = realtime_res.json()["data"]["values"]
+
+#         current = {
+#             "temperature": realtime_values.get("temperature"),
+#             "feels_like": realtime_values.get("temperatureApparent"),
+#             "dew_point": realtime_values.get("dewPoint"),
+
+#             "humidity": realtime_values.get("humidity"),
+#             "pressure": realtime_values.get("pressureSurfaceLevel"),
+#             "visibility": realtime_values.get("visibility"),
+
+#             "cloud_base": realtime_values.get("cloudBase"),
+#             "cloud_ceiling": realtime_values.get("cloudCeiling"),
+#             "cloud_cover": realtime_values.get("cloudCover"),
+
+#             "precipitation_probability":
+#                 realtime_values.get("precipitationProbability"),
+
+#             "rain_intensity":
+#                 realtime_values.get("rainIntensity"),
+
+#             "snow_intensity":
+#                 realtime_values.get("snowIntensity"),
+
+#             "sleet_intensity":
+#                 realtime_values.get("sleetIntensity"),
+
+#             "freezing_rain_intensity":
+#                 realtime_values.get("freezingRainIntensity"),
+
+#             "wind_speed":
+#                 realtime_values.get("windSpeed"),
+
+#             "wind_gust":
+#                 realtime_values.get("windGust"),
+
+#             "wind_direction":
+#                 realtime_values.get("windDirection"),
+
+#             "uv_index":
+#                 realtime_values.get("uvIndex"),
+
+#             "uv_health_concern":
+#                 realtime_values.get("uvHealthConcern"),
+
+#             "weather_code":
+#                 realtime_values.get("weatherCode"),
+
+#             "weather":
+#                 weather_text(realtime_values.get("weatherCode")),
+#         }
+
+#         # ===================================
+#         # Forecast
+#         # ===================================
+
+#         forecast_res = requests.get(
+#             f"{BASE_URL}/forecast",
+#             params={
+#                 "location": location,
+#                 "timesteps": "1d",
+#                 "apikey": API_KEY,
+#             },
+#             headers=headers,
+#             timeout=10,
+#         )
+
+#         forecast_res.raise_for_status()
+
+#         daily = forecast_res.json()["timelines"]["daily"]
+
+#         forecast = []
+
+#         for day in daily[:5]:
+
+#             v = day["values"]
+
+#             forecast.append(
+#                 {
+#                     "date": day["time"].split("T")[0],
+
+#                     "temp_min": v.get("temperatureMin"),
+#                     "temp_max": v.get("temperatureMax"),
+#                     "temp_avg": v.get("temperatureAvg"),
+
+#                     "feels_like_avg":
+#                         v.get("temperatureApparentAvg"),
+
+#                     "dew_point_avg":
+#                         v.get("dewPointAvg"),
+
+#                     "humidity_avg":
+#                         v.get("humidityAvg"),
+
+#                     "pressure_surface_avg":
+#                         v.get("pressureSurfaceLevelAvg"),
+
+#                     "pressure_sea_avg":
+#                         v.get("pressureSeaLevelAvg"),
+
+#                     "visibility_avg":
+#                         v.get("visibilityAvg"),
+
+#                     "cloud_cover_avg":
+#                         v.get("cloudCoverAvg"),
+
+#                     "cloud_base_avg":
+#                         v.get("cloudBaseAvg"),
+
+#                     "cloud_ceiling_avg":
+#                         v.get("cloudCeilingAvg"),
+
+#                     "precipitation_probability_avg":
+#                         v.get("precipitationProbabilityAvg"),
+
+#                     "rain_intensity_avg":
+#                         v.get("rainIntensityAvg"),
+
+#                     "snow_intensity_avg":
+#                         v.get("snowIntensityAvg"),
+
+#                     "sleet_intensity_avg":
+#                         v.get("sleetIntensityAvg"),
+
+#                     "freezing_rain_intensity_avg":
+#                         v.get("freezingRainIntensityAvg"),
+
+#                     "hail_probability_avg":
+#                         v.get("hailProbabilityAvg"),
+
+#                     "hail_size_avg":
+#                         v.get("hailSizeAvg"),
+
+#                     "wind_speed_avg":
+#                         v.get("windSpeedAvg"),
+
+#                     "wind_gust_avg":
+#                         v.get("windGustAvg"),
+
+#                     "wind_direction_avg":
+#                         v.get("windDirectionAvg"),
+
+#                     "uv_index_avg":
+#                         v.get("uvIndexAvg"),
+
+#                     "uv_health_concern_avg":
+#                         v.get("uvHealthConcernAvg"),
+
+#                     "weather_code":
+#                         v.get("weatherCodeMax"),
+
+#                     "weather":
+#                         weather_text(v.get("weatherCodeMax")),
+#                 }
+#             )
+
+#         response_data = {
+#             "location": location_name,
+#             "current": current,
+#             "forecast": forecast,
+#         }
+
+#         cache.set(
+#             cache_key,
+#             {
+#                 "data": response_data,
+#                 "cached_at": datetime.utcnow().isoformat(),
+#             },
+#             timeout=60 * 30,
+#         )
+
+#         log_analytics_event(request.user, "weather_check")
+
+#         return Response(
+#             {
+#                 **response_data,
+#                 "source": "live",
+#             }
+#         )
+
+#     except Exception as e:
+
+#         traceback.print_exc()
+
+#         print("Weather API Error:", str(e))
+
+#         stale = cache.get(cache_key)
+
+#         if stale:
+
+#             log_analytics_event(request.user, "weather_check")
+
+#             return Response(
+#                 {
+#                     **stale["data"],
+#                     "source": "stale-cache",
+#                     "cached_at": stale["cached_at"],
+#                     "warning": "Using cached weather because live API failed.",
+#                 }
+#             )
+
+#         return Response(
+#             {
+#                 "error": "Weather service unavailable",
+#                 "details": str(e),
+#             },
+#             status=503,
+#         )

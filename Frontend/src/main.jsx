@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import { ThemeProvider } from "./context/ThemeContext";
 
+// Import i18n for multilanguage support
+import "./i18n/index.js";
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 

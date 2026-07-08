@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'daphne',
+    
+    "analytics",
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -197,3 +198,8 @@ CACHES = {
         "LOCATION": "weather-cache",
     }
 }
+
+import os
+
+print("EMAIL_HOST_USER:", os.getenv("EMAIL_HOST_USER"))
+print("EMAIL_HOST_PASSWORD:", os.getenv("EMAIL_HOST_PASSWORD"))
