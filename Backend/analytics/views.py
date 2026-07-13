@@ -25,14 +25,14 @@ class AnalyticsAPIView(APIView):
         # -------------------------
         user = request.user
 
-        print("=" * 50)
-        print("Logged in user:", request.user)
-        print("Authenticated:", request.user.is_authenticated)
-        print("Plantings:", PlantingRecord.objects.filter(user=user).count())
-        print("Harvests:", HarvestRecord.objects.filter(user=user).count())
-        print("Sales:", SaleRecord.objects.filter(user=user).count())
-        print("Expenses:", ExpenseRecord.objects.filter(user=user).count())
-        print("=" * 50)
+        # print("=" * 50)
+        # print("Logged in user:", request.user)
+        # print("Authenticated:", request.user.is_authenticated)
+        # print("Plantings:", PlantingRecord.objects.filter(user=user).count())
+        # print("Harvests:", HarvestRecord.objects.filter(user=user).count())
+        # print("Sales:", SaleRecord.objects.filter(user=user).count())
+        # print("Expenses:", ExpenseRecord.objects.filter(user=user).count())
+        # print("=" * 50)
 
         # -------------------------
         # Total Revenue
