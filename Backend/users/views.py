@@ -393,8 +393,8 @@ class RegisterRequestView(APIView):
         )
 
         verification_url = (
-            f"http://localhost:8000/api/auth/verify-email/{token}/"
-        )
+            f"https://cropwisebackend.onrender.com/api/auth/verify-email/{token}/"
+        ) 
 
         subject = "Verify Your Email"
 
