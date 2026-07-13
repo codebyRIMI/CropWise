@@ -10,6 +10,12 @@ https://docs.djangoproject.com/en/6.0/howto/deployment/asgi/
 
 
 import os
+
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "crop_backend.settings"
+)
+
 # from channels.auth import AuthMiddlewareStack
 from settings.jwt_middleware import (
     JWTAuthMiddleware
@@ -25,10 +31,6 @@ from settings.routing import (
     websocket_urlpatterns,
 )
 
-os.environ.setdefault(
-    "DJANGO_SETTINGS_MODULE",
-    "crop_backend.settings"
-)
 
 django_asgi_app = get_asgi_application()
 
