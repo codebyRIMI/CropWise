@@ -2,7 +2,7 @@ from django.urls import path
 from .views import AnalyticsSummaryView, NotificationListView, NotificationPreferenceView
 from .views import UserPreferenceView
 from .views import UserLocationView , MarkNotificationReadView, UnreadNotificationCountView
-
+from .views import ChangePasswordView
    
 urlpatterns = [
     path('notifications-settings/', NotificationPreferenceView.as_view(), name='notification-settings'),
@@ -27,6 +27,12 @@ urlpatterns = [
         "preferences/",
         UserPreferenceView.as_view(),
         name="preferences"
+    ),
+      # ✅ Add it here
+    path(
+        "change-password/",
+        ChangePasswordView.as_view(),
+        name="change-password",
     ),
 ]
 

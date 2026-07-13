@@ -39,3 +39,128 @@
         flex: 1;
     }
 }
+
+
+:root[data-theme="dark"] {
+
+  .protectedd-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background:
+      radial-gradient(circle at top left, rgba(14, 93, 188, 0.08), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.08), transparent 30%),
+      linear-gradient(
+        135deg,
+        #0b0f14 0%,
+        #10151d 35%,
+        #141922 70%,
+        #191f29 100%
+      );
+
+    .topp-header {
+      height: 70px;
+      width: 100%;
+
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      padding: 0 24px;
+
+      background: rgba(15, 23, 42, 0.95);
+
+      backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      color: #f8fafc;
+
+      svg {
+        color: #e2e8f0;
+        transition: 0.3s;
+
+        &:hover {
+          color: #4ade80;
+        }
+      }
+    }
+
+    .pagee-content {
+      flex: 1;
+      background: transparent;
+      color: #f8fafc;
+    }
+  }
+
+}
+
+
+:root[data-theme="light"] {
+
+  .protectedd-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    background:
+      radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.08), transparent 30%),
+      linear-gradient(
+        135deg,
+        #f8fafc 0%,
+        #f1f5f9 35%,
+        #eef2ff 70%,
+        #ffffff 100%
+      );
+
+    .topp-header {
+      height: 70px;
+      width: 100%;
+
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      padding: 0 24px;
+
+      background: rgba(255, 255, 255, 0.9);
+
+      backdrop-filter: blur(18px);
+
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      color: #0f172a;
+
+      svg {
+        color: #475569;
+        transition: 0.3s ease;
+
+        &:hover {
+          color: #22c55e;
+          transform: scale(1.08);
+        }
+      }
+    }
+
+    .pagee-content {
+      flex: 1;
+      background: transparent;
+      color: #1e293b;
+    }
+  }
+
+}

@@ -3,8 +3,65 @@ import { Link } from "react-router-dom";
 import "../scss/dashboard.scss";
 import Sidebar from "../components/Sidebar";
 import { useTranslation } from "react-i18next";
+import  { useEffect, useState } from "react";
+
 const Dashboard = () => {
+  const [analytics, setAnalytics] = useState(null);
+  const [recentRecommendations, setRecentRecommendations] = useState([]);
     const { t } = useTranslation();
+    
+
+
+    useEffect(() => {
+  fetchRecentRecommendations();
+  fetchAnalytics();
+}, []);
+
+const fetchAnalytics = async () => {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/api/analytics/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) return;
+
+    const data = await res.json();
+
+    setAnalytics(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+    const token =
+  localStorage.getItem("access") ||
+  localStorage.getItem("token");
+
+useEffect(() => {
+  fetchRecentRecommendations();
+}, []);
+
+const fetchRecentRecommendations = async () => {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/api/history/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) return;
+
+    const data = await res.json();
+
+    // Latest 3 predictions
+    setRecentRecommendations(data.slice(0, 3));
+
+  } catch (err) {
+    console.log("Failed to fetch history", err);
+  }
+};
   return (
      <>
       <Sidebar />
@@ -22,9 +79,12 @@ const Dashboard = () => {
              {t("get_smart_recommendations")}
           </button>
           </Link>
-          <button className="secondary-btn">
+          <Link to="/farm-records">
+           <button className="secondary-btn">
            {t("view_farm_analytics")}
           </button>
+          </Link>
+         
         </div>
       </header>
 
@@ -40,20 +100,20 @@ const Dashboard = () => {
       <section className="farm-overview">
          <h2>{t("your_farm_overview")}</h2>
         <div className="overview-grid">
-          <div className="overview-card">
+          {/* <div className="overview-card">
             <h3>10,000+</h3>
               <p>{t("farmers_helped")}</p>
-          </div>
-          <div className="overview-card">
+          </div> */}
+          {/* <div className="overview-card">
             <h3>35%</h3>
             <p>{t("total_improvement")}</p>
-          </div>
+          </div> */}
           <div className="overview-card">
             <h3>94%</h3>
              <p>{t("success_rate")}</p>
           </div>
           <div className="overview-card">
-            <h3>50+</h3>
+            <h3>20+</h3>
              <p>{t("crops_supported")}</p>
           </div>
         </div>
@@ -65,7 +125,7 @@ const Dashboard = () => {
         <div className="activity-grid">
           <div className="activity-card">
             <h4>{t("latest_recommendations")}</h4>
-            <ul>
+            {/* <ul>
                       <li>
   <b>{t("wheat")}</b> – {t("winter_season")}
 </li>
@@ -77,13 +137,39 @@ const Dashboard = () => {
 <li>
   <b>{t("soybean")}</b> – {t("post_monsoon")}
 </li>
-            </ul>
-             <button className="link-btn">
+            </ul> */}
+<ul>
+  {recentRecommendations.length > 0 ? (
+    recentRecommendations.map((item) => (
+      <li key={item.id || item.created_at}>
+        <b>{t(`crop.${item.crop.toLowerCase()}`)}</b>
+
+        <small
+          style={{
+            display: "block",
+            color: "#888",
+            marginTop: "4px",
+          }}
+        >
+          {new Date(item.created_at).toLocaleDateString("en-IN")}
+        </small>
+      </li>
+    ))
+  ) : (
+    <li>{t("no_history")}</li>
+  )}
+</ul>
+             {/* <button className="link-btn">
   {t("view_all_recommendations")}
-</button>
+</button> */}
+<Link to="/recommendations?tab=history">
+  <button className="link-btn">
+    {t("view_all_recommendations")}
+  </button>
+</Link>
           </div>
           <div className="activity-card">
-                  <h4>{t("performance_highlights")}</h4>
+            {/* <h4>{t("performance_highlights")}</h4>
 
 <p>
   {t("this_season_yield")} <b>+15%</b>
@@ -96,10 +182,51 @@ const Dashboard = () => {
 <p>
   {t("success_rate")} <b>94%</b>
 </p>
-
+<Link to="/analytics">
 <button className="link-btn">
   {t("view_detailed_analysis")}
 </button>
+</Link> */}
+
+
+<h4>{t("performance_highlights")}</h4>
+
+<p>
+  {t("average_yield")}{" "}
+  <b>
+    {analytics
+      ? analytics.average_yield.toFixed(2)
+      : "--"}{" "}
+    ton/ha
+  </b>
+</p>
+
+<p>
+  {t("total_profit")}{" "}
+  <b>
+    ₹
+    {analytics
+      ? analytics.total_profit.toLocaleString()
+      : "--"}
+  </b>
+</p>
+
+<p>
+  {t("quality_rate")}{" "}
+  <b>
+    {analytics
+      ? analytics.quality_rate.toFixed(1)
+      : "--"}
+    %
+  </b>
+</p>
+
+<Link to="/analytics">
+  <button className="link-btn">
+    {t("view_detailed_analysis")}
+  </button>
+</Link>
+
           </div>
         </div>
       </section>
@@ -118,10 +245,12 @@ const Dashboard = () => {
               <h4>{t("smart_crop_recommendations")}</h4>
 
 <p>{t("smart_crop_recommendations_desc")}</p>
-
+<Link to="/recommendations">
 <button className="learn-btn">
   {t("learn_more")}
 </button>
+</Link>
+
           </div>
 
           <div className="tool-card">
@@ -131,9 +260,12 @@ const Dashboard = () => {
 
 <p>{t("weather_insights_desc")}</p>
 
-<button className="learn-btn">
+<Link to="/weather">
+   <button className="learn-btn">
   {t("learn_more")}
-</button>
+  </button>
+</Link>
+
           </div>
           
           <div className="tool-card">
@@ -142,9 +274,12 @@ const Dashboard = () => {
 
 <p>{t("soil_analysis_desc")}</p>
 
+<Link to="/soil-analysis">
 <button className="learn-btn">
   {t("learn_more")}
 </button>
+</Link>
+
           </div>
 
           <div className="tool-card">
@@ -153,9 +288,12 @@ const Dashboard = () => {
 
 <p>{t("analytics_dashboard_desc")}</p>
 
+<Link to="/analytics">
 <button className="learn-btn">
   {t("learn_more")}
 </button>
+</Link>
+
           </div>
         </div>
       </section>

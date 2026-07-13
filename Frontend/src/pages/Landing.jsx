@@ -854,8 +854,8 @@ useEffect(() => {
 
       {/* Stats */}
       <div className="stats">
-        <div className="stat"><h2>500+</h2><span>{t("farmers")}</span></div>
-        <div className="stat"><h2>50+</h2><span>{t("crops")}</span></div>
+        {/* <div className="stat"><h2>500+</h2><span>{t("farmers")}</span></div> */}
+        <div className="stat"><h2>20+</h2><span>{t("crops")}</span></div>
         <div className="stat"><h2>95%</h2><span>{t("success_rate")}</span></div>
         <div className="stat"><h2>24/7</h2><span>{t("support")}</span></div>
       </div>

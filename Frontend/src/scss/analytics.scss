@@ -784,3 +784,623 @@
   opacity: .9;
   cursor: pointer;
 }
+
+
+/* ==========================================================
+   GLOBAL DARK THEME - CropWise AgriTech SaaS
+   ========================================================== */
+/* ============================================================
+   🌙 ANALYTICS PAGE - PREMIUM DARK THEME
+============================================================ */
+:root[data-theme="dark"] {
+
+  /* =====================================================
+     MAIN BACKGROUND
+  ====================================================== */
+
+  .analytics {
+
+    min-height: 100vh;
+    padding: 2rem;
+
+    background:
+      radial-gradient(circle at top left, rgba(14,93,188,.08), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(59,130,246,.08), transparent 30%),
+      radial-gradient(circle at center, rgba(168,85,247,.05), transparent 35%),
+      linear-gradient(
+        135deg,
+        #0b0f14 0%,
+        #10151d 30%,
+        #141922 65%,
+        #191f29 100%
+      );
+
+    color:#f8fafc;
+  }
+
+  /* =====================================================
+     COMMON GLASS CARDS
+  ====================================================== */
+
+  .analytics-header,
+  .analytics-card,
+  .analytics-panel,
+  .summary-card,
+  .financial-card,
+  .financial-chart-card,
+  .distribution-card{
+
+      position:relative;
+
+      overflow:hidden;
+
+      background:
+      linear-gradient(
+      145deg,
+      rgba(20,28,40,.80),
+      rgba(15,23,42,.95)
+      );
+
+      border:1px solid rgba(255,255,255,.06);
+
+      backdrop-filter:blur(18px);
+
+      box-shadow:
+      0 15px 45px rgba(0,0,0,.40),
+      inset 0 1px 0 rgba(255,255,255,.04);
+
+      transition:.35s;
+
+      &:hover{
+
+          transform:translateY(-8px);
+
+          border-color:rgba(34,197,94,.18);
+
+          box-shadow:
+          0 25px 60px rgba(0,0,0,.45),
+          0 0 35px rgba(34,197,94,.08);
+
+      }
+  }
+
+  /* =====================================================
+      HEADER
+  ====================================================== */
+
+  .analytics-header{
+
+      border-radius:30px;
+
+      padding:45px;
+
+      margin-bottom:35px;
+
+      background:
+      linear-gradient(
+      135deg,
+      rgba(22,163,74,.18),
+      rgba(15,23,42,.96)
+      );
+
+      h1{
+
+          color:#fff;
+
+          font-size:2.1rem;
+
+          font-weight:800;
+
+      }
+
+      p{
+
+          color:#cbd5e1;
+
+      }
+
+  }
+
+  /* =====================================================
+      FILTER
+  ====================================================== */
+
+  .header-filter select{
+
+      background:#111827;
+
+      color:white;
+
+      border:none;
+
+      border-radius:15px;
+
+      padding:14px 20px;
+
+      outline:none;
+
+  }
+
+  /* =====================================================
+      TOP CARDS
+  ====================================================== */
+
+  .analytics-card{
+
+      border-radius:28px;
+
+      padding:30px;
+
+      .icon{
+
+          background:#eef2ff;
+
+          color:#6d5efc;
+
+          border-radius:18px;
+
+          padding:12px;
+
+      }
+
+      h2{
+
+          color:white;
+
+      }
+
+      h4{
+
+          color:#d1d5db;
+
+      }
+
+      span{
+
+          color:#22c55e;
+
+      }
+
+  }
+
+  /* =====================================================
+      TABS
+  ====================================================== */
+
+  .analytics-tabs{
+
+      background:#111827;
+
+      border-radius:18px;
+
+      padding:8px;
+
+      button{
+
+          color:#cbd5e1;
+
+          border:none;
+
+          background:transparent;
+
+      }
+
+      button.active{
+
+          background:white;
+
+          color:black;
+
+          border-radius:12px;
+
+      }
+
+  }
+
+  /* =====================================================
+      CHART CARD
+  ====================================================== */
+
+  .analytics-panel{
+
+      border-radius:28px;
+
+      padding:35px;
+
+  }
+
+  .panel-header{
+
+      h3{
+
+          color:white;
+
+      }
+
+      p{
+
+          color:#94a3b8;
+
+      }
+
+  }
+
+  /* =====================================================
+      SUMMARY CARD
+  ====================================================== */
+
+  .summary-card{
+
+      border-radius:24px;
+
+      padding:28px;
+
+      h2{
+
+          color:white;
+
+      }
+
+      h4{
+
+          color:#fff;
+
+      }
+
+      p{
+
+          color:#94a3b8;
+
+      }
+
+  }
+
+  /* =====================================================
+      BADGE
+  ====================================================== */
+
+  .badge{
+
+      background:rgba(34,197,94,.15);
+
+      color:#86efac;
+
+      border:1px solid rgba(34,197,94,.20);
+
+  }
+
+  /* =====================================================
+      FINANCIAL
+  ====================================================== */
+
+  .financial-card{
+
+      h2{
+
+          color:white;
+
+      }
+
+      .green{
+
+          color:#4ade80;
+
+      }
+
+      .orange{
+
+          color:#fb923c;
+
+      }
+
+      .blue{
+
+          color:#60a5fa;
+
+      }
+
+      .card-subtitle{
+
+          color:#94a3b8;
+
+      }
+
+      .card-footer{
+
+          color:#22c55e;
+
+      }
+
+  }
+
+  /* =====================================================
+      DISTRIBUTION
+  ====================================================== */
+
+  .distribution-card{
+
+      border-radius:28px;
+
+      padding:35px;
+
+  }
+
+  .crop-item{
+
+      border-bottom:1px solid rgba(255,255,255,.05);
+
+      h4{
+
+          color:white;
+
+      }
+
+      p{
+
+          color:#94a3b8;
+
+      }
+
+  }
+
+  /* =====================================================
+      RECHARTS
+  ====================================================== */
+
+  .recharts-cartesian-grid line{
+
+      stroke:#334155;
+
+  }
+
+  .recharts-text{
+
+      fill:#cbd5e1;
+
+  }
+
+  .recharts-legend-item-text{
+
+      color:#e2e8f0 !important;
+
+  }
+
+  .recharts-default-tooltip{
+
+      background:#111827 !important;
+
+      border:none !important;
+
+      border-radius:14px;
+
+  }
+
+  .recharts-tooltip-label{
+
+      color:white !important;
+
+  }
+
+}
+
+
+:root[data-theme="dark"] {
+
+  /* Main text */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff !important;
+  }
+
+  p,
+  span,
+  label,
+  li,
+  td,
+  th,
+  small,
+  strong {
+    color: #cbd5e1 !important;
+  }
+
+  /* Links */
+  a {
+    color: #60a5fa;
+
+    &:hover {
+      color: #93c5fd;
+    }
+  }
+
+  /* Analytics */
+
+  .analytics-header h1,
+  .analytics-header p,
+  .panel-header h3,
+  .panel-header p,
+  .card-header h3,
+  .card-header p,
+  .analytics-card h2,
+  .analytics-card h4,
+  .financial-card h2,
+  .financial-card h4,
+  .financial-card p,
+  .summary-card h2,
+  .summary-card h4,
+  .summary-card p,
+  .crop-item h4,
+  .crop-item p,
+  .environment-header h3,
+  .environment-header p,
+  .field-header h2,
+  .field-header p,
+  .insight-card h4,
+  .insight-card p,
+  .summary-item span,
+  .summary-item h5 {
+    color: #ffffff !important;
+  }
+
+  /* Secondary text */
+
+  .card-subtitle,
+  .panel-header p,
+  .card-header p,
+  .crop-item p,
+  .summary-card p,
+  .analytics-card span {
+    color: #cbd5e1 !important;
+  }
+
+  /* Tabs */
+
+  .analytics-tabs button {
+    color: #cbd5e1;
+  }
+
+  .analytics-tabs button.active {
+    color: #111827;
+  }
+
+  /* Select */
+
+  .header-filter select {
+    color: #ffffff;
+  }
+
+  /* Recharts */
+
+  .recharts-text {
+    fill: #e2e8f0 !important;
+  }
+
+  .recharts-legend-item-text {
+    color: #ffffff !important;
+  }
+
+  .recharts-tooltip-label,
+  .recharts-tooltip-item {
+    color: #ffffff !important;
+  }
+
+  /* Badge */
+
+  .badge {
+    color: #bbf7d0 !important;
+  }
+
+  /* Colored values */
+
+  .green {
+    color: #4ade80 !important;
+  }
+
+  .blue {
+    color: #60a5fa !important;
+  }
+
+  .orange {
+    color: #fb923c !important;
+  }
+
+  /* =========================================================
+   CROP DISTRIBUTION - DARK THEME
+========================================================= */
+
+.distribution-section {
+
+  .distribution-card,
+  .summary-card {
+    background: linear-gradient(
+      145deg,
+      rgba(20, 28, 40, 0.92),
+      rgba(15, 23, 42, 0.98)
+    );
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 24px;
+    color: #f8fafc;
+  }
+
+  .card-header {
+
+    h3{
+      color:#ffffff;
+      font-weight:700;
+    }
+
+    p{
+      color:#94a3b8;
+    }
+  }
+
+  .crop-summary-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .crop-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 22px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.3s;
+
+    &:hover{
+      background:rgba(34,197,94,.08);
+      border-color:rgba(34,197,94,.18);
+    }
+  }
+
+  .crop-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    h4{
+      color:#f8fafc !important;
+      font-weight:600;
+      margin:0;
+    }
+  }
+
+  .crop-dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+
+  .crop-right{
+    text-align:right;
+
+    h4{
+      color:#ffffff !important;
+      font-weight:700;
+      margin:0 0 4px;
+    }
+
+    p{
+      color:#94a3b8 !important;
+      margin:0;
+    }
+  }
+
+}
+}
+
+
+

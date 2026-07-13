@@ -240,7 +240,62 @@ const handleToggle = async (field) => {
 
 
 
+//change password
+const [passwordData, setPasswordData] = useState({
+  current_password: "",
+  new_password: "",
+  confirm_password: "",
+});
+const handlePasswordChange = (e) => {
+  const { name, value } = e.target;
 
+  setPasswordData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+const handleUpdatePassword = async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem("access");
+
+  try {
+    // await axios.post(
+    //   "http://127.0.0.1:8000/api/settings/change-password/",
+    //   passwordData,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // );
+    await settingsAPI.changePassword(passwordData);
+    toast.success("Password updated successfully");
+
+    setPasswordData({
+      current_password: "",
+      new_password: "",
+      confirm_password: "",
+    });
+
+  } catch (err) {
+
+    if (err.response?.data) {
+
+      const errors = err.response.data;
+
+      Object.values(errors).forEach((value) => {
+        toast.error(
+          Array.isArray(value) ? value[0] : value
+        );
+      });
+
+    } else {
+      toast.error("Something went wrong");
+    }
+  }
+};
 
 
 
@@ -262,7 +317,7 @@ const handleToggle = async (field) => {
             "notifications",
             "privacy",
             "preferences",
-            "data",
+            // "data",
             "account",
           ].map((tab) => (
             <div
@@ -295,16 +350,16 @@ const handleToggle = async (field) => {
     title: t("weather_alerts"),
     text: t("weather_alerts_desc"),
   },
-  {
-    key: "systemknowledge_updates",
-    title: t("system_announcements"),
-    text: t("system_announcements_desc"),
-  },
-  {
-    key: "market_prices",
-    title: t("market_prices"),
-    text: t("market_prices_desc"),
-  },
+  // {
+  //   key: "systemknowledge_updates",
+  //   title: t("system_announcements"),
+  //   text: t("system_announcements_desc"),
+  // },
+  // {
+  //   key: "market_prices",
+  //   title: t("market_prices"),
+  //   text: t("market_prices_desc"),
+  // },
             ].map((item, i) => (
               <div className="setting-item" key={i}>
                 <div>
@@ -587,7 +642,7 @@ const handleToggle = async (field) => {
       {t("account_management_desc")}
     </p>
 
-    <form className="account-form">
+    {/* <form className="account-form">
       <div className="form-group">
         <label>{t("current_password")}</label>
         <input
@@ -615,7 +670,59 @@ const handleToggle = async (field) => {
       <button className="primary-btn">
         {t("update_password")}
       </button>
-    </form>
+    </form> */}
+    <form
+  className="account-form"
+  onSubmit={handleUpdatePassword}
+>
+
+  <div className="form-group">
+    <label>{t("current_password")}</label>
+
+    <input
+      type="password"
+      name="current_password"
+      value={passwordData.current_password}
+      onChange={handlePasswordChange}
+      placeholder={t("enter_current_password")}
+      required
+    />
+  </div>
+
+  <div className="form-group">
+    <label>{t("new_password")}</label>
+
+    <input
+      type="password"
+      name="new_password"
+      value={passwordData.new_password}
+      onChange={handlePasswordChange}
+      placeholder={t("enter_new_password")}
+      required
+    />
+  </div>
+
+  <div className="form-group">
+    <label>{t("confirm_new_password")}</label>
+
+    <input
+      type="password"
+      name="confirm_password"
+      value={passwordData.confirm_password}
+      onChange={handlePasswordChange}
+      placeholder={t("confirm_password")}
+      required
+    />
+  </div>
+
+  <button
+    type="submit"
+    className="primary-btn"
+  >
+    {t("update_password")}
+  </button>
+
+</form>
 
     <div className="danger-zone">
       <h2>{t("danger_zone")}</h2>

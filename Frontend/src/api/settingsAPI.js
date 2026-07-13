@@ -70,6 +70,12 @@ export const settingsAPI = {
 
   markNotificationRead: (id) =>
     API.patch(`notifications/${id}/read/`),
+  
+  changePassword: (data) =>
+    API.post("change-password/", data),
 };
 
 export default API;
+
+
+

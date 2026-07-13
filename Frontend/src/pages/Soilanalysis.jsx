@@ -404,7 +404,7 @@ const loadAllData = async () => {
             className={activeTab === "history" ? "active" : ""}
             onClick={() => handleTabChange("history")}
           >
-           {t("recommendations")}
+           {t("history")}
           </button>
 
           <button

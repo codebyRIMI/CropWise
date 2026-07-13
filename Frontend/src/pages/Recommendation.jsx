@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Sidebar from "../components/Sidebar";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -18,6 +20,11 @@ import "../scss/recommendation.scss";
 const COLORS = ["#044306", "#ec9f2a", "#0a4676", "#e91058", "#7a058e"];
 
 export default function Recommendation() {
+  const [searchParams] = useSearchParams();
+
+const [activeTab, setActiveTab] = useState(
+  searchParams.get("tab") || "manual"
+);
   const token =
   localStorage.getItem("access") ||
   localStorage.getItem("token");
@@ -47,7 +54,7 @@ const { t } = useTranslation();
   });
 
   // UI STATES
-  const [activeTab, setActiveTab] = useState("manual");
+ 
   const [result, setResult] = useState(null);
   const [chartData, setChartData] = useState([]);
   const [error, setError] = useState("");
@@ -424,6 +431,12 @@ const generateLocationAnalysis = (crop, district, state) => {
     state,
   });
 };
+
+useEffect(() => {
+  if (activeTab === "history") {
+    fetchHistory();
+  }
+}, [activeTab]);
 
   return (
     <>
