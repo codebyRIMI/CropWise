@@ -445,8 +445,17 @@ class RegisterRequestView(APIView):
         )
 
         try:
-            email.send()
+            # email.send()
+            print("Sending verification email...")
+            sent = email.send(fail_silently=False)
+            print("Email send result:", sent)
+        # except Exception as e:
         except Exception as e:
+            import traceback
+            traceback.print_exc()
+            print("EMAIL ERROR:", repr(e))
+
+            
             record.delete()
             return Response(
                 {"error": str(e)},
