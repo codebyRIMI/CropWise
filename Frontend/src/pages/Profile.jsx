@@ -194,7 +194,7 @@ const [popupMessage, setPopupMessage] = useState("");
     try {
       const token = localStorage.getItem("access");
       const res = await axios.get(
-        "http://127.0.0.1:8000/api/profiles/profile",
+        "https://cropwisebackend.onrender.com/api/profiles/profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -228,7 +228,7 @@ const [popupMessage, setPopupMessage] = useState("");
       });
 
       const res = await axios.patch(
-        "http://127.0.0.1:8000/api/profiles/profile",
+        "https://cropwisebackend.onrender.com/api/profiles/profile",
         formData,
         {
           headers: {

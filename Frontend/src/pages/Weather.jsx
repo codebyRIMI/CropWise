@@ -120,7 +120,7 @@
 //       try {
 //         const token = localStorage.getItem("access");
 //         const res = await axios.get(
-//           `http://127.0.0.1:8000/api/weather/forecast?city=${city}`,
+//           `https://cropwisebackend.onrender.com/api/weather/forecast?city=${city}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -358,8 +358,8 @@ const { t } = useTranslation();
       try {
         const token = localStorage.getItem("access");
         const url = city
-        ? `http://127.0.0.1:8000/api/weather/forecast?city=${city}`
-        : `http://127.0.0.1:8000/api/weather/forecast`;
+        ? `https://cropwisebackend.onrender.com/api/weather/forecast?city=${city}`
+        : `https://cropwisebackend.onrender.com/api/weather/forecast`;
 
 
         const res = await axios.get(url, {

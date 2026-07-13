@@ -107,7 +107,7 @@ const getReasons = () => {
   const fetchHistory = async () => {
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/history/",
+        "https://cropwisebackend.onrender.com/api/history/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -253,7 +253,7 @@ const getReasons = () => {
 
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/predict/",
+        "https://cropwisebackend.onrender.com/api/predict/",
         {
           method: "POST",
           headers: authHeaders,
@@ -319,7 +319,7 @@ const getReasons = () => {
 
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/predict/location/",
+        "https://cropwisebackend.onrender.com/api/predict/location/",
         {
           method: "POST",
           headers: authHeaders,
