@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "daphne",
     'channels',
 
-    "cloudinary_storage",
+    # "cloudinary_storage",
     "cloudinary",
     "analytics",
 
@@ -236,13 +236,23 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+#     },
+#     "staticfiles": {
+#         # "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+#         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+#     },
+# }
+
+
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "cloudinary.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
