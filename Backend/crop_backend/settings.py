@@ -93,6 +93,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",   # Vite front-end
     "http://127.0.0.1:5173",
+    "https://smartfarming-cropwise.netlify.app/",  # Netlify front-end
 ]
 
 INSTALLED_APPS += ["corsheaders"]
