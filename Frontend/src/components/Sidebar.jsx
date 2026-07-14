@@ -292,7 +292,7 @@ export default function Sidebar() {
         if (!access) return;
 
         const response = await axios.get(
-          "https://cropwisebackend.onrender.com/api/profiles/profile",
+          `${import.meta.env.VITE_API_URL}/api/profiles/profile`,
           {
             headers: {
               Authorization: `Bearer ${access}`,
@@ -331,7 +331,7 @@ export default function Sidebar() {
 
     try {
       await axios.post(
-        "https://cropwisebackend.onrender.com/api/auth/logout/",
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
         {
           refresh: localStorage.getItem("refresh"),
         },
@@ -357,7 +357,7 @@ export default function Sidebar() {
   const profileImage = user?.profile_image
     ? user.profile_image.startsWith("http")
       ? user.profile_image
-      : `http://127.0.0.1:8000${user.profile_image}`
+      : `${import.meta.env.VITE_API_URL}${user.profile_image}`
     : null;
 
   return (

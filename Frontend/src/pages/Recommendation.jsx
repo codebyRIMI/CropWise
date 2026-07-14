@@ -107,7 +107,7 @@ const getReasons = () => {
   const fetchHistory = async () => {
     try {
       const res = await fetch(
-        "https://cropwisebackend.onrender.com/api/history/",
+        `${import.meta.env.VITE_API_URL}/api/history/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -253,7 +253,7 @@ const getReasons = () => {
 
     try {
       const res = await fetch(
-        "https://cropwisebackend.onrender.com/api/predict/",
+        `${import.meta.env.VITE_API_URL}/api/predict/`,
         {
           method: "POST",
           headers: authHeaders,
@@ -319,7 +319,7 @@ const getReasons = () => {
 
     try {
       const res = await fetch(
-        "https://cropwisebackend.onrender.com/api/predict/location/",
+        `${import.meta.env.VITE_API_URL}/api/predict/location/`,
         {
           method: "POST",
           headers: authHeaders,

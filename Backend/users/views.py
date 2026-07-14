@@ -326,7 +326,6 @@
 #         )
 
 
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -396,7 +395,7 @@ class RegisterRequestView(APIView):
         )
 
         verification_url = (
-            f"https://cropwisebackend.onrender.com/api/auth/verify-email/{token}/"
+            f"{settings.BACKEND_URL}/api/auth/verify-email/{token}/"
         )
 
         subject = "Verify Your Email"
@@ -488,121 +487,6 @@ class RegisterRequestView(APIView):
 
 
 
-
-
-
-
-
-
-
-# class RegisterRequestView(APIView):
-
-#     def post(self, request):
-
-#         serializer = RegisterRequestSerializer(
-#             data=request.data
-#         )
-
-#         if not serializer.is_valid():
-#             return Response(
-#                 serializer.errors,
-#                 status=status.HTTP_400_BAD_REQUEST
-#             )
-
-#         data = serializer.validated_data
-
-#         token = get_random_string(64)
-
-#         PendingRegistration.objects.filter(
-#             email=data["email"]
-#         ).delete()
-
-#         record = PendingRegistration.objects.create(
-#             username=data["username"],
-#             email=data["email"],
-#             password=make_password(data["password"]),
-#             token=token
-#         )
-
-#         verification_url = (
-#             f"https://cropwisebackend.onrender.com/api/auth/verify-email/{token}/"
-#         ) 
-
-#         subject = "Verify Your Email"
-
-#         text_content = f"""
-#         Verify your email:
-
-#         {verification_url}
-#         """
-
-#         html_content = f"""
-#         <html>
-#         <body>
-#             <h2>Email Verification</h2>
-
-#             <p>Hello {data['username']},</p>
-
-#             <p>Click the button below to verify your email.</p>
-
-#             <a href="{verification_url}"
-#             style="
-#                 display:inline-block;
-#                 padding:12px 24px;
-#                 background-color:#28a745;
-#                 color:white;
-#                 text-decoration:none;
-#                 border-radius:6px;
-#                 font-weight:bold;">
-#                 Verify Email
-#             </a>
-
-#             <p style="margin-top:20px;">
-#                 This link expires in 1 hour.
-#             </p>
-#         </body>
-#         </html>
-#         """
-
-#         email = EmailMultiAlternatives(
-#             subject,
-#             text_content,
-#             settings.EMAIL_HOST_USER,
-#             [data["email"]]
-#         )
-
-#         email.attach_alternative(
-#             html_content,
-#             "text/html"
-#         )
-
-#         try:
-#             # email.send()
-#             print("Sending verification email...")
-#             print("HOST:", settings.EMAIL_HOST)
-#             print("PORT:", settings.EMAIL_PORT)
-#             print("USER:", settings.EMAIL_HOST_USER)
-#             print("PASSWORD PRESENT:", bool(settings.EMAIL_HOST_PASSWORD))
-#             sent = email.send(fail_silently=False)
-#             print("Email send result:", sent)
-#         # except Exception as e:
-#         except Exception as e:
-#             import traceback
-#             traceback.print_exc()
-#             print("EMAIL ERROR:", repr(e))
-
-            
-#             record.delete()
-#             return Response(
-#                 {"error": str(e)},
-#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
-#             )
-
-#         return Response(
-#             {"message": "Verification email sent"},
-#             status=status.HTTP_200_OK        
-#         )
-    
         
 
 
@@ -653,24 +537,8 @@ class VerifyEmailView(APIView):
         # )
 
         return redirect(
-            "https://smartfarming-cropwise.netlify.app/?verified=true"
+            f"{settings.FRONTEND_URL}/?verified=true"
         )
-
-
-
-
-# class LoginView(APIView):
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-#         user = authenticate(username=username, password=password)
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             return Response({
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token)
-#             })
-#         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 

@@ -358,8 +358,8 @@ const { t } = useTranslation();
       try {
         const token = localStorage.getItem("access");
         const url = city
-        ? `https://cropwisebackend.onrender.com/api/weather/forecast?city=${city}`
-        : `https://cropwisebackend.onrender.com/api/weather/forecast`;
+        ? `${import.meta.env.VITE_API_URL}/api/weather/forecast?city=${city}`
+        : `${import.meta.env.VITE_API_URL}/api/weather/forecast`;
 
 
         const res = await axios.get(url, {

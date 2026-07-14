@@ -19,7 +19,7 @@ const Dashboard = () => {
 
 const fetchAnalytics = async () => {
   try {
-    const res = await fetch("https://cropwisebackend.onrender.com/api/analytics/", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/analytics/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,7 @@ useEffect(() => {
 
 const fetchRecentRecommendations = async () => {
   try {
-    const res = await fetch("https://cropwisebackend.onrender.com/api/history/", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/history/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

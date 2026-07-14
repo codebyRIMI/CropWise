@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL:
-    "https://cropwisebackend.onrender.com/api/admin/notifications/",
+    `${import.meta.env.VITE_API_URL}/api/admin/notifications/`,
 });
 
 
@@ -65,7 +65,7 @@ API.interceptors.response.use(
 
         const res = await axios.post(
 
-          "https://cropwisebackend.onrender.com/api/token/refresh/",
+          `${import.meta.env.VITE_API_URL}/api/token/refresh/`,
 
           {
             refresh,

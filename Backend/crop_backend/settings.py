@@ -37,6 +37,12 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
+
+BACKEND_URL = os.getenv("BACKEND_URL")
+
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,6 +73,11 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = "crop_backend.asgi.application"
 
+
+
+REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND":
@@ -74,7 +85,7 @@ CHANNEL_LAYERS = {
 
         "CONFIG": {
             "hosts": [
-                ("127.0.0.1", 6379)
+                (REDIS_HOST, REDIS_PORT)
             ],
         },
     },
@@ -180,7 +191,8 @@ EMAIL_USE_TLS = True
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

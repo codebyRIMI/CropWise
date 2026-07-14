@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://cropwisebackend.onrender.com/api/settings/",
+  baseURL: `${import.meta.env.VITE_API_URL}/api/settings/`,
 });
 
 /* request interceptor */
@@ -31,7 +31,7 @@ API.interceptors.response.use(
         const refresh = localStorage.getItem("refresh");
 
         const res = await axios.post(
-          "https://cropwisebackend.onrender.com/api/token/refresh/",
+          `${import.meta.env.VITE_API_URL}/api/token/refresh/`,
           { refresh }
         );
 
