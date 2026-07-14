@@ -183,11 +183,34 @@ const [popupMessage, setPopupMessage] = useState("");
 
 
   // Helper to get correct image URL
+  // const getProfileImageUrl = (image) => {
+  //   if (!image) return null;
+  //   if (image instanceof File) return imagePreview;
+  //   return `http://127.0.0.1:8000${image}`;
+  // };
+
+
   const getProfileImageUrl = (image) => {
-    if (!image) return null;
-    if (image instanceof File) return imagePreview;
-    return `http://127.0.0.1:8000${image}`;
-  };
+  if (!image) return null;
+
+  // Image selected but not uploaded yet
+  if (image instanceof File) {
+    return imagePreview;
+  }
+
+  // Cloudinary URL
+  if (typeof image === "string" && image.startsWith("http")) {
+    return image;
+  }
+
+  // Local media URL (development)
+  return `${import.meta.env.VITE_API_URL}${image}`;
+
+  // console.log("profile_image:", res.data.profile_image);
+};
+
+
+
 
   // Fetch profile data
   const fetchProfile = async () => {
