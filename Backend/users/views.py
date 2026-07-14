@@ -335,7 +335,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import RegisterSerializer , RegisterRequestSerializer
 from django.contrib.auth.hashers import make_password
 from django.conf import settings
-
+import requests
 import random
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
@@ -363,13 +363,16 @@ class RegisterView(APIView):
     
 
 
+
+
+
+
+
 class RegisterRequestView(APIView):
 
     def post(self, request):
 
-        serializer = RegisterRequestSerializer(
-            data=request.data
-        )
+        serializer = RegisterRequestSerializer(data=request.data)
 
         if not serializer.is_valid():
             return Response(
@@ -394,15 +397,9 @@ class RegisterRequestView(APIView):
 
         verification_url = (
             f"https://cropwisebackend.onrender.com/api/auth/verify-email/{token}/"
-        ) 
+        )
 
         subject = "Verify Your Email"
-
-        text_content = f"""
-        Verify your email:
-
-        {verification_url}
-        """
 
         html_content = f"""
         <html>
@@ -432,35 +429,53 @@ class RegisterRequestView(APIView):
         </html>
         """
 
-        email = EmailMultiAlternatives(
-            subject,
-            text_content,
-            settings.EMAIL_HOST_USER,
-            [data["email"]]
-        )
+        payload = {
+            "sender": {
+                "name": "CropWise",
+                "email": settings.EMAIL_HOST_USER
+            },
+            "to": [
+                {
+                    "email": data["email"],
+                    "name": data["username"]
+                }
+            ],
+            "subject": subject,
+            "htmlContent": html_content
+        }
 
-        email.attach_alternative(
-            html_content,
-            "text/html"
-        )
+        headers = {
+            "accept": "application/json",
+            "api-key": settings.BREVO_API_KEY,
+            "content-type": "application/json"
+        }
 
         try:
-            # email.send()
-            print("Sending verification email...")
-            print("HOST:", settings.EMAIL_HOST)
-            print("PORT:", settings.EMAIL_PORT)
-            print("USER:", settings.EMAIL_HOST_USER)
-            print("PASSWORD PRESENT:", bool(settings.EMAIL_HOST_PASSWORD))
-            sent = email.send(fail_silently=False)
-            print("Email send result:", sent)
-        # except Exception as e:
+
+            print("Sending verification email via Brevo API...")
+
+            response = requests.post(
+                "https://api.brevo.com/v3/smtp/email",
+                json=payload,
+                headers=headers,
+                timeout=20
+            )
+
+            print("Status Code:", response.status_code)
+            print("Response:", response.text)
+
+            if response.status_code != 201:
+                raise Exception(response.text)
+
         except Exception as e:
+
             import traceback
             traceback.print_exc()
+
             print("EMAIL ERROR:", repr(e))
 
-            
             record.delete()
+
             return Response(
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -468,8 +483,125 @@ class RegisterRequestView(APIView):
 
         return Response(
             {"message": "Verification email sent"},
-            status=status.HTTP_200_OK        
+            status=status.HTTP_200_OK
         )
+
+
+
+
+
+
+
+
+
+
+# class RegisterRequestView(APIView):
+
+#     def post(self, request):
+
+#         serializer = RegisterRequestSerializer(
+#             data=request.data
+#         )
+
+#         if not serializer.is_valid():
+#             return Response(
+#                 serializer.errors,
+#                 status=status.HTTP_400_BAD_REQUEST
+#             )
+
+#         data = serializer.validated_data
+
+#         token = get_random_string(64)
+
+#         PendingRegistration.objects.filter(
+#             email=data["email"]
+#         ).delete()
+
+#         record = PendingRegistration.objects.create(
+#             username=data["username"],
+#             email=data["email"],
+#             password=make_password(data["password"]),
+#             token=token
+#         )
+
+#         verification_url = (
+#             f"https://cropwisebackend.onrender.com/api/auth/verify-email/{token}/"
+#         ) 
+
+#         subject = "Verify Your Email"
+
+#         text_content = f"""
+#         Verify your email:
+
+#         {verification_url}
+#         """
+
+#         html_content = f"""
+#         <html>
+#         <body>
+#             <h2>Email Verification</h2>
+
+#             <p>Hello {data['username']},</p>
+
+#             <p>Click the button below to verify your email.</p>
+
+#             <a href="{verification_url}"
+#             style="
+#                 display:inline-block;
+#                 padding:12px 24px;
+#                 background-color:#28a745;
+#                 color:white;
+#                 text-decoration:none;
+#                 border-radius:6px;
+#                 font-weight:bold;">
+#                 Verify Email
+#             </a>
+
+#             <p style="margin-top:20px;">
+#                 This link expires in 1 hour.
+#             </p>
+#         </body>
+#         </html>
+#         """
+
+#         email = EmailMultiAlternatives(
+#             subject,
+#             text_content,
+#             settings.EMAIL_HOST_USER,
+#             [data["email"]]
+#         )
+
+#         email.attach_alternative(
+#             html_content,
+#             "text/html"
+#         )
+
+#         try:
+#             # email.send()
+#             print("Sending verification email...")
+#             print("HOST:", settings.EMAIL_HOST)
+#             print("PORT:", settings.EMAIL_PORT)
+#             print("USER:", settings.EMAIL_HOST_USER)
+#             print("PASSWORD PRESENT:", bool(settings.EMAIL_HOST_PASSWORD))
+#             sent = email.send(fail_silently=False)
+#             print("Email send result:", sent)
+#         # except Exception as e:
+#         except Exception as e:
+#             import traceback
+#             traceback.print_exc()
+#             print("EMAIL ERROR:", repr(e))
+
+            
+#             record.delete()
+#             return Response(
+#                 {"error": str(e)},
+#                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
+#             )
+
+#         return Response(
+#             {"message": "Verification email sent"},
+#             status=status.HTTP_200_OK        
+#         )
     
         
 
@@ -521,7 +653,7 @@ class VerifyEmailView(APIView):
         # )
 
         return redirect(
-            "http://localhost:5173/?verified=true"
+            "https://smartfarming-cropwise.netlify.app/?verified=true"
         )
 
 
@@ -622,13 +754,52 @@ class ForgotPasswordView(APIView):
             otp=otp
         )
 
-        send_mail(
-            "Password Reset OTP",
-            f"Your OTP is {otp}",
-            settings.EMAIL_HOST_USER,
-            [email],
-            fail_silently=False
+        html_content = f"""
+        <html>
+        <body>
+
+        <h2>Password Reset</h2>
+
+        <p>Your OTP is:</p>
+
+        <h1>{otp}</h1>
+
+        <p>This OTP expires in 5 minutes.</p>
+
+        </body>
+        </html>
+        """
+
+        payload = {
+            "sender": {
+                "name": "CropWise",
+                "email": settings.EMAIL_HOST_USER
+            },
+            "to": [
+                {
+                    "email": email,
+                    "name": "User"
+                }
+            ],
+            "subject": "Password Reset OTP",
+            "htmlContent": html_content
+        }
+
+        headers = {
+            "accept": "application/json",
+            "api-key": settings.BREVO_API_KEY,
+            "content-type": "application/json"
+        }
+
+        response = requests.post(
+            "https://api.brevo.com/v3/smtp/email",
+            json=payload,
+            headers=headers,
+            timeout=20
         )
+
+        if response.status_code != 201:
+            raise Exception(response.text)
 
         return Response({"message": "OTP sent"})
     
