@@ -103,7 +103,7 @@ useEffect(() => {
   const connectWebSocket = () => {
 
     socket = new WebSocket(
-      `ws://127.0.0.1:8000/ws/notifications/?token=${token}`
+      `${import.meta.env.VITE_WS_URL}/ws/notifications/?token=${token}`
     );
 
     socket.onopen = () => {

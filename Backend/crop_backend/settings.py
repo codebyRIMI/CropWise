@@ -75,8 +75,13 @@ ASGI_APPLICATION = "crop_backend.asgi.application"
 
 
 
-REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
-REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+# REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
+# REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+
+REDIS_URL = os.getenv(
+    "REDIS_URL",
+    "redis://127.0.0.1:6379"
+)
 
 CHANNEL_LAYERS = {
     "default": {
@@ -85,7 +90,7 @@ CHANNEL_LAYERS = {
 
         "CONFIG": {
             "hosts": [
-                (REDIS_HOST, REDIS_PORT)
+                REDIS_URL
             ],
         },
     },
