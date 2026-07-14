@@ -33,7 +33,7 @@ import {
 import {
   getDashboard,
   searchNotificationHistory,
-} from "../api/adminNotificationApi";
+} from "../api/adminNotificationApi.js";
 
 
 

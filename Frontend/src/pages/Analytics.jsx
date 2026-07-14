@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAnalytics } from "../api/analyticsApi";
+import { getAnalytics } from "../api/analyticsApi.js";
 import "../scss/analytics.scss";
 import Sidebar from "../components/Sidebar";
 

@@ -22,7 +22,7 @@ import {
   getResources,
   createResource,
   deleteResource,
-} from "../api/recordsApi";
+} from "../api/recordsAPI.js";
 
 const FarmRecords = () => {
   const [activeTab, setActiveTab] = useState("planting");

@@ -8,7 +8,7 @@ import {
   CheckCircle,
   Info,
 } from "lucide-react";
-import { settingsAPI } from "../api/settingsAPI";
+import { settingsAPI } from "../api/settingsAPI.js";
 
 import "../scss/NotificationPanel.scss";
 

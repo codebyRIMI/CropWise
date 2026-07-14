@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import "../scss/settings.scss";
 import axios from "axios";
 import { useEffect } from "react";
-import { settingsAPI } from "../api/settingsAPI";
+import { settingsAPI } from "../api/settingsAPI.js";
 import toast from "react-hot-toast";
 import { useTheme } from "../context/ThemeContext";
 import { useTranslation } from "react-i18next"; // for language translation

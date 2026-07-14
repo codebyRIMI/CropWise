@@ -12,7 +12,7 @@ import {
 import "../scss/soilanalysis.scss";
 import { FiUpload, FiPlus, FiX } from "react-icons/fi";
 import Sidebar from "../components/Sidebar";
-import { soilAPI } from "../api/soilApi";
+import { soilAPI } from "../api/soilApi.js";
 import toast from "react-hot-toast";
 
 export default function SoilAnalysis() {
