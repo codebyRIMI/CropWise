@@ -389,3 +389,4 @@ Developed as a B.Tech Computer Science & Engineering final-year project.
 
 ## 📄 License
 
+This project is licensed under the [MIT License](LICENSE).
