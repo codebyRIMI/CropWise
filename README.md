@@ -11,7 +11,7 @@ A full-stack web application that provides AI-powered crop recommendations, farm
 | **ML Pipeline** | scikit-learn, XGBoost, pandas, numpy | 
 | **DL Pipeline** | Open-CV, Pillow, Tensor Flow-2.20, Keras-3.12|
 | **Database** | SQLite (default) |
-| **Weather API** | tomorrow.io (no API key needed) |
+| **Weather API** | tomorrow.io |
 
 ## Features
 
